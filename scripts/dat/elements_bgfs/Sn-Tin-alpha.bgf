@@ -1,0 +1,29 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Sn-Tin-alpha.bgf modified FFTYPE:Sn
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     6.49100     6.49100     6.49100    90.00000    90.00000    90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 SN1   RES A   444   0.00000   0.00000   0.00000 Sn     4 0  0.00000
+HETATM     2 SN2   RES A   444   1.62300   1.62300   1.62300 Sn     4 0  0.00000
+HETATM     3 SN3   RES A   444   1.62300   4.86800   4.86800 Sn     4 0  0.00000
+HETATM     4 SN4   RES A   444   4.86800   1.62300   4.86800 Sn     4 0  0.00000
+HETATM     5 SN5   RES A   444   4.86800   4.86800   1.62300 Sn     4 0  0.00000
+HETATM     6 SN6   RES A   444   3.24600   3.24600   0.00000 Sn     4 0  0.00000
+HETATM     7 SN7   RES A   444   3.24600   0.00000   3.24600 Sn     4 0  0.00000
+HETATM     8 SN8   RES A   444   0.00000   3.24600   3.24600 Sn     4 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     2     3     4     5
+CONECT     2     1     6     7     8
+CONECT     3     1     6     7     8
+CONECT     4     1     6     7     8
+CONECT     5     1     6     7     8
+CONECT     6     2     3     4     5
+CONECT     7     2     3     4     5
+CONECT     8     2     3     4     5
+END

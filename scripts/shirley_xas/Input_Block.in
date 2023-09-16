@@ -1,0 +1,59 @@
+# Version of the code
+SHIRLEY_ROOT=/global/home/users/dasc/Builds/Shirley_dev_new
+# pseudopotentials
+PSEUDO_DIR=${SHIRLEY_ROOT}/pseudo
+#Location of Bibliothek directory
+#if using default set BIB_ROOT=${SHIRLEY_ROOT}/scripts/arvid
+#BIB_ROOT=${SHIRLEY_ROOT}
+BIB_ROOT=/global/home/users/dasc/Builds/Shirley_dev_new
+# Parallelization variables
+# Number of atomic calculations that can run simultaneously
+NJOB=1
+# procs per pool - used for parallelization of diag within Shirley
+PPP=1 
+
+PARA_PREFIX="mpirun -mca btl openib,tcp,self"
+PARA_POSTFIX=" "
+SCF_POSTFIX="-npool 1"
+NSCF_POSTFIX=" "
+# where will output be dumped
+TMP_DIR=./
+#
+# # xc functional
+PSEUDO_FUNCTIONAL=pbe
+# #pseudopotential postfix
+PSEUDO_POT_ES_POST_FIX=pbe-van-dgp-2p5.UPF
+# specific details for this calculation
+MOLNAME="SiH4"
+#
+# #XAS info
+XAS_ARG=4
+CHAPPROX="XCH"
+#
+#Defines the variables from the 'system' namespace
+IBRAV=1
+A=12
+B=12
+C=12
+ECUT_WFC='25'
+ECUT_RHO='200'
+NBND_FAC=2
+#
+# #Defines the variables from the 'electrons' namespace
+ DIAG='david'
+ DIAG_NSCF='david'
+ ELEC_CONV_THR='1.0d-8'
+ ELEC_MIXING_BETA='0.3'
+ mixing_mode='local-TF'
+ OCCUPATIONS='smearing'
+ SMEARING='gaussian'
+ DEGAUSS=0.0019
+ startingpot='file'
+ input_dft="PBE"
+# SCF k-points
+K_POINTS="K_POINTS gamma"
+#
+XYZFILES="SiH4.xyz"
+XYZUNIT="angstrom"
+XASELEMENTS='Si'
+#

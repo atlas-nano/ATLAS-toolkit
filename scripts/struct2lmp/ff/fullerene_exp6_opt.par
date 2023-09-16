@@ -1,0 +1,59 @@
+PARAMETER FORMAT (11-89)
+  232    5    0    0    0    0    0    0    0    0    0    0    0    0    0    0 
+graph.ar ff                                                                     
+Created by yg @ degas on  1/11/91    9:39:33                                    
+*                                                                               
+*
+FORCEFIELD GENFF   
+DEFAULTS  xxxxxxxxxx
+LBOND      T
+LANGLE     T
+ANGX 2 K   F
+LTORSION   T
+TORS SCAL  T
+ETOR SCAL    1.00000
+LINVERSN   T
+SNGL INVR  F
+LNONBOND   T
+RNB GEOMN  T
+NBEXBND    T
+NBEXANG    T
+SHRINK CH  F
+SCAL NB14    1.00000
+LCOULMB    T
+R*EPS      F
+HBONDS     T
+ATM DEFLT C_33 
+MASSZER    F
+POLYENE    F
+*
+FFLABEL    ATNO      MASS CHARG HYB BND CPK #IH #LP
+C_2G          6  12.01100  0.00   2   4   5   0   0
+*
+ADDED H   HYDROGEN  1IMPLCTH  2IMPLCTH  3IMPLCTH  4IMPLCTH
+*
+LONE PAIRS
+*
+VDW AT ITY       RNB      DENB     SCALE
+C_2G     2    3.6683    0.11309  15.0000
+*
+NONBOND-OFF TYPE      RVDW      DVDW     SCALE
+*
+BONDSTRTCH  TYPE FORC CNST  BND DIST    DE/CUB    KSLOPE    TSLOPE  BOND DIP
+C_2G -C_2G     2  720.0000    1.4114  133.0000    0.0000    0.0000    0.0000
+*
+ANGLE-(L-C-R)     TYPE FORC CNST EQUIL ANG  A-STR-LC  A-STR-CR   STR-STR DLT-TH-1H DLT-TH-2H  NON-HARM   BARRIER
+C_2G -C_2G -C_2G    11  196.1300  120.0000  -72.4100  -72.4100   68.0000    0.0000    0.0000    0.0000   
+*
+TORSION                 CASE   BARRIER    PERIOD CISMIN(1)    ANGANG    BNDTOR
+C_2G -C_2G -C_2G -C_2G     1   21.2800    2.0000    1.0000    0.0000    0.0000    1
+*
+INVERSION (CENT AT 1ST) TYPE  FRC CNST  EQU ANGL         D         E         F
+#C_2G -X    -X    -X        2    0.0000    0.0000    0.0000    0.0000    0.0000
+*
+ANGANGINV (1ST CENT I ) TYPE     K-KJL     K-JKL     K-JLK
+*
+PITWIST     TYPE   BARRIER  SPLT INV    ANGANG
+*
+HBOND       TYPE    -DE HB     RE HB
+END OF DATA

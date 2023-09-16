@@ -1,0 +1,95 @@
+%SHASH = (
+	'pair'	=> {
+		'lj_charmm' => {
+			'header'  => 'NONBONDED',
+			'section' => 'LENNARD-JONES',
+			'nparm'   => 2,
+			'labels'  => {
+				0 => 'EPSILON',
+				1 => 'SIGMA',
+			},
+			'units'   => {
+				0 => 'kcalmol',
+				1 => 'angstrom',
+			},
+		},
+	},
+	'bond' => {
+		'harmonic' => {
+			'header' => 'BOND',
+			'nparm'  => 2,
+			'kind'   => 'CHARMM',
+			'labels' => {
+				0 => 'K',
+				1 => 'R0',
+			},
+			'units'  => {
+				0 => 'angstrom^-2kcalmol',
+				1 => 'angstrom',
+			},
+		},
+		'morse'   => {
+			'header'   => 'BOND',
+			'nparm'    => 3,
+			'kind'     => 'MORSE',
+			'sameline' => {
+				0 => {
+					'1' => 1,
+				},
+			},
+			'labels'   => {
+				0 => 'K',
+				2 => 'R0',
+			},
+			'units'  => {
+				0 => 'angstrom^-2kcalmol',
+				2 => 'angstrom',
+			},
+		},
+	},
+	'angle' => {
+		'cosine_squared' => {
+			'header'   => 'BEND',
+			'nparm'    => 2,
+			'kind'     => 'G96',
+			'labels'   => {
+				0 => 'K',
+				1 => 'THETA0',
+			},
+			'units'    => {
+				0 => 'rad^-2kcalmol',
+				1 => 'deg',
+			},
+		},
+		'harmonic'      => {
+			'header'   => 'BEND',
+			'nparm'    => 2,
+			'kind'     => 'CHARMM',
+			'labels'   => {
+				0 => 'K',
+				1 => 'THETA0',
+			},
+			'units'    => {
+				0 => 'rad^-2kcalmol',
+				1 => 'deg',
+			},
+		},
+	},
+	'dihedral' => {
+		'charmm' => {
+			'header'   => 'TORSION',
+			'nparm'    => 3,
+			'kind'     => 'CHARMM',
+			'labels'   => {
+				0 => 'K',
+				1 => 'M',
+				2 => 'PHI0',
+			},
+			'units'    => {
+				0 => 'kcalmol',
+				1 => '',
+				2 => 'deg',
+			},
+		},
+	},
+);

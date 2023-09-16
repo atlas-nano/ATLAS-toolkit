@@ -1,0 +1,503 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          T
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      F
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          1.00000
+ SINGLE_INVERSION                      T
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST                          
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                       50.00000
+ COU_SPLINE_OFF                          10.00000
+ COU_SPLINE_ON                            9.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                NEVER                         
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            SPLINE                        
+ COU_DIRECT_CUT-OFF                      10.00000
+ VDW_COMBINATION_RULE                  ARITHMETIC
+ VDW_INTER_CUT_OFF                       50.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE                        
+ VDW_SPLINE_ON                            9.00000
+ VDW_SPLINE_OFF                          10.00000
+ EWALD_SUM_VDW_OPTIMIZE                NEVER                         
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         F
+ CALCULATE_BOND_ORDER                  F
+END
+ATOMTYPES
+ CEL2       C      12.01100  0.0000   0   0   0 # for alkene; H2C=CR
+ CTL3       C      12.01100  0.0000   0   0   0 # carbon of methyl group (-CH3)
+ CAL        Ca     40.08000  0.0000   0   0   0 # Calcium Ion
+ OBL        O      15.99940  0.0000   0   0   0 # acetic acid carboxyl oxygen (e. to protein OB)
+ ZN         Zn     65.37000  0.0000   0   0   0 # zinc (II) cation
+ HT         H       1.00800  0.0000   0   0   0 # TIPS3P WATER HYDROGEN
+ NTL        N      14.00700  0.0000   0   0   0 # ammonium nitrogen
+ HOL        H       1.00800  0.0000   0   0   0 # Nucleic acid phosphate hydroxyl proton
+ CLA        Cl     35.45000  0.0000   0   0   0 # Chloride Ion
+ DUM        H       0.00000  0.0000   0   0   0 # dummy atom
+ O2L        O      15.99940  0.0000   0   0   0 # Nucleic acid =O in phosphate or sulfate
+ CES        Cs    132.90000  0.0000   0   0   0 # Cesium Ion
+ SOD        Na     22.98977  0.0000   0   0   0 # Sodium Ion
+ OSL        O      15.99940  0.0000   0   0   0 # Nucleic acid phosphate ester oxygen
+ CTL5       C      12.01100  0.0000   0   0   0 # carbon of methyl group (-CH3) for tetramethylammonium
+ HEL1       H       1.00800  0.0000   0   0   0 # for alkene; RHC=CR
+ SL         S      32.06000  0.0000   0   0   0 # Sulfate sulfur
+ OT         O      15.99940  0.0000   0   0   0 # TIPS3P WATER OXYGEN
+ HAL1       H       1.00800  0.0000   0   0   0 # alphatic proton
+ HEL2       H       1.00800  0.0000   0   0   0 # for alkene; H2C=CR
+ OHL        O      15.99940  0.0000   0   0   0 # Nucleic acid phosphate hydroxyl oxygen
+ NH3L       N      14.00700  0.0000   0   0   0 # nitrogen phosphatidylethanolamine
+ HL         H       1.00800  0.0000   0   0   0 # polar H (equivalent to protein H)
+ CEL1       C      12.01100  0.0000   0   0   0 # for alkene; RHC=CR
+ CTL1       C      12.01100  0.0000   0   0   0 # sp3 carbon with 1 H  (-CH1-)
+ HAL2       H       1.00800  0.0000   0   0   0 # alphatic proton
+ OCL        O      15.99940  0.0000   0   0   0 # acetate oxygen
+ MG         Mg     24.30500  0.0000   0   0   0 # Magnesium Ion
+ HAL3       H       1.00800  0.0000   0   0   0 # alphatic proton
+ PL         P      30.97400  0.0000   0   0   0 # phosphorus
+ HCL        H       1.00800  0.0000   0   0   0 # charged H for PE (equivalent to protein HC)
+ CTL2       C      12.01100  0.0000   0   0   0 # carbon of methylene group (-CH2-)
+ POT        K      39.10200  0.0000   0   0   0 # Potassium Ion! check masses
+ CL         C      12.01100  0.0000   0   0   0 # carbonyl C (acetic acid/methyl acetate)
+END
+#
+DIAGONAL_VDW
+ CEL2        LJ_6_12        4.1600  0.0640 # 1-4 scaling:  4.16000 0.06400
+ CTL3        LJ_6_12        4.0800  0.0780 # 1-4 scaling:  3.80000 0.01000
+ CAL         LJ_6_12        2.7340  0.1200 # 1-4 scaling:  2.73400 0.12000
+ OBL         LJ_6_12        3.4000  0.1200 # 1-4 scaling:  2.80000 0.12000
+ ZN          LJ_6_12        2.1800  0.2500 # 1-4 scaling:  2.18000 0.25000
+ HT          LJ_6_12        0.4490  0.0460 # 1-4 scaling:  0.44900 0.04600
+ NTL         LJ_6_12        3.7000  0.2000 # 1-4 scaling:  3.70000 0.20000
+ HOL         LJ_6_12        0.4490  0.0460 # 1-4 scaling:  0.44900 0.04600
+ CLA         LJ_6_12        4.5400  0.1500 # 1-4 scaling:  4.54000 0.15000
+ DUM         LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ O2L         LJ_6_12        3.4000  0.1200 # 1-4 scaling:  3.40000 0.12000
+ CES         LJ_6_12        4.2000  0.1900 # 1-4 scaling:  4.20000 0.19000
+ SOD         LJ_6_12        2.7275  0.0469 # 1-4 scaling:  2.72750 0.04690
+ OSL         LJ_6_12        3.5400  0.1521 # 1-4 scaling:  3.54000 0.15210
+ CTL5        LJ_6_12        4.1200  0.0800 # 1-4 scaling:  3.80000 0.01000
+ HEL1        LJ_6_12        2.5000  0.0310 # 1-4 scaling:  2.50000 0.03100
+ SL          LJ_6_12        4.2000  0.4700 # 1-4 scaling:  4.20000 0.47000
+ OT          LJ_6_12        3.5364  0.1521 # 1-4 scaling:  3.53640 0.15210
+ HAL1        LJ_6_12        2.6400  0.0220 # 1-4 scaling:  2.64000 0.02200
+ HEL2        LJ_6_12        2.5200  0.0260 # 1-4 scaling:  2.52000 0.02600
+ OHL         LJ_6_12        3.5400  0.1521 # 1-4 scaling:  3.54000 0.15210
+ NH3L        LJ_6_12        3.7000  0.2000 # 1-4 scaling:  3.70000 0.20000
+ HL          LJ_6_12        1.4000  0.0460 # 1-4 scaling:  1.40000 0.04600
+ CEL1        LJ_6_12        4.1800  0.0680 # 1-4 scaling:  4.18000 0.06800
+ CTL1        LJ_6_12        4.5500  0.0200 # 1-4 scaling:  3.80000 0.01000
+ HAL2        LJ_6_12        2.6800  0.0280 # 1-4 scaling:  2.68000 0.02800
+ OCL         LJ_6_12        3.4000  0.1200 # 1-4 scaling:  3.40000 0.12000
+ MG          LJ_6_12        2.3700  0.0150 # 1-4 scaling:  2.37000 0.01500
+ HAL3        LJ_6_12        2.6800  0.0240 # 1-4 scaling:  2.68000 0.02400
+ PL          LJ_6_12        4.3000  0.5850 # 1-4 scaling:  4.30000 0.58500
+ HCL         LJ_6_12        0.4490  0.0460 # 1-4 scaling:  0.44900 0.04600
+ CTL2        LJ_6_12        4.0200  0.0560 # 1-4 scaling:  3.80000 0.01000
+ POT         LJ_6_12        3.5275  0.0870 # 1-4 scaling:  3.52750 0.08700
+ CL          LJ_6_12        4.0000  0.0700 # 1-4 scaling:  4.00000 0.07000
+END
+#
+ATOM_TYPING_RULES
+END
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ HEL2     CEL2        HARMONIC     730.0000    1.1000
+ CEL2     CEL2        HARMONIC    1020.0000    1.3300
+ CTL3     CTL3        HARMONIC     445.0000    1.5300
+ CTL3     HAL3        HARMONIC     644.0000    1.1110
+ CTL3     OSL         HARMONIC     680.0000    1.4300
+ CTL3     CL          HARMONIC     400.0000    1.5220
+ OBL      CL          HARMONIC    1500.0000    1.2200
+ OHL      CTL3        HARMONIC     856.0000    1.4200
+ OHL      CTL2        HARMONIC     856.0000    1.4200
+ OHL      CTL1        HARMONIC     856.0000    1.4200
+ OHL      CL          HARMONIC     460.0000    1.4000
+ OHL      PL          HARMONIC     474.0000    1.5900
+ HT       HT          HARMONIC       0.0000    1.5139
+ HT       OT          HARMONIC     900.0000    0.9572
+ NTL      CTL5        HARMONIC     430.0000    1.5100
+ NTL      CTL2        HARMONIC     430.0000    1.5100
+ HOL      OHL         HARMONIC    1090.0000    0.9600
+ NH3L     HCL         HARMONIC     820.0000    1.0400
+ NH3L     CTL2        HARMONIC     522.0000    1.5100
+ CEL1     CEL2        HARMONIC    1000.0000    1.3420
+ CEL1     CTL3        HARMONIC     766.0000    1.5040
+ CEL1     CEL1        HARMONIC     880.0000    1.3400
+ CEL1     CTL2        HARMONIC     730.0000    1.5020
+ CTL1     CTL3        HARMONIC     445.0000    1.5380
+ CTL1     CTL2        HARMONIC     445.0000    1.5380
+ CTL1     CTL1        HARMONIC     445.0000    1.5000
+ CTL1     OSL         HARMONIC     680.0000    1.4300
+ CTL1     CL          HARMONIC     400.0000    1.5220
+ CTL1     HAL1        HARMONIC     618.0000    1.1110
+ O2L      PL          HARMONIC    1160.0000    1.4800
+ OCL      CL          HARMONIC    1050.0000    1.2600
+ OSL      CL          HARMONIC     300.0000    1.3340
+ OSL      PL          HARMONIC     540.0000    1.6000
+ CTL5     HL          HARMONIC     600.0000    1.0800
+ HEL1     CEL1        HARMONIC     721.0000    1.1000
+ CTL2     CTL3        HARMONIC     445.0000    1.5280
+ CTL2     HL          HARMONIC     600.0000    1.0800
+ CTL2     CTL2        HARMONIC     445.0000    1.5300
+ CTL2     OSL         HARMONIC     680.0000    1.4300
+ CTL2     CL          HARMONIC     400.0000    1.5220
+ CTL2     HAL2        HARMONIC     618.0000    1.1110
+ SL       O2L         HARMONIC    1080.0000    1.4480
+ SL       OSL         HARMONIC     500.0000    1.5750
+END
+#
+ANGLE_BEND
+ HEL2     CEL2     HEL2        THETA_HARM   38.0000  119.0000
+ HEL2     CEL2     CEL2        THETA_HARM  111.0000  120.5000
+ HEL2     CEL2     CEL1        THETA_HARM   90.0000  120.5000
+ CEL2     CEL1     CTL3        THETA_HARM   94.0000  125.2000
+ CEL2     CEL1     CTL2        THETA_HARM   96.0000  126.0000
+ CTL3     CTL2     CL          THETA_HARM  104.0000  108.0000
+ CTL3     OSL      SL          THETA_HARM   30.0000  109.0000
+ CTL3     OSL      PL          THETA_HARM   40.0000  120.0000
+ OBL      CL       CTL3        THETA_HARM  140.0000  125.0000
+ OBL      CL       CTL2        THETA_HARM  140.0000  125.0000
+ OBL      CL       CTL1        THETA_HARM  140.0000  125.0000
+ OHL      CTL3     HAL3        THETA_HARM   91.8000  108.8900
+ OHL      CTL2     CTL3        THETA_HARM  151.4000  110.1000
+ OHL      CTL2     CTL2        THETA_HARM  151.4000  110.1000
+ OHL      CTL2     CTL1        THETA_HARM  151.4000  110.1000
+ OHL      CTL2     HAL2        THETA_HARM   91.8000  108.8900
+ OHL      CTL1     CTL2        THETA_HARM  151.4000  110.1000
+ OHL      CTL1     HAL1        THETA_HARM   91.8000  108.8900
+ OHL      CL       CTL3        THETA_HARM  110.0000  110.5000
+ OHL      CL       CTL2        THETA_HARM  110.0000  110.5000
+ OHL      CL       OBL         THETA_HARM  100.0000  123.0000
+ HT       OT       HT          THETA_HARM  110.0000  104.5200
+ NTL      CTL5     HL          THETA_HARM   80.0000  109.5000
+ NTL      CTL2     CTL3        THETA_HARM  135.4000  115.0000
+ NTL      CTL2     HL          THETA_HARM   80.0000  109.5000
+ NTL      CTL2     CTL2        THETA_HARM  135.4000  115.0000
+ HOL      OHL      CTL3        THETA_HARM  115.0000  106.0000
+ HOL      OHL      CTL2        THETA_HARM  115.0000  106.0000
+ HOL      OHL      CTL1        THETA_HARM  115.0000  106.0000
+ HOL      OHL      CL          THETA_HARM  110.0000  115.0000
+ HOL      OHL      PL          THETA_HARM   60.0000  115.0000
+ NH3L     CTL2     CTL2        THETA_HARM  135.4000  110.0000
+ NH3L     CTL2     HAL2        THETA_HARM   90.0000  107.5000
+ HL       CTL5     HL          THETA_HARM   48.0000  109.5000
+ HL       CTL2     CTL3        THETA_HARM   66.8600  110.1000
+ HL       CTL2     HL          THETA_HARM   48.0000  109.5000
+ HL       CTL2     CTL2        THETA_HARM   66.8600  110.1000
+ CEL1     CEL1     CTL3        THETA_HARM   96.0000  123.5000
+ CEL1     CEL1     CTL2        THETA_HARM   96.0000  123.5000
+ CEL1     CTL2     CTL3        THETA_HARM   64.0000  112.2000
+ CEL1     CTL2     CEL1        THETA_HARM   60.0000  114.0000
+ CEL1     CTL2     CTL2        THETA_HARM   64.0000  112.2000
+ CTL1     CTL2     CTL3        THETA_HARM  116.7000  113.5000
+ CTL1     CTL2     CTL2        THETA_HARM  116.7000  113.5000
+ CTL1     CTL2     CTL1        THETA_HARM  116.7000  113.5000
+ CTL1     CTL1     CTL3        THETA_HARM  106.7000  108.5000
+ CTL1     CTL1     CTL2        THETA_HARM  116.7000  113.5000
+ CTL1     CTL1     CTL1        THETA_HARM  106.7000  111.0000
+ HAL2     CTL2     CTL3        THETA_HARM   69.2000  110.1000
+ HAL2     CTL2     CEL1        THETA_HARM   90.0000  111.5000
+ HAL2     CTL2     CTL2        THETA_HARM   53.0000  110.1000
+ HAL2     CTL2     CTL1        THETA_HARM   53.0000  110.1000
+ HAL2     CTL2     OSL         THETA_HARM  120.0000  109.5000
+ HAL2     CTL2     CL          THETA_HARM   66.0000  109.5000
+ HAL2     CTL2     HAL2        THETA_HARM   71.0000  109.0000
+ O2L      SL       O2L         THETA_HARM  260.0000  109.4700
+ O2L      SL       OSL         THETA_HARM  170.0000   98.0000
+ O2L      PL       O2L         THETA_HARM  240.0000  120.0000
+ O2L      PL       OHL         THETA_HARM  197.8000  108.2300
+ OCL      CL       OCL         THETA_HARM  200.0000  124.0000
+ OCL      CL       CTL3        THETA_HARM   80.0000  118.0000
+ OCL      CL       CTL2        THETA_HARM   80.0000  118.0000
+ HAL3     CTL3     CTL3        THETA_HARM   75.0000  110.1000
+ HAL3     CTL3     CEL1        THETA_HARM   84.0000  111.5000
+ HAL3     CTL3     HAL3        THETA_HARM   71.0000  108.4000
+ HAL3     CTL3     CTL2        THETA_HARM   69.2000  110.1000
+ HAL3     CTL3     CTL1        THETA_HARM   66.8600  110.1000
+ HAL3     CTL3     OSL         THETA_HARM  120.0000  109.5000
+ HAL3     CTL3     CL          THETA_HARM   66.0000  109.5000
+ OSL      CTL2     CTL3        THETA_HARM  151.4000  110.1000
+ OSL      CTL2     CTL2        THETA_HARM  151.4000  110.1000
+ OSL      CTL2     CTL1        THETA_HARM  151.4000  110.1000
+ OSL      CTL1     CTL3        THETA_HARM  151.4000  110.1000
+ OSL      CTL1     CTL2        THETA_HARM  151.4000  110.1000
+ OSL      CL       CTL3        THETA_HARM  110.0000  109.0000
+ OSL      CL       CTL2        THETA_HARM  110.0000  109.0000
+ OSL      CL       OBL         THETA_HARM  180.0000  125.9000
+ OSL      PL       O2L         THETA_HARM  197.8000  111.6000
+ OSL      PL       OSL         THETA_HARM  160.0000  104.3000
+ OSL      PL       OHL         THETA_HARM   96.2000  108.0000
+ CTL5     NTL      CTL5        THETA_HARM  120.0000  109.5000
+ CTL5     NTL      CTL2        THETA_HARM  120.0000  109.5000
+ HCL      NH3L     HCL         THETA_HARM   82.0000  109.5000
+ HCL      NH3L     CTL2        THETA_HARM   66.0000  109.5000
+ HEL1     CEL1     CEL2        THETA_HARM   84.0000  118.0000
+ HEL1     CEL1     CTL3        THETA_HARM   44.0000  117.0000
+ HEL1     CEL1     CEL1        THETA_HARM  104.0000  119.5000
+ HEL1     CEL1     CTL2        THETA_HARM   80.0000  116.0000
+ CTL2     NTL      CTL2        THETA_HARM  120.0000  109.5000
+ CTL2     CTL2     CTL3        THETA_HARM  116.0000  115.0000
+ CTL2     CTL2     CTL2        THETA_HARM  116.7000  113.6000
+ CTL2     CTL2     CL          THETA_HARM  104.0000  108.0000
+ CTL2     CTL1     CTL3        THETA_HARM  116.7000  113.5000
+ CTL2     CTL1     CTL2        THETA_HARM  116.7000  113.5000
+ CTL2     OSL      SL          THETA_HARM   30.0000  109.0000
+ CTL2     OSL      PL          THETA_HARM   40.0000  120.0000
+ CL       OSL      CTL3        THETA_HARM   80.0000  109.6000
+ CL       OSL      CTL2        THETA_HARM   80.0000  109.6000
+ CL       OSL      CTL1        THETA_HARM   80.0000  109.6000
+ HAL1     CTL1     CTL3        THETA_HARM   69.0000  110.1000
+ HAL1     CTL1     CTL2        THETA_HARM   69.0000  110.1000
+ HAL1     CTL1     CTL1        THETA_HARM   69.0000  110.1000
+ HAL1     CTL1     OSL         THETA_HARM  120.0000  109.5000
+END
+#
+UREY_BRADLEY
+ CTL3     OSL      SL          HARMONIC      54.0000    1.9000
+ CTL3     OSL      PL          HARMONIC      70.0000    2.3300
+ OBL      CL       CTL3        HARMONIC      40.0000    2.4420
+ OBL      CL       CTL2        HARMONIC      40.0000    2.4420
+ OBL      CL       CTL1        HARMONIC      40.0000    2.4420
+ OHL      CL       OBL         HARMONIC     420.0000    2.2620
+ NTL      CTL5     HL          HARMONIC      54.0000    2.1300
+ NTL      CTL2     HL          HARMONIC      54.0000    2.1300
+ HOL      OHL      PL          HARMONIC      80.0000    2.3000
+ NH3L     CTL2     HAL2        HARMONIC      70.0000    2.0836
+ HL       CTL5     HL          HARMONIC      56.0000    1.7670
+ HL       CTL2     CTL3        HARMONIC      45.0600    2.1790
+ HL       CTL2     HL          HARMONIC      56.0000    1.7670
+ HL       CTL2     CTL2        HARMONIC      45.0600    2.1790
+ CTL1     CTL2     CTL3        HARMONIC      22.3200    2.5610
+ CTL1     CTL2     CTL2        HARMONIC      22.3200    2.5610
+ CTL1     CTL2     CTL1        HARMONIC      22.3200    2.5610
+ CTL1     CTL1     CTL3        HARMONIC      16.0000    2.5610
+ CTL1     CTL1     CTL2        HARMONIC      22.3200    2.5610
+ CTL1     CTL1     CTL1        HARMONIC      16.0000    2.5610
+ HAL2     CTL2     CTL3        HARMONIC      45.0600    2.1790
+ HAL2     CTL2     CTL2        HARMONIC      45.0600    2.1790
+ HAL2     CTL2     CTL1        HARMONIC      45.0600    2.1790
+ HAL2     CTL2     CL          HARMONIC      60.0000    2.1630
+ HAL2     CTL2     HAL2        HARMONIC      10.8000    1.8020
+ O2L      SL       O2L         HARMONIC      70.0000    2.4500
+ OCL      CL       OCL         HARMONIC     140.0000    2.2250
+ OCL      CL       CTL3        HARMONIC     100.0000    2.3880
+ OCL      CL       CTL2        HARMONIC     100.0000    2.3880
+ HAL3     CTL3     CTL3        HARMONIC      45.0600    2.1790
+ HAL3     CTL3     HAL3        HARMONIC      10.8000    1.8020
+ HAL3     CTL3     CTL2        HARMONIC      45.0600    2.1790
+ HAL3     CTL3     CTL1        HARMONIC      45.0600    2.1790
+ HAL3     CTL3     CL          HARMONIC      60.0000    2.1630
+ OSL      CL       CTL3        HARMONIC      40.0000    2.3260
+ OSL      CL       CTL2        HARMONIC      40.0000    2.3260
+ OSL      CL       OBL         HARMONIC     320.0000    2.2576
+ CTL5     NTL      CTL5        HARMONIC      52.0000    2.4660
+ CTL5     NTL      CTL2        HARMONIC      52.0000    2.4660
+ HCL      NH3L     CTL2        HARMONIC       8.0000    2.0560
+ CTL2     NTL      CTL2        HARMONIC      52.0000    2.4660
+ CTL2     CTL2     CTL3        HARMONIC      16.0000    2.5610
+ CTL2     CTL2     CTL2        HARMONIC      22.3200    2.5610
+ CTL2     CTL1     CTL3        HARMONIC      22.3200    2.5610
+ CTL2     CTL1     CTL2        HARMONIC      22.3200    2.5610
+ CTL2     OSL      SL          HARMONIC      54.0000    1.9000
+ CTL2     OSL      PL          HARMONIC      70.0000    2.3300
+ CL       OSL      CTL3        HARMONIC      60.0000    2.2651
+ CL       OSL      CTL2        HARMONIC      60.0000    2.2651
+ CL       OSL      CTL1        HARMONIC      60.0000    2.2651
+ HAL1     CTL1     CTL3        HARMONIC      45.0600    2.1790
+ HAL1     CTL1     CTL2        HARMONIC      45.0600    2.1790
+ HAL1     CTL1     CTL1        HARMONIC      45.0600    2.1790
+END
+#
+TORSIONS
+ CEL2     CEL1     CTL3     HAL3        SHFT_DIHDR     0.1000    3.0000  180.0000
+ CEL2     CEL1     CTL2     CTL3        SHFT_DIHDR     1.0000    1.0000  180.0000
+                                                       2.6000    3.0000  180.0000
+ CEL2     CEL1     CTL2     CEL1        SHFT_DIHDR     2.4000    1.000010313.2403
+                                                       0.8000    2.000010313.2403
+                                                       2.6000    3.000010313.2403
+ CEL2     CEL1     CTL2     CTL2        SHFT_DIHDR     1.0000    1.0000  180.0000
+                                                       2.6000    3.0000  180.0000
+ CEL2     CEL1     CTL2     HAL2        SHFT_DIHDR     0.2400    3.0000    0.0000
+ O2L      PL       OSL      CTL3        SHFT_DIHDR     0.2000    3.0000    0.0000
+ O2L      PL       OSL      CTL2        SHFT_DIHDR     0.2000    3.0000    0.0000
+ CTL3     CEL1     CEL2     HEL2        SHFT_DIHDR    10.4000    2.0000  180.0000
+ CTL3     CEL1     CEL1     HEL1        SHFT_DIHDR     2.0000    2.0000  180.0000
+ CTL3     CTL2     CTL2     CTL3        SHFT_DIHDR     0.2000    2.0000  180.0000
+                                                       0.3000    4.0000    0.0000
+                                                       0.2000    6.0000  180.0000
+ CTL3     CTL2     CTL2     CL          SHFT_DIHDR     0.4200    1.0000  180.0000
+                                                       0.7800    2.0000    0.0000
+                                                       0.7000    3.0000  180.0000
+                                                       0.2200    4.0000    0.0000
+                                                       0.1800    6.0000  180.0000
+ CTL3     CTL2     CL       OSL         SHFT_DIHDR    -0.3000    1.0000  180.0000
+                                                       1.0600    2.0000  180.0000
+ CTL3     CTL2     OSL      CL          SHFT_DIHDR     1.4000    1.0000  180.0000
+ CTL3     OSL      SL       O2L         SHFT_DIHDR     0.0000    3.0000    0.0000
+ CTL3     CTL1     OSL      CL          SHFT_DIHDR     1.4000    1.0000  180.0000
+ X        CEL2     CEL2     X           SHFT_DIHDR     9.8000    2.0000  180.0000
+ X        CTL3     CTL3     X           SHFT_DIHDR     0.3050    3.0000    0.0000
+ X        CTL3     OSL      X           SHFT_DIHDR     0.0000    3.0000    0.0000
+ X        CTL3     CL       X           SHFT_DIHDR     0.1000    6.0000  180.0000
+ X        CTL3     OHL      X           SHFT_DIHDR     0.2800    3.0000    0.0000
+ X        OHL      PL       X           SHFT_DIHDR     0.6000    3.0000    0.0000
+ X        CTL5     NTL      X           SHFT_DIHDR     0.4600    3.0000    0.0000
+ X        CEL1     CEL1     X           SHFT_DIHDR     0.3000    1.0000    0.0000
+                                                      17.0000    2.0000  180.0000
+ X        CTL2     NTL      X           SHFT_DIHDR     0.5200    3.0000    0.0000
+ X        CTL2     NH3L     X           SHFT_DIHDR     0.2000    3.0000    0.0000
+ X        CTL2     CTL3     X           SHFT_DIHDR     0.3200    3.0000    0.0000
+ X        CTL2     CTL2     X           SHFT_DIHDR     0.3800    3.0000    0.0000
+ X        CTL2     OSL      X           SHFT_DIHDR     0.0000    3.0000    0.0000
+ X        CTL2     CL       X           SHFT_DIHDR     0.1000    6.0000  180.0000
+ X        CTL2     OHL      X           SHFT_DIHDR     0.2800    3.0000    0.0000
+ X        CTL1     CTL3     X           SHFT_DIHDR     0.4000    3.0000    0.0000
+ X        CTL1     CTL2     X           SHFT_DIHDR     0.4000    3.0000    0.0000
+ X        CTL1     CTL1     X           SHFT_DIHDR     0.4000    3.0000    0.0000
+ X        CTL1     OSL      X           SHFT_DIHDR     0.0000    3.0000    0.0000
+ X        CTL1     OHL      X           SHFT_DIHDR     0.2800    3.0000    0.0000
+ X        CL       OSL      X           SHFT_DIHDR     4.1000    2.0000  180.0000
+ X        CL       OHL      X           SHFT_DIHDR     4.1000    2.0000  180.0000
+ HAL3     CTL3     OSL      SL          SHFT_DIHDR     0.0000    3.0000    0.0000
+ HAL3     CTL3     CL       OHL         SHFT_DIHDR     0.0000    6.0000  180.0000
+ OBL      CL       CTL3     HAL3        SHFT_DIHDR     0.0000    6.0000  180.0000
+ OBL      CL       CTL2     HAL2        SHFT_DIHDR     0.0000    6.0000  180.0000
+ OBL      CL       OSL      CTL3        SHFT_DIHDR     1.9300    1.0000  180.0000
+                                                       7.7000    2.0000  180.0000
+ OBL      CL       OSL      CTL2        SHFT_DIHDR     1.9300    1.0000  180.0000
+                                                       7.7000    2.0000  180.0000
+ OBL      CL       OSL      CTL1        SHFT_DIHDR     1.9300    1.0000  180.0000
+                                                       7.7000    2.0000  180.0000
+ OSL      CL       CTL3     HAL3        SHFT_DIHDR     0.0000    6.0000  180.0000
+ OSL      CL       CTL2     HAL2        SHFT_DIHDR     0.0000    6.0000  180.0000
+ OSL      PL       OSL      CTL3        SHFT_DIHDR     2.4000    1.0000  180.0000
+                                                       0.2000    2.0000  180.0000
+                                                       0.2000    3.0000  180.0000
+ OSL      PL       OSL      CTL2        SHFT_DIHDR     2.4000    1.0000  180.0000
+                                                       0.2000    2.0000  180.0000
+                                                       0.2000    3.0000  180.0000
+ OHL      PL       OSL      CTL3        SHFT_DIHDR     1.9000    2.0000    0.0000
+                                                       1.0000    3.0000    0.0000
+ OHL      PL       OSL      CTL2        SHFT_DIHDR     1.9000    2.0000    0.0000
+                                                       1.0000    3.0000    0.0000
+ NTL      CTL2     CTL2     OSL         SHFT_DIHDR     6.6000    1.0000  180.0000
+                                                      -0.8000    3.0000  180.0000
+ NTL      CTL2     CTL2     OHL         SHFT_DIHDR     8.6000    1.0000  180.0000
+                                                      -0.8000    3.0000  180.0000
+ NH3L     CTL2     CTL2     OSL         SHFT_DIHDR     1.4000    1.0000  180.0000
+ NH3L     CTL2     CTL2     OHL         SHFT_DIHDR     1.4000    1.0000  180.0000
+ CEL1     CEL1     CTL3     HAL3        SHFT_DIHDR     0.0600    3.0000    0.0000
+ CEL1     CEL1     CTL2     CTL3        SHFT_DIHDR     1.0000    1.0000  180.0000
+                                                       2.6000    3.0000  180.0000
+ CEL1     CEL1     CTL2     CEL1        SHFT_DIHDR     2.0000    1.000010313.2403
+                                                       0.2000    2.0000    0.0000
+                                                       0.6000    3.000010313.2403
+                                                       0.4000    4.0000    0.0000
+ CEL1     CEL1     CTL2     CTL2        SHFT_DIHDR     1.0000    1.0000  180.0000
+                                                       2.6000    3.0000  180.0000
+ CEL1     CEL1     CTL2     HAL2        SHFT_DIHDR     0.0600    3.0000    0.0000
+ CEL1     CTL2     CEL1     HEL1        SHFT_DIHDR     0.0000    2.0000    0.0000
+                                                       0.0000    3.0000    0.0000
+ HEL1     CEL1     CEL2     HEL2        SHFT_DIHDR    10.4000    2.0000  180.0000
+ HEL1     CEL1     CTL3     HAL3        SHFT_DIHDR     0.0000    3.0000    0.0000
+ HEL1     CEL1     CEL1     HEL1        SHFT_DIHDR     2.0000    2.0000  180.0000
+ HEL1     CEL1     CTL2     CTL3        SHFT_DIHDR     0.2400    3.0000    0.0000
+ HEL1     CEL1     CTL2     CTL2        SHFT_DIHDR     0.2400    3.0000    0.0000
+ HEL1     CEL1     CTL2     HAL2        SHFT_DIHDR     0.0000    3.0000    0.0000
+ CTL2     CEL1     CEL2     HEL2        SHFT_DIHDR    10.4000    2.0000  180.0000
+ CTL2     CTL2     CTL2     CTL3        SHFT_DIHDR     0.2000    2.0000  180.0000
+                                                       0.3000    4.0000    0.0000
+                                                       0.2000    6.0000  180.0000
+ CTL2     CTL2     CTL2     CTL2        SHFT_DIHDR     0.2000    2.0000  180.0000
+                                                       0.3000    4.0000    0.0000
+                                                       0.2000    6.0000  180.0000
+ CTL2     CTL2     CTL2     CL          SHFT_DIHDR     0.4200    1.0000  180.0000
+                                                       0.7800    2.0000    0.0000
+                                                       0.7000    3.0000  180.0000
+                                                       0.2200    4.0000    0.0000
+                                                       0.1800    6.0000  180.0000
+ CTL2     CTL2     CL       OSL         SHFT_DIHDR    -0.3000    1.0000  180.0000
+                                                       1.0600    2.0000  180.0000
+ CTL2     CTL2     OSL      CL          SHFT_DIHDR     1.4000    1.0000  180.0000
+ CTL2     OSL      SL       O2L         SHFT_DIHDR     0.0000    3.0000    0.0000
+ CTL2     CTL1     OSL      CL          SHFT_DIHDR     1.4000    1.0000  180.0000
+ CTL1     CTL2     CL       OSL         SHFT_DIHDR    -0.3000    1.0000  180.0000
+                                                       1.0600    2.0000  180.0000
+ HAL2     CTL2     CL       OHL         SHFT_DIHDR     0.0000    6.0000  180.0000
+END
+#
+INVERSIONS
+ CEL2     HEL2     CEL2     HEL2        IT_IJKL        6.0000    0.0000
+ CL       X        X        OCL         IT_IJKL      192.0000    0.0000
+ CL       X        X        OBL         IT_IJKL      200.0000    0.0000
+END
+#
+COULOMBIC
+ X        X           CONST-EPS
+END

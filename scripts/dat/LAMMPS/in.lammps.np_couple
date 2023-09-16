@@ -1,0 +1,29 @@
+fix                  shakeH all shake 0.0001 20 0 shakeOpts
+
+comm_style           tiled
+balance              1.1 rcb
+group                mol1 id <> 1 ${nAtoms}
+group                mol2 subtract all mol1
+
+
+print                .
+print                ================================================
+print                "NVT dynamics at ${rtemp}K"
+print                ================================================
+print                .
+                     
+fix                  2 all nvt temp ${rtemp} ${rtemp} 100.0
+thermo               100
+dump                 1 all custom 1000 ${sname}.${rtemp}K.nvt.lammpstrj id type xu yu zu vx vy vz
+run                  40000 
+undump               1
+variable             cDist equal "sqrt((xcm(mol1,x)-xcm(mol2,x))^2 + (xcm(mol1,y)-xcm(mol2,y))^2 + (xcm(mol1,z)-xcm(mol2,z))^2)"
+thermo_style         custom step etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press v_cDist
+thermo_modify        format float %14.6f flush yes
+fix                  couple mol1 smd cvel 20.0 -0.001 couple mol2 auto auto auto 0.0
+dump                 1 all custom 1000 ${sname}.${rtemp}K.prod.lammpstrj id type xu yu zu vx vy vz
+log                  ${sname}.${rtemp}K.np_couple.lammps.log
+run                  100000 
+unfix                2
+undump               1
+unfix                shakeH

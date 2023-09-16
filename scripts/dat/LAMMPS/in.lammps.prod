@@ -1,0 +1,12 @@
+thermo 100
+print                          .
+print ================================================
+print "NVT production dynamics "
+print ================================================
+print                       .
+
+fix             2 all nvt temp ${rtemp} ${rtemp} 100.0 tloop 10 ploop 10
+dump            1 all custom 1000 ${sname}.${rtemp}K.prod.lammpstrj id type xu yu zu vx vy vz
+run             5000000 # run for 15 ns
+unfix           2
+undump          1

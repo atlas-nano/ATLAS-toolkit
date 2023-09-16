@@ -1,0 +1,58 @@
+compute cc1 all chunk/atom molecule
+compute mydChunk all dipole/chunk cc1
+#dipole
+variable ux equal sum(c_mydChunk[1])
+variable uy equal sum(c_mydChunk[2])
+variable uz equal sum(c_mydChunk[3])
+variable ut equal sum(c_mydChunk[4])
+thermo_style    custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press vol c_Tcore c_Tshell v_ux v_uy v_uz v_ut
+thermo_modify line multi flush yes
+fix 1 all ave/time 1 1 1 c_mydChunk[*] file ${sname}.${E}VA-1.dipoleMoment.txt mode vector
+
+dump            1 all custom 10 ${sname}.pulse.equil.lammpstrj id type xu yu zu vx vy vz
+thermo 10
+#equil
+print "================================================"
+print "NVE dynamics for 20ps"
+print "================================================"
+fix 1 all nve
+run 20000
+
+variable v0 index 5E-4 #number of oscillations/fs
+variable sigma index 500 #width of pulse in fs
+variable psi index 0.628319 #pulse phase offset at t0
+variable t0 equal step+5000*dt #pulse starts 5000 steps (5ps at 1fs timestep) from now
+#note that the E0 is defined previously, in units of V/A
+#variable        efield equal $E/(2*PI*${v0})*dt*exp(-(step-${t0})^2/${sigma}^2)*cos(2*PI*${v0}*(step-${t0})+${psi}) # See Eqn(1) from Sci. Adv. 2020; 6 : eaay7074
+#efield on
+print "================================================"
+print "NVE dynamics for 10ps with Efield on"
+print "================================================"
+fix pulse all efield 0.0 0.0 0.0 file ${efieldFile}
+variable    time equal dt*step
+variable fex equal f_pulse[1]
+variable fey equal f_pulse[2]
+variable fez equal f_pulse[3]
+variable ex equal f_pulse[4]
+variable ey equal f_pulse[5]
+variable ez equal f_pulse[6]
+fix             savpos all print 1 "${time} ${fex} ${fey} ${fez} ${ex} ${ey} ${ez}" file  ${sname}.${E}VA-1.field.dat screen no
+run 10000
+
+#efield off
+print "================================================"
+print "NVE dynamics for 10ps with Efield off"
+print "================================================"
+unfix pulse
+run 10000
+
+log             ${sname}.efield.2pt.eng
+print "================================================"
+print "NVE dynamics for 10ps dumping velocities for 2PT"
+print "================================================"
+thermo          1
+dump            2 all custom 1 ${sname}.efield.2pt.lammpstrj id type xu yu zu vx vy vz 
+run             10000
+undump          1
+undump          2
+unfix 1

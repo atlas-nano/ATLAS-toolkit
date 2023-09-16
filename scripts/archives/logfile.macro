@@ -1,0 +1,24 @@
+beginmacro
+%
+% version      : 3.23
+% compile date    : Mar 29 2006 16:45
+%
+% Macro created on  5/11/06   22:45:18
+%
+progstat = set(program,POLYGRAF)
+progstat = set(program,NMRGRAF)
+progstat = set(program,LINGRAF)
+progstat = set(program,POLYGRAF)
+progstat = set(program,NMRGRAF)
+progstat = set(program,LINGRAF)
+progstat = set(program,POLYGRAF)
+progstat = set(program,NMRGRAF)
+progstat = set(program,LINGRAF)
+progstat = set(program,POLYGRAF)
+progstat = set(program,NMRGRAF)
+progstat = set(program,LINGRAF)
+Top menu/in-out
+   In-Out/read
+   File types/BioDesign
+     "/net/hulk/home3/tpascal/55_pdb.1.bgf"
+%    /net/hulk/home3/tpascal/55_pdb.1.bgf

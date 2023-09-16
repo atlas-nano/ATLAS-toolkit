@@ -1,0 +1,11 @@
+ FILES_IN
+ PARM p1 parmfile;
+ STREAM s1 reffile;
+ STATIC ref_set trajfile;
+ FILES_OUT
+ TABLE tbl tablename;
+ DECLARE
+groupinfo;
+ OUTPUT
+tableinfo;
+ END

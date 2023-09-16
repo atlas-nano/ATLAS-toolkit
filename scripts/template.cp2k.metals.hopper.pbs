@@ -1,0 +1,18 @@
+#PBS -S /bin/bash
+#PBS -q regular
+#PBS -l mppwidth=totpp_here
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+prefix=fprefix_here
+
+#PBS -N ${fprefix}.geopt
+
+cd $PBS_O_WORKDIR
+module load cp2k
+mkdir -p /global/scratch/sd/${USER}/${prefix}.geopt ./results/
+
+cp ${prefix}.* /global/scratch/sd/${USER}/${prefix}.geopt/
+cd /global/scratch/sd/${USER}/${prefix}.geopt
+aprun -n totpp_here -in ${prefix}.cp2k.in | tee ${prefix}.cp2k.geopt.screen.out
+cp ${prefix}.*xyz ${prefix}.*.restart ${prefix}.*.mulliken ${prefix}.*.screen.out ${PBS_O_WORKDIR}/results/

@@ -1,0 +1,129 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                F
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          1.00000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST                          
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                       14.00000
+ COU_SPLINE_OFF                          14.00000
+ COU_SPLINE_ON                           11.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                SMART                         
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            SPLINE                        
+ COU_DIRECT_CUT-OFF                      11.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC                     
+ VDW_INTER_CUT_OFF                       14.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE                        
+ VDW_SPLINE_ON                           11.00000
+ VDW_SPLINE_OFF                          14.00000
+ EWALD_SUM_VDW_OPTIMIZE                SMART                         
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  T
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  T
+END
+#
+ATOMTYPES
+ S_3+2      S      32.06000  0.0000   3   0   0
+ Mo6+6      Mo     95.94000  0.0000   6   0   0
+END
+#
+DIAGONAL_VDW
+ S_3+2       LJ_6_12       4.034999847412109       0.2739999890327454    
+ Mo6+6       LJ_6_12       3.052000045776367       0.5600000172853470E-01
+END
+#
+ATOM_TYPING_RULES
+ S_3+2           S            3           0           0           1
+ Mo6+6           Mo           0           0           0           1
+END
+#
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ Mo6+6    S_3+2       HARMONIC     376.7090    2.5310
+END
+#
+ANGLE_BEND
+ Mo6+6    S_3+2    Mo6+6       COS_HARMON   235.3090   92.1000
+ S_3+2    Mo6+6    S_3+2       COS_HARMON   158.7400   90.0000
+END
+#
+TORSIONS
+END
+#
+INVERSIONS
+END
+#
+GENERATOR
+END
+#
+COULOMBIC
+ X        X           CONST-EPS 
+END

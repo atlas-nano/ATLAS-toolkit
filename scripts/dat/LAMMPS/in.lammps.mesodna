@@ -1,0 +1,73 @@
+variable		rtemp index 298
+
+print                          .
+print ==========================================
+print "500 steps CG Minimization"
+print ==========================================
+print                          .
+
+dump        1 all custom 25 ${sname}.min.lammpstrj id type xu yu zu vx vy vz
+thermo          10
+fix             restraint solute spring/self 500.0
+min_style       sd
+minimize        1.0e-4 1.0e-4 500 5000
+min_style       cg
+minimize        1.0e-4 1.0e-4 500 5000
+#now minimize the entire system
+unfix           restraint
+minimize        1.0e-4 1.0e-4 500 5000
+undump          1
+
+neigh_modify    exclude molecule nuc
+delete_bonds    nuc multi remove
+
+print                          .
+print =====================================
+print "NVE dynamics with Langevin thermostat"
+print =====================================
+print            .
+
+reset_timestep  0
+
+fix             restraint solute spring/self 10.0
+fix             2 movable nve
+velocity        all create 0.0 12345678 dist uniform
+thermo          100
+dump            1 all atom 1000 ${sname}.heat.lammpstrj
+dump_modify     1 image yes scale yes
+variable        l loop 10 #number of increments
+variable        i index 30 #temp increments
+
+label           loop
+variable        t equal v_l*$i # temperature this loop
+print           "temperature: $t"
+fix             5 nuc rigid/nvt/small molecule temp $t $t 100.0
+fix             3 backbone langevin $t $t 100.0 699483
+fix             4 solvent langevin $t $t 100.0 834729
+run             1000
+unfix           3
+unfix           4
+unfix			5
+next            l
+jump            ${input} loop
+unfix           2
+undump          1
+unfix           restraint
+
+print                          .
+print ================================================
+print "NPT dynamics with an isotropic pressure of 1atm."
+print ================================================
+print                       .
+
+reset_timestep  0
+run_style       respa 2 3 bond 1 dihedral 1 pair 2 angle 1
+fix             2 movable npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000.0
+fix				3 nuc rigid/nvt/small molecule temp ${rtemp} ${rtemp} 100.0
+thermo          50
+restart         10000 ${sname}.${rtemp}K.npt.*.restart
+dump            1 all custom 100 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
+run             1000000 # run for 15 ns
+unfix           2
+unfix			3
+undump          1

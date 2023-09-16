@@ -1,0 +1,1316 @@
+#!/usr/bin/perl -w
+use strict;
+
+BEGIN {
+    push (@INC, "/ul/tpascal/.libs/blib/arch/auto/p5namot");
+    push (@INC, "/ul/tpascal/.libs/Net/Ssh/lib/perl5/site_perl/5.6.1");
+    push (@INC, "/ul/tpascal/.libs/PerlMagick/arch/auto/Image/Magick/");
+}
+
+use p5namot;
+use Magick;
+use Net::SSH qw(ssh);
+use POSIX ":sys_wait_h";
+
+p5namot::Cmd("set hush ERROR off");
+p5namot::Cmd("set hush INFO off");
+p5namot::Cmd("set hush REQUESTED off");
+p5namot::Cmd("set hush WARNING off");
+
+# This program will perform energy analysis on a md trajectory file using anal
+# It attempts to extract the components of the energy matrix (vdw, electrostatics,
+# etc.) and create time dependant graphs additionally, if the energy_files for 
+# the individual helices are specified, it will provide the appropritate strain 
+# energy plots.
+#
+# usage: energy_anal.pl param_file start_time end_time interval 
+#        [helix1.out helix2.out]
+
+if (!@ARGV or $#ARGV < 3) {
+    die "usage: energy_anal.pl param_file start_time end_time " .
+	"interval [helix1.out helix2.out]\n";
+}
+
+my ($paramfile, $start_time, $end_time, $interval, $helix1, $helix2) = @ARGV;
+my ($topfile, $trajfile, $mol_name, $calc_strain, $eng_max, $eng_min);
+my ($total_bases, $no_bases_at_end, $spec_pic, $is3primeIn);
+my (%helix_info, %EngDatStructure, %helix_layout);
+my (@unit_array, @unit_array_hash, @crossovers, @helix);
+my ($user_name, $host_name, $should_create_movie, $movie_size, $movie_length);
+my ($periodicity, $minorgroove, $majorgroove);
+my ($global_cuttoff, $run_ptraj);
+
+$run_ptraj = 1; #flag for whether or not to run Ptraj i.e. do the restart file
+                # already exist
+$global_cuttoff = 0;
+ 
+sub ValidateInput();
+sub Swap(@);
+sub GetParameters();
+sub CreateRstFiles();
+sub DoEngAnal();
+sub WriteOutput();
+sub ProcessFile(@);
+sub CalculateTotals();
+sub CollectStats(@);
+sub CreateGraphs();
+sub DetermineHelixLayout();
+sub CreateNamot2Scripts();
+sub CreateNamot2Pictures();
+sub DetermineRGBVal(@);
+sub ExecuteNamotCommand(@);
+sub ConvertFile(@);
+sub GetOriginalVal($);
+sub CreateMovie();
+sub executeSSHCmd(@);
+sub ReCalculateEnergy();
+sub GetCorrectUnit(@);
+sub DetermineStrandLayout();
+sub IsCrossoverAtUnit(@);
+sub FinalizeHelixLayout();
+
+# -- Start --
+{
+    print "\n-==Start Program ==-\n\n";
+    GetParameters();
+    ValidateInput();
+    print "\n\nStep 1. Executing Ptraj...\n";
+    print "-----------------------------------------------------------------\n\n";
+    if ($run_ptraj) {
+	CreateRstFiles();
+    } else {
+	print "Assuming restart files already exist\n";
+    }
+    print "-----------------------------------------------------------------\n\n";
+    print "Step 2. Analyzing files...\n";
+    print "-----------------------------------------------------------------\n\n";
+    DoEngAnal();
+    print "-----------------------------------------------------------------\n\n";
+    
+    @unit_array = sort keys %EngDatStructure;
+    
+    if ($calc_strain) {
+	$spec_pic = "/ul/tpascal/scripts/spectrum.png";
+	if (! -d "total_energy") {
+	    mkdir "total_energy";
+	}
+	chdir "total_energy";
+    }	
+
+    WriteOutput();
+    print "\nStep 3. Creating Namot2 energy topology pictures...\n";
+    print "-----------------------------------------------------------------\n\n";
+    print "Creating scripts...";
+    CreateNamot2Scripts();
+    print "Done\n";
+    CreateNamot2Pictures();
+    print "-----------------------------------------------------------------\n\n";
+    if ($should_create_movie) {
+	CreateMovie();
+	print "-----------------------------------------------------------------\n\n";
+    }
+
+    if ($calc_strain) {
+	$spec_pic = "/ul/tpascal/scripts/strain_spectrum.png";
+	chdir "../";
+	if (! -d "strain_energy") {
+	    mkdir "strain_energy";
+	}
+	chdir "strain_energy";
+	print "\n\n-==Strain Energy Calculations==-\n\n";
+	DetermineStrandLayout();
+	ReCalculateEnergy();
+	WriteOutput();
+	print "\nStep 5. Creating Namot2 energy topology pictures...\n";
+	print "-----------------------------------------------------------------\n\n";
+	print "Creating scripts...";
+	CreateNamot2Scripts();
+	print "Done\n";
+	CreateNamot2Pictures();
+	print "-----------------------------------------------------------------\n\n";
+	if ($should_create_movie) {
+	    CreateMovie();
+	    print "-----------------------------------------------------------------\n\n";
+	}
+	chdir "../";
+    }
+
+    print "-==End Program==-\n\n";
+
+}
+
+sub ValidateInput() {
+    -e $paramfile or die "Cannot locate $paramfile: $!\n";
+    -e $topfile or die "Cannot locate $topfile: $!\n";
+    -e $trajfile or die "Cannot locate $trajfile: $!\n";
+    
+    
+    if ($ARGV[4] and $ARGV[5]) {
+	$calc_strain = 1;
+	if (! -e $helix1) { 
+	    print "Warning: Cannot locate $helix1: $!\n";
+	    $calc_strain = 0;
+	}
+	
+	if (! -e $helix2) {
+	    print "Warning: Cannot locate $helix2: $!\n";
+	    $calc_strain = 0;
+	}
+    }
+    
+    if (! $calc_strain) {
+	print "NOTE: Will not perform strain energy calculations\n";
+	$spec_pic = "/ul/tpascal/scripts/spectrum.png";
+    } else {
+	print "NOTE: Performing strain energy calculations using helix1 data: " .
+	    "$helix1 and helix2 data: $helix2\n";
+	$spec_pic = "/ul/tpascal/scripts/strain_spectrum.png";
+    }
+    
+    if ($start_time =~ /(\d+)/) {
+	$start_time = $1;
+    } else {
+	die "Invalid starting number. Expected integer\n";
+    }
+    
+    if ($end_time =~ /(\d+)/) {
+	$end_time = $1;
+    } else {
+	die "Invalid end number. Expected integer\n";
+    }
+    if ($interval =~ /(\d+)/) {
+	$interval = $1;
+    } else {
+	die "Invalid interval. Expected integer\n";
+    }
+    
+    if ($start_time > $end_time) {
+	($start_time, $end_time) = Swap($start_time, $end_time);
+    }
+}
+
+sub GetParameters() {
+    open PARAMFILE, $paramfile or die "Cannot open $paramfile: $!\n";
+    my ($in_data, $c_list);
+
+    if (! -d "outfiles") {
+	mkdir "outfiles";
+    }
+
+    $is3primeIn = -1;
+
+    $host_name = $user_name = $movie_size = $movie_length = "";
+
+    while (<PARAMFILE>) {
+	chomp;
+        $in_data = $_;
+     
+	if ($in_data =~ /Mol:\s(\d+).(\d+)/) {
+	    $mol_name = $1 . $2;
+	    $periodicity = $1 + $2;
+	    ($majorgroove, $minorgroove) = ($1, $2);
+	} elsif ($in_data =~ /Total bases:\s(\d+)/) {
+	    $total_bases = $1;
+	} elsif ($in_data =~ /Bases at end:\s(\d+)/) {
+	    $no_bases_at_end = $1;
+	} elsif ($in_data =~ /Crossovers:\s(.+)$/) {
+	    $c_list = $1;
+	    @crossovers = split(/ /, $c_list);
+	} elsif ($in_data =~ /Topology file:\s(.+)$/) {
+	    $topfile = $1;
+	} elsif ($in_data =~ /Trajectory file:\s(.+)$/) {
+	    $trajfile = $1;
+	} elsif ($in_data =~ /3 prime in:\s([1|0])$/) {
+	    $is3primeIn = $1;
+	} elsif ($in_data =~ /Host:\s(\w+)$/) {
+	    $host_name = $1;
+	} elsif ($in_data =~ /Username:\s(\w+)$/) {
+	    $user_name = $1;
+	} elsif ($in_data =~ /Movie Dimentions:\s(\d+)x(\d+)$/) {
+	    $movie_size = $1 . "," . $2;
+	} elsif ($in_data =~ /Movie Length:\s(\d+)$/) {
+	    $movie_length = $1;
+	} elsif ($in_data =~ /Cuttoff:\s(\d+\.\d+)$/) {
+	    $global_cuttoff = $1;
+	} elsif ($in_data =~ /Run Ptraj:\s([1|0])$/) {
+	    $run_ptraj = $1;
+	}
+    }
+
+    if ($host_name ne "" and $user_name ne "" and $movie_size ne "" and $movie_length ne "") {
+	$should_create_movie = 1;
+    } else {
+	$should_create_movie = 0;
+	print "Will not create movie\n";
+    }
+
+    if ( $#crossovers <= 0 or ! $no_bases_at_end or ! $total_bases or ! $mol_name or ($is3primeIn == -1) ) {
+	die "Invalid Parameter file\n";
+    }
+
+    if ( ($total_bases % 4) > 0 or $total_bases < 4) {
+	die "Invalid total number of bases: Must be a multiple of 4\n";
+    }
+
+    DetermineHelixLayout();
+}
+
+sub CreateRstFiles() {
+    my ($out_cmd, $i, $j, $strand_ln);
+    my ($starttm, $num_precision);
+
+    if (! -d "rstfiles") {
+	mkdir "rstfiles";
+    }
+
+    if (! -d "pdbfile") {
+	mkdir "pdbfiles";
+    }
+
+    $num_precision = $end_time . "";
+    $num_precision = length($num_precision);
+
+    $starttm = sprintf("%0" . $num_precision . "d", $start_time);
+#    $starttm = $start_time;
+
+
+    $strand_ln = int($total_bases/4);
+
+# Create restart files----------------------
+    $out_cmd = "> tmp_gen_rst_file";
+
+    open OUTCMD, $out_cmd or die "Cannot create file tmp_gen_rst_file: $!\n";
+    print OUTCMD "trajin $trajfile $start_time $end_time $interval\n";
+
+    $i = 1;
+    $j = 1;
+    while ($i < $total_bases) {
+
+	print OUTCMD "center :1-" . ($j * $strand_ln) . " mass origin\n";
+	print OUTCMD "image origin center\n";
+	$i +=$strand_ln;
+	$j++;
+    }
+    print OUTCMD "trajout rstfiles/" . $mol_name . "_rst restrat\n";
+
+    close OUTCMD;
+
+    $out_cmd = "ptraj $topfile < tmp_gen_rst_file > junk";
+    
+    system $out_cmd;
+    system "rm -f junk tmp_gen_rst_file";
+
+# Create pdb files------------------------------------------------------------
+    $out_cmd = "> tmp_gen_rst_file";
+
+    open OUTCMD, $out_cmd or die "Cannot create file tmp_gen_rst_file: $!\n";
+    print OUTCMD "trajin $trajfile $start_time $end_time $interval\n";
+
+    $i = 1;
+    $j = 1;
+    while ($i < $total_bases) {
+
+	print OUTCMD "center :1-" . ($j * $strand_ln) . " mass origin\n";
+	print OUTCMD "image origin center\n";
+	$i +=$strand_ln;
+	$j++;
+    }
+
+    print OUTCMD "trajout pdbfiles/" . $mol_name . "_pdb pdb\n";
+    close OUTCMD;
+
+
+    $out_cmd = "ptraj $topfile < tmp_gen_rst_file > junk";
+    
+    system $out_cmd;
+    system "rm -f junk tmp_gen_rst_file";
+
+}
+
+sub DoEngAnal() {
+
+    my ($i, $curr_rst_file, $num_precision, $out_cmd, $j, $curr_eng_out_file);
+    my ($my_data, $a_val, $b_val, $c_val, $d_val, $cutt_off);
+    my ($hash_key);
+
+    $num_precision = $end_time . "";
+    $num_precision = length($num_precision);
+
+    $i = $start_time;
+    while ($i <= $end_time) {
+	$curr_rst_file = "rstfiles/" . $mol_name . "_rst." . $i;
+#	$curr_rst_file .= sprintf("%0" . $num_precision . "d", $i);
+
+	print "Analyzing $curr_rst_file...";
+
+	$out_cmd = "tail -1 $curr_rst_file |";
+
+	open OUTCMD, $out_cmd or die "Cannot tail $curr_rst_file: $!\n";
+	while (<OUTCMD>) {
+	    $my_data = $_;
+	    $my_data =~ /(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+(\d+\.\d+)/;
+	    $a_val = $1;
+	    $b_val = $2;
+	    $c_val = $3;
+	    $d_val = $4;
+	}
+	close OUTCMD;
+
+	if ($global_cuttoff > 0) {
+	    $cutt_off = $global_cuttoff;
+	} else {
+	    $cutt_off = $a_val;
+	    if ($b_val > $cutt_off) {
+		$cutt_off = $b_val;
+	    }
+	    
+	    if ($c_val > $cutt_off) {
+		$cutt_off = $c_val;
+	    }
+	    
+	    if ($d_val > $cutt_off) {
+		$cutt_off = $d_val;
+	    }
+	}
+
+	$cutt_off = sprintf("%1.1f", $cutt_off);
+	print "Running anal using $cutt_off cutoff\n";
+	$out_cmd = "> tmp_anal_res.in";
+	open OUTCMD, $out_cmd or die "Cannot create tmp_anal_res.in: $!\n";
+
+	print OUTCMD "TITLE \'Residue Energy\'\n";
+	print OUTCMD "\t1 0 0 0 " . ($total_bases + 1) . " 1\n";
+	print OUTCMD "\t0 $a_val $b_val $c_val $d_val\n";
+	print OUTCMD "\t1 0 1 0 50 1\n";
+	print OUTCMD "\t$cutt_off 2.0 1.2 1.0\n";
+	print OUTCMD "\t0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0\n";
+	print OUTCMD "ENERGY\n";
+	for $j (1 .. $total_bases) {
+	    print OUTCMD "Title ResidueC\n";
+	    print OUTCMD "RES $j\n";
+	    print OUTCMD "STOP\n";
+	    print OUTCMD "END\n";
+	}
+	print OUTCMD "END\nEND\nSTOP\n";
+	close OUTCMD;
+
+	$curr_eng_out_file = "outfiles/eng_" . $i . ".out";
+	$out_cmd = "anal -O -i tmp_anal_res.in -o $curr_eng_out_file -p $topfile -c $curr_rst_file\n";
+	system $out_cmd;
+	system "rm -f tmp_anal_res.in";
+
+	$hash_key = sprintf("%0" . $num_precision . "d", $i);
+#	$hash_key = $i;
+	ProcessFile($curr_eng_out_file, $hash_key, 0);
+	$i += $interval;
+    }
+}
+
+sub ProcessFile(@) {
+    my ($curr_fle, $hash_key, $which_structure) = @_;
+    my ($data_start, $in_data, $unit_nm);
+    my (@eng_header);
+
+    my (%structure_data);
+
+    $data_start = 0;
+
+    if (open INPFILE, $curr_fle) {
+	while (<INPFILE>) {
+	    chomp;
+
+	    if ($_ =~ /ENERGY CONTRIBUTION BY GROUPS/) {
+		$data_start = 1;
+#		print "Storing data..";
+	    }
+
+	    if ($data_start) {
+		$in_data = $_;
+		if ($in_data = /^\s+GROUP\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+\w+/) {
+		    @eng_header = ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+		} elsif ($in_data = /^\s+(\d+)\s+(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)/ and $#eng_header > 0) {
+		    if ($1 == ($total_bases +1)) {
+			$data_start = 0;
+			last;
+			last;
+
+		    } elsif ($which_structure > 0 and $1 == ($total_bases/2 +1) )  {
+			$data_start = 0;
+			last;
+			last;
+		    } else {
+			$unit_nm = sprintf("%4d", $1);
+			if ($which_structure == 0) {
+			    $EngDatStructure{$unit_nm}->{$hash_key} = (
+								       {
+									   $eng_header[0] => $2,
+									   $eng_header[1] => $3,
+									   $eng_header[2] => $4,
+									   $eng_header[3] => $5,
+									   $eng_header[4] => $6,
+									   $eng_header[5] => $7,
+									   $eng_header[6] => $8,
+									   $eng_header[7] => $9,
+									   $eng_header[8] => $10
+									   }
+								       );
+			} else {
+			    $unit_nm = GetCorrectUnit($unit_nm, $which_structure);
+			    $helix_info{$unit_nm}->{"0"} = (
+								       {
+									   $eng_header[0] => $2,
+									   $eng_header[1] => $3,
+									   $eng_header[2] => $4,
+									   $eng_header[3] => $5,
+									   $eng_header[4] => $6,
+									   $eng_header[5] => $7,
+									   $eng_header[6] => $8,
+									   $eng_header[7] => $9,
+									   $eng_header[8] => $10
+									   }
+								       );
+			}
+		    }
+		}
+	    }
+	    
+	} 
+	if ($#eng_header > 0) {
+	    print "Done\n";
+	} else {
+	    print "Failure. $curr_fle is invalid\n";
+	}
+	close INPFILE;
+    }else {
+	print "\nWARNING: Invalid file: $curr_fle\n";
+    }
+}
+ 
+sub DetermineHelixLayout() {
+# takes the total bases, breaks it up in 4 strands, and determines which base belongs to a chain
+# according to the namot2 convention
+
+    my ($strand_len) = $total_bases /4;
+    my ($curr_strand, $i);
+
+    for $i (1 .. $total_bases) {
+	$curr_strand = int( ($i - 1)/$strand_len ) + 1;
+#	$unit_array_hash[$i]{"Chain_Spec"} = $curr_strand . ":" . ( $i - ( ($curr_strand -1) * $strand_len ) );
+#	print "$i: " . $unit_array[$i]{"Chain_Spec"} . "\n";
+	$unit_array_hash[$i]{"Chain_Spec"} = "1:" . $i;
+    }
+}
+
+sub WriteOutput() {
+
+    my ($unit_key, $eng_key, $in_energy);
+    my ($avg_total_energy, $component_total_energy, $component_counter);
+    my ($out_line, $avg_structure_out);
+
+    CalculateTotals();
+
+    $avg_total_energy = 0.0;
+
+    if (! -d "avg_structures") {
+	mkdir "avg_structures";
+    }
+    open AVGSTRU, "> avg_structures/Total_all_Energies.dat" or die "$!\n"; 
+
+	print AVGSTRU "     GROUP   ANGLE      BOND  CONSTRAINT DIHEDRAL    EEL14     EELNB     HBOND     VDW14     VDWNB      TOTAL\n";
+    $avg_structure_out = "";
+    for $unit_key ( sort keys %EngDatStructure) {
+	$component_total_energy = 0.0;
+	$component_counter = 0;
+	$out_line = sprintf("%8s", $unit_key);
+
+	for $eng_key (sort keys %{ $EngDatStructure{$unit_key}->{"Statistics"} } ) {
+	    $in_energy = $EngDatStructure{$unit_key}->{"Statistics"}->{$eng_key}->{"Average"};
+	    $component_total_energy += $in_energy;
+	    $out_line .= sprintf("%10.2f", $in_energy);
+	    $component_counter++;
+	}
+	$out_line .= sprintf("%12.3f", $component_total_energy);
+	$avg_structure_out .= sprintf("%5d%12.3f\n", $unit_key, $component_total_energy);
+	print AVGSTRU "$out_line\n";
+#	print "$component_total_energy\n";
+	$avg_total_energy += ($component_total_energy/$component_counter);
+	$component_total_energy = 0.0;
+	$component_counter = 0;
+    }
+
+    close AVGSTRU;
+
+    if (! -d "avg_structures") {
+	mkdir "avg_structures";
+    }
+    if (open OUTFILE, "> avg_structures/Total_" . $start_time . "ps_" . $end_time . "ps.dat") {
+	print OUTFILE "$avg_structure_out";
+	close OUTFILE;
+    }
+
+    print "\nAverage Total Energy: $avg_total_energy KCal\n";
+
+    print "Creating graphs...";
+    CreateGraphs();
+    print "Done\n";
+
+}
+
+sub CreateGraphs() {
+
+    my (@time_array, @eng_comp_array, $this_unit);
+    my ($i, $j, $outfile, $eng_total, $eng_data, $running_total);
+    my ($graph_2d_out, $graph_3d_out, $my_total, $my_stdev, $my_num);
+
+#   populate the arrays with the keys for the time and energy contributions
+
+    for $this_unit (keys %EngDatStructure) {
+	@time_array = sort keys %{ $EngDatStructure{$this_unit} }; 
+	pop @time_array;
+#	this should be starttime->endtime
+
+	@eng_comp_array = sort keys %{ $EngDatStructure{$this_unit}->{"Statistics"} };
+	last;
+    }
+
+
+    if (! -d "2d_graphs") {
+	mkdir "2d_graphs";
+    }
+
+    if (! -d "3d_graphs") {
+	mkdir "3d_graphs";
+    }
+
+    for $i (@eng_comp_array) {
+
+	$graph_3d_out = "";
+	$graph_2d_out = "";
+
+	for $j (@time_array) {
+	    $eng_total = "";
+	    $eng_data = "";
+	    for $this_unit (sort keys %EngDatStructure) {
+		$eng_data .= sprintf("%5d%5d%10.2f\n", $this_unit, $j, $EngDatStructure{$this_unit}->{$j}->{$i});
+		$eng_total .= $EngDatStructure{$this_unit}->{$j}->{$i};
+		$eng_total .= " ";
+	    }
+	    ($my_total, $my_stdev, $my_num) = CollectStats($eng_total);
+	    $graph_2d_out .= sprintf("%5d%10.2f%6.2f\n", $j,$my_total, $my_stdev);
+	    $graph_3d_out .= ($eng_data . "\n");
+	}
+
+	$outfile = "2d_graphs/" . $i . "_" . $start_time . "ps_" . $end_time . "ps.dat";
+	if (open OUTFILE, "> $outfile") {
+	    print OUTFILE "$graph_2d_out";
+	    close OUTFILE;
+	}
+	
+	$outfile = "3d_graphs/" . $i . "_" . $start_time . "ps_" . $end_time . "ps.dat";
+	if (open OUTFILE, "> $outfile") {
+	    print OUTFILE "$graph_3d_out";
+	    close OUTFILE;
+	}
+    }
+
+    $graph_2d_out = "";
+    $graph_3d_out = "";
+
+
+    for $j (@time_array) {
+	$running_total = "";
+	$eng_data = "";
+	for $this_unit (sort keys %EngDatStructure) {
+	    $eng_total = 0.0;
+	    for $i (@eng_comp_array) {
+		$eng_total += $EngDatStructure{$this_unit}->{$j}->{$i};
+	    }
+	    $eng_data .= sprintf("%5d%5d%10.2f\n", $this_unit, $j, $eng_total);
+	    $running_total .= $eng_total;
+	    $running_total .= " ";
+	}
+	$graph_3d_out .= ($eng_data . "\n");
+	($my_total, $my_stdev, $my_num) = CollectStats($running_total);
+	$graph_2d_out .= sprintf("%5d%10.2f%6.2f\n", $j,$my_total, $my_stdev);
+    }
+
+    $outfile = "2d_graphs/TOTAL_" . $start_time . "ps_" . $end_time . "ps.dat";
+    if (open OUTFILE, "> $outfile") {
+	print OUTFILE "$graph_2d_out";
+	close OUTFILE;
+    }
+    
+    $outfile = "3d_graphs/TOTAL_" . $start_time . "ps_" . $end_time . "ps.dat";
+    if (open OUTFILE, "> $outfile") {
+	print OUTFILE "$graph_3d_out";
+	close OUTFILE;
+    }
+    
+# create average structures
+    for $j (@eng_comp_array) {
+	$eng_data = "";
+	for $this_unit (sort keys %EngDatStructure) {
+	    $eng_data .= sprintf("%5d", $this_unit);
+	    $eng_data .= sprintf("%10.2f", $EngDatStructure{$this_unit}->{"Statistics"}->{$j}->{"Average"});
+	    $eng_data .= sprintf("%10.2f", $EngDatStructure{$this_unit}->{"Statistics"}->{$j}->{"StDev"});
+	    $eng_data .="\n";
+	}
+	$outfile = "avg_structures/" . $j . "_" . $start_time . "ps_" . $end_time . "ps.dat";
+	if (open OUTFILE, "> $outfile") {
+	    print OUTFILE "$eng_data";
+	    close OUTFILE;
+	}
+    }
+}
+
+sub CreateNamot2Scripts() {
+# assigns a weighed rgb value, corresponding to the energy of that base
+# then create a Namot2 script file
+
+    my (@time_array, $this_unit, @eng_comp_array, %rgbvals, $curr_rgb_unit);
+    my ($i, $j, $outfile, $eng_total, $rgbval, $rec, $curr_pdbfile);
+
+#   populate the arrays with the keys for the time and energy contributions
+
+    for $this_unit (keys %EngDatStructure) {
+	@time_array = sort keys %{ $EngDatStructure{$this_unit} }; 
+	pop @time_array;
+#	this should be starttime->endtime
+
+	@eng_comp_array = sort keys %{ $EngDatStructure{$this_unit}->{"Statistics"} };
+	last;
+    }
+
+    $eng_min = $eng_max = $eng_total = 0.0;
+
+    for $i (@time_array) {
+	for $this_unit (@unit_array) {
+	    $eng_total = 0.0;
+#	    for $j (@eng_comp_array) {
+#		$eng_total += $EngDatStructure{$this_unit}->{$i}->{$j};
+#	    }
+#	    print "$this_unit: $eng_total, $eng_min, $eng_max\n";
+	    $eng_total = $EngDatStructure{$this_unit}->{$i}->{"EELNB"};
+	    $eng_total += $EngDatStructure{$this_unit}->{$i}->{"EEL14"};
+	    if ($eng_total < $eng_min) {
+		if ($eng_max == 0.0) {
+		    $eng_max = $eng_total;
+		}
+		$eng_min = $eng_total;
+#		print "Time: $i, $this_unit: min: $eng_min\n";
+	    }
+
+	    if ($eng_total > $eng_max) {
+		if ($eng_min == 0.0) {
+		    $eng_min = $eng_total;
+		}
+		$eng_max = $eng_total;
+#		print "Time: $i, $this_unit: max: $eng_max\n";
+	    }
+	}
+    }
+
+#    print "Max: $eng_max, Min: $eng_min\n";
+    if (! -d "Namotscripts") {
+	mkdir "Namotscripts";
+    }
+    if (! -d "pics") {
+	mkdir "pics";
+    }
+
+    for $i (@time_array) {
+	%rgbvals = ();
+	for $this_unit (@unit_array) {
+	    $eng_total = 0.0;
+	    for $j (@eng_comp_array) {
+		$eng_total += $EngDatStructure{$this_unit}->{$i}->{$j};
+	    }
+#	    $eng_total = $EngDatStructure{$this_unit}->{$i}->{"EELNB"};
+#	    $eng_total += $EngDatStructure{$this_unit}->{$i}->{"EEL14"};
+	    $rgbval = DetermineRGBVal($eng_total, $eng_max, $eng_min);
+#	    print "$rgbval\n";
+	    $curr_rgb_unit = GetInt($this_unit);
+	    $unit_array_hash[$curr_rgb_unit]->{"RGB_Val"} = $rgbval;
+	    $rec = (
+		    {
+			"Unit" => $this_unit,
+			"Chain_Spec" => $unit_array_hash[$this_unit]->{"Chain_Spec"}
+		    }
+		    );
+	    push @{ $rgbvals{$rgbval} }, $rec;
+	}
+	$outfile = "Namotscripts/TotalEnergy_" . GetOriginalVal($i) . "ps.script";
+	$curr_pdbfile = "pdbfiles/" . $mol_name . "_pdb." . GetOriginalVal($i);
+	if (! -e $curr_pdbfile) {
+	    $curr_pdbfile = "../" . $curr_pdbfile;
+	}
+
+	if (-e $curr_pdbfile) {
+	    system "/ul/tpascal/scripts/stripNaH20.pl $curr_pdbfile";
+	    system "/ul/maiti/src/util/scripts/fixcurvepdb.pl $curr_pdbfile > junk";
+	    system "rm -f junk";
+	    if (-e $curr_pdbfile) {
+		if (open OUTFILE, "> $outfile") {
+		    print OUTFILE "load pdb na ../$curr_pdbfile\n";
+		    for $j (sort keys %rgbvals) {
+#		    print OUTFILE "set usr-rgb $j\n";
+			for $curr_rgb_unit ( @{ $rgbvals{$j} }) {
+			    print OUTFILE "set color m1:" . $curr_rgb_unit->{"Chain_Spec"} . " $j\n";
+			}
+			print OUTFILE "\n";
+		    }
+#		print OUTFILE "set text 300 690 TIME: $i" . "ps\n";
+		    print OUTFILE "set background black\n";
+		    print OUTFILE "write png ../pics/TotalEnergy_" . GetOriginalVal($i) . ".png\n";
+#		print OUTFILE "close\n";
+		    close OUTFILE;
+		}
+	    }
+	}
+    }
+}
+
+sub CreateNamot2Pictures() {
+
+    my (@time_array, $curr_scriptfile, $out_file, $i, $image_file, $image_base, $time_string);
+
+    for $i (keys %EngDatStructure) {
+	@time_array = sort keys %{ $EngDatStructure{$i} }; 
+	pop @time_array;
+	last;
+    }
+
+    chdir "Namotscripts";
+
+    for $i (@time_array) {
+	$i = GetOriginalVal($i);
+	$curr_scriptfile = "TotalEnergy_" . $i . "ps.script";
+	if (-e $curr_scriptfile) {
+	    ExecuteNamotCommand($curr_scriptfile);
+	    $image_file = "../pics/TotalEnergy_" . $i . ".png";
+	    $image_base = "TotalEnergy_" . $i;
+	    if (-e $image_file) {
+		$time_string = "Time: $i" . "ps";
+		ConvertFile($image_base, $time_string);
+		system "rm -f $image_file" . ".png";
+	    }
+	}
+    }
+    chdir "../";
+
+}
+
+sub DetermineRGBVal(@) {
+    my ($curr_val, $max_val, $min_val) = @_;
+    my ($return_val);
+    
+    # there are 255x255x255 different colors
+    # $min_val = 000 000 000
+    # $max_val = 255 000 000
+
+    $return_val = ($max_val - $min_val);
+    $return_val = ($curr_val - $min_val) / $return_val;
+#    $return_val = sprintf( "%03d", int($return_val * 255) );
+
+#    $return_val .= " 000 000";
+
+    $return_val = 8 - int($return_val * 8);
+
+    if ($return_val <= 1) {
+	$return_val = "red";
+    } elsif ($return_val == 2) {
+	$return_val = "orange";
+    } elsif ($return_val == 3) {
+	$return_val = "yellow";
+    } elsif ($return_val == 4) {
+	$return_val = "green";
+    } elsif ($return_val == 5) {
+	$return_val = "blue";
+    } elsif ($return_val == 6) {
+	$return_val = "cyan";
+    } elsif ($return_val >= 7) {
+	$return_val = "magenta";
+    } elsif ($return_val == 7) {
+	$return_val = "white";
+    } else {
+	$return_val = "white";
+    }    
+    return $return_val;
+
+}
+
+sub CalculateTotals() {
+
+    my ($unit_key, $time_key, $eng_key, $unit_val, $time_val, $eng_val, $counter);
+    my ($avg, $StDev, $total);
+    $avg = $StDev = $total = 0.0;
+
+    while ( ($unit_key, $unit_val) = each %EngDatStructure) {
+#	print "\nUnit: $unit_key\n";
+	$counter = 0;
+	while ( ($time_key, $time_val) = each %{ $unit_val } ) {
+	    if ($time_key ne "Statistics") {
+#		print "\n$time_key\n";
+		while ( ($eng_key, $eng_val) = each %{ $time_val } ) {
+#		    print "$eng_key: $eng_val\n";
+		    $unit_val->{"Statistics"}->{$eng_key}->{"DataVals"} .= $eng_val;
+		    $unit_val->{"Statistics"}->{$eng_key}->{"DataVals"} .= " ";
+		    $counter++;
+		}
+	    }
+	}
+    }
+
+    while ( ($unit_key, $unit_val) = each %EngDatStructure) {
+	while ( ($eng_key, $eng_val) = each %{ $unit_val->{"Statistics"} }) {
+#	    print "$eng_key: " . $eng_val->{"DataVals"} . "\n";
+	    ($avg, $StDev, $total) = CollectStats($eng_val->{"DataVals"});
+	    $eng_val->{"Average"} = $avg;
+	    $eng_val->{"StDev"} = $StDev;
+	    $eng_val->{"Total"} = $total;
+	}
+    }
+
+}
+
+sub CollectStats(@) {
+
+    my (@datavalues, $n_total, $avg, $result, $i);
+
+    @datavalues = split / /, $_[0];
+    $n_total = $#datavalues;
+    $avg = 0.0;
+    $result = 0.0;
+
+    foreach $i (@datavalues) {
+        $avg += $i;
+    }
+
+    $avg = $avg/($n_total + 1);
+
+    foreach (@datavalues) {
+        $result += ($_ - $avg) **2;
+    }
+
+    if ($n_total ==0) {
+        $n_total = 1;
+    }
+
+
+    $result = sqrt($result/$n_total);
+#    print "$n_total\n";
+    return ($avg, $result, ($avg * $n_total));
+
+}
+
+sub ExecuteNamotCommand(@) {
+    my ($script_fle) = $_[0];
+    my (@outarray, $i, $instr);
+
+    print "Executing $script_fle...";
+
+    p5namot::Cmd("set background black");
+
+    if (open INFILE, $script_fle) { 
+	while (<INFILE>) {
+	    $instr = $_;
+	    chomp $instr;
+	    push @outarray, $instr;
+	}
+
+	close INFILE;
+	
+	for $i (0 .. $#outarray) {
+	    p5namot::Cmd("$outarray[$i]");
+	    p5namot::Cmd("render");
+	  }
+    }
+
+    p5namot::Cmd("close");
+    print "Sucess\n";
+}
+
+sub Swap(@) {
+    my ($first, $second) = @_;
+
+    my ($temp) = $first;
+    $first = $second;
+    $second = $temp;
+    return ($first, $second);
+}
+
+sub GetInt(@) {
+    my ($in_string) = $_[0];
+    my ($out);
+
+    if ($in_string =~ /(\d+)/) {
+	$out = $1;
+    } else {
+	$out = 0;
+    }
+
+#    print "out: $out\n";
+    return $out;
+}
+
+sub ConvertFile(@) {
+    my ($in_img) = $_[0]; 
+    my ($time_text) = $_[1];   
+    my ($out_img, $result, $spectrum, $out_file);    
+    my ($img_height, $img_width, $height_offset, $width_offset);
+    my ($max_text, $min_text, $text_width_offset, $text_height_offset);
+
+    $out_img = $in_img . ".gif";
+    $in_img .= ".png";
+
+    print "$in_img -> $out_img...";
+
+    $out_img = "../pics/" . $out_img;
+    $in_img = "../pics/" . $in_img;
+    if (-e $in_img) {
+	$out_file = Image::Magick->new();
+	$result = $out_file->ReadImage($in_img);
+	if (! "$result") {
+
+	    ($img_height, $img_width) = $out_file->Get('height', 'width');
+
+	    $width_offset = int($img_width/2) -10;
+	    $height_offset = $img_height - 20;
+	    $out_file->Annotate(text=>$time_text, pointsize=>20, fill=>'white', align=>'Center', x=>$width_offset, y=>$height_offset);
+	    if (-e $spec_pic) {
+		$spectrum = Image::Magick->new();
+		$result = $spectrum->ReadImage($spec_pic);
+		if (! "$result") {
+		    $width_offset = 35;
+		    $height_offset = int( ($img_height - 350)/2 );
+		    $out_file->Composite(image=>$spectrum, compose=>'over', x=>$width_offset, y=>$height_offset);
+
+#		    now annotate the min/max vals
+		    $max_text = $eng_max . " KCal";
+		    $min_text = $eng_min . " KCal";
+		    
+		    $text_width_offset = $width_offset + 40;
+		    $text_height_offset = $height_offset + 25;
+		    $out_file->Annotate(text=>$max_text, pointsize=>10, fill=>'white', x=>$text_width_offset, y=>$text_height_offset); 
+		    
+		    $text_height_offset += 303;
+		    $text_width_offset = $width_offset + 40;
+		    $out_file->Annotate(text=>$min_text, pointsize=>10, fill=>'white', x=>$text_width_offset, y=>$text_height_offset); 
+		    
+		}
+		
+	    }
+
+	    $out_file->Write( $out_img );
+	    print "Sucess\n";
+	} else {
+	    print "Failure\n";   
+	}
+    } else {
+	print "Failure\n";
+    }
+}
+
+sub GetOriginalVal($) {
+    my ($in_val) = $_[0];
+
+    $in_val =~ /^[0]*(\d+)$/;
+    return $1;
+}
+
+sub CreateMovie() {
+    my ($file_list, $curr_cmd, $i, @time_array, $movie_nm); 
+    my($curr_file, $fr_rate, @cmd_list, $result, $size, $kid);
+
+    for $i (keys %EngDatStructure) {
+	@time_array = sort keys %{ $EngDatStructure{$i} }; 
+	pop @time_array;
+	last;
+    }
+
+    print "\nStep 4. Creating Movie...\n";
+    print "-----------------------------------------------------------------\n\n";
+    print "Attempting to create movie on $host_name, as $user_name...\n";
+
+    if (! -d "/ul/$user_name/tempics") {
+	print "Creating /ul/$user_name/tempics...";
+	mkdir"/ul/$user_name/tempics/";
+	print "Done\n";
+    }
+    
+    $fr_rate = 0;
+    print "Copying image files to /ul/$user_name/tempics/...";
+    for $i (@time_array) {
+	$curr_file = "TotalEnergy_" . GetOriginalVal($i) . ".gif";
+	if (-e "pics/$curr_file") {
+	    $file_list .= " /ul/$user_name/tempics/$curr_file";
+	    system "cp -f pics/$curr_file /ul/$user_name/tempics/";
+	    $fr_rate++;
+	}
+    }
+    print "Done\n";
+    if ($fr_rate/$movie_length < 2.5) {
+	$fr_rate = 2.5;
+    } else {
+	$fr_rate = sprintf("%2.2f", ($fr_rate/$movie_length));
+    }
+
+    $movie_nm = "$mol_name";
+    if ($spec_pic eq "/ul/tpascal/scripts/strain_spectrum.png") {
+	$movie_nm .= "_strain.avi";
+    } else {
+	$movie_nm .= "_total.avi";
+    }
+
+    $cmd_list[0] = "mkdir -p /temp1/$user_name/movie";
+    $curr_cmd = "makemovie -o /temp1/$user_name/movie/$movie_nm -f avi -r $fr_rate -c qt_cvid -s ";
+    
+    $size = $movie_size;
+    
+    $curr_cmd .= $size;
+    
+    $cmd_list[1] = $curr_cmd . " $file_list";
+    $cmd_list[2] = "mv -f /temp1/$user_name/movie/";
+
+    $cmd_list[2] .= "$movie_nm /ul/$user_name/tempics/";
+    
+    $curr_cmd = "echo \$HOST";
+    $result = executeSSHCmd($curr_cmd, "Logining on to ");
+
+    if ( $result ) {
+	$result = executeSSHCmd($cmd_list[0], "Creating directory /temp1/$user_name/movie...");
+	$result = executeSSHCmd($cmd_list[1], "Creating movie $movie_nm...");
+	$result = executeSSHCmd($cmd_list[2], "Moving movie file...");
+	if (-e "/ul/$user_name/tempics/$movie_nm") {
+	    if (! -d "movies") {
+		mkdir "movies";
+	    }
+	    system "mv /ul/$user_name/tempics/$movie_nm movies/";
+	    print "Sucessfully create $movie_nm. Stored in the \"movies\" folder\n";
+	} else {
+	    print "There were errors creating $mol_name" . ".avi\n";
+	}
+    }
+    system "rm -fr $file_list";
+}
+
+sub executeSSHCmd(@) {
+    my ($curr_cmd, $display_string) = @_;
+    my ($result, $kid);
+
+    print "$display_string...";
+    $result = ssh("$user_name\@$host_name", "$curr_cmd");
+#    do {
+#	$kid = waitpid(-1, WNOHANG);
+#    } until $kid > 0;
+
+    if ($result) {
+	print "Failure\n$!\n";
+	$result = 0;
+    } else { 
+	print "Sucess\n"; 
+        $result = 1;
+    }
+
+    return $result;
+
+}
+
+sub ReCalculateEnergy() {
+    my (@time_array, $this_unit, @eng_comp_array, %rgbvals, $curr_rgb_unit);
+    my ($i, $j, $outfile, $eng_total, $rgbval, $rec, $curr_pdbfile, @helix_keys);
+
+    ProcessFile($helix1, "0", 1);
+    ProcessFile($helix2, "0", 2);
+
+#   populate the arrays with the keys for the time and energy contributions
+    
+    @helix_keys = keys %helix_info;
+
+    if ($#helix_keys == $#unit_array) {
+	for $this_unit (keys %EngDatStructure) {
+	    @time_array = sort keys %{ $EngDatStructure{$this_unit} }; 
+	    pop @time_array;
+#	this should be starttime->endtime
+	    
+	    @eng_comp_array = sort keys %{ $EngDatStructure{$this_unit}->{"Statistics"} };
+	    last;
+	}
+	
+	for $i (@time_array) {
+	    for $this_unit (@unit_array) {
+		for $j (@eng_comp_array) {
+		    $EngDatStructure{$this_unit}->{$i}->{$j} -= $helix_info{$this_unit}->{"0"}->{$j};
+		}
+	    }
+	}
+    } else {
+	die "The files $helix1 or $helix2 contains invalid data\n";
+    }
+}
+
+sub GetCorrectUnit(@) {
+    my ($curr_unit, $helix_no) = @_;
+    my ($result);
+    my ($strand_len) = $total_bases/4;
+
+    $helix_no -= 1;
+    my ($current_chain);
+
+    if ($helix_no == 1) {
+	$curr_unit = $curr_unit + ($strand_len * 2); # helix offset
+    }
+
+    $curr_unit = sprintf("%4d", $curr_unit);
+    $result = $helix_layout{$curr_unit};
+
+    return $result;
+
+}
+
+sub DetermineStrandLayout() {
+
+    my ($total_base_num) = $total_bases/4;
+    my ($bases_total) = $total_bases/4;
+    my ($numBasesAtEnd) = $no_bases_at_end;
+    my (@regionsEnd);
+    my $i;
+    my ($helix1_strand1, $helix1_strand2, $helix2_strand1, $helix2_strand2);
+
+    while ((($bases_total - $numBasesAtEnd) - $periodicity) >= 0 ) {
+	my $total_regions = $#regionsEnd;
+	if ($total_regions > -1) {
+	    push @regionsEnd, $regionsEnd[$total_regions] + $majorgroove;
+	    push @regionsEnd, $regionsEnd[$total_regions +1] + $minorgroove;
+	} else {
+	    push @regionsEnd, $numBasesAtEnd + $majorgroove;
+	    push @regionsEnd, $numBasesAtEnd + $minorgroove + $majorgroove;
+	}
+
+	$bases_total -= $periodicity;
+    }
+
+    $regionsEnd[$#regionsEnd] = $total_base_num;
+
+    if ($is3primeIn) {
+	#set first region data for helices
+
+	#helix 1
+	$helix[0][0][0]{"Strand"} = 1; 
+	$helix[0][0][0]{"StartUnit"} = 1;
+	$helix[0][0][0]{"EndUnit"} =  $numBasesAtEnd;
+
+	$helix[0][1][0]{"Strand"} = 4; 
+	$helix[0][1][0]{"StartUnit"} =  $total_base_num;
+	$helix[0][1][0]{"EndUnit"} =  $total_base_num - $numBasesAtEnd + 1;;
+
+	#helix 2
+	$helix[1][0][0]{"Strand"} = 2; 
+	$helix[1][0][0]{"StartUnit"} = $total_base_num;
+	$helix[1][0][0]{"EndUnit"} =  $total_base_num - $numBasesAtEnd +1;
+
+	$helix[1][1][0]{"Strand"} = 3; 
+	$helix[1][1][0]{"StartUnit"} =  1;
+	$helix[1][1][0]{"EndUnit"} = $numBasesAtEnd;
+	    $helix1_strand1 = $helix[0][0][0]{"Strand"};
+	    $helix1_strand2 = $helix[0][1][0]{"Strand"};
+	    $helix2_strand1 = $helix[1][0][0]{"Strand"};
+	    $helix2_strand2 = $helix[1][1][0]{"Strand"};
+#	    print "Start: region: 0, val: 0, h1s1: $helix1_strand1, h1s2: $helix1_strand2, h2s1: $helix2_strand1, h2s2: $helix2_strand2\n";
+
+#	print "region 1 ends at $numBasesAtEnd\n";
+	for $i (0 .. $#regionsEnd) {
+#	    print "region " . ($i+2) . " ends at $regionsEnd[$i]\n";
+
+	    $helix1_strand1 = $helix[0][0][$i]{"Strand"};
+	    $helix1_strand2 = $helix[0][1][$i]{"Strand"};
+	    $helix2_strand1 = $helix[1][0][$i]{"Strand"};
+	    $helix2_strand2 = $helix[1][1][$i]{"Strand"};
+	    if (IsCrossoverAtUnit($regionsEnd[$i]) or ($i == $#regionsEnd and IsCrossoverAtUnit($regionsEnd[$i -1]))) {
+		if (($i+1) % 2 == 1) {
+		    if ($helix1_strand1 == 1) { $helix1_strand1 = 3; } else { $helix1_strand1 = 1 };
+		    if ($helix2_strand2 == 1) { $helix2_strand2 = 3; } else { $helix2_strand2 = 1 };
+		} else {
+		    if ($helix1_strand2 == 4) { $helix1_strand2 = 2; } else { $helix1_strand2 = 4 };
+		    if ($helix2_strand1 == 4) { $helix2_strand1 = 2; } else { $helix2_strand1 = 4 };
+		}
+	    }
+#	    print "After: region: " . ($i+1) .", val: $regionsEnd[$i], h1s1: $helix1_strand1, h1s2: $helix1_strand2, h2s1: $helix2_strand1, h2s2: $helix2_strand2\n";
+	    #helix 1
+	    $helix[0][0][$i+1]{"Strand"} = $helix1_strand1; 
+	    $helix[0][0][$i+1]{"StartUnit"} = $helix[0][0][$i]{"EndUnit"} + 1;
+	    $helix[0][0][$i+1]{"EndUnit"} =  $regionsEnd[$i];
+	    
+	    $helix[0][1][$i+1]{"Strand"} = $helix1_strand2; 
+	    $helix[0][1][$i+1]{"StartUnit"} =  $helix[0][1][$i]{"EndUnit"} - 1;
+	    $helix[0][1][$i+1]{"EndUnit"} =  $total_base_num - $regionsEnd[$i] + 1;
+	    
+	    #helix 2
+	    $helix[1][0][$i+1]{"Strand"} = $helix2_strand1; 
+	    $helix[1][0][$i+1]{"StartUnit"} = $helix[1][0][$i]{"EndUnit"} - 1;
+	    $helix[1][0][$i+1]{"EndUnit"} =  $total_base_num - $regionsEnd[$i] + 1;
+	    	    
+	    $helix[1][1][$i+1]{"Strand"} = $helix2_strand2; 
+	    $helix[1][1][$i+1]{"StartUnit"} = $helix[1][1][$i]{"EndUnit"} + 1;
+	    $helix[1][1][$i+1]{"EndUnit"} = $regionsEnd[$i];
+	}
+	FinalizeHelixLayout();
+    }
+
+}
+
+sub FinalizeHelixLayout() {
+# because the above function is copied from helix_from_strand.pl, this function
+# will generate the correct layout
+# it will parse the $helix array and map the strands and units in the helix
+
+    my ($i, $j, $startno, $endno, $region, $counter);
+    my ($curr_strand, $helix_unit, $structure_unit, $tmp);
+    my ($strand_len) = $total_bases/4;
+
+    $helix_unit = 0;
+#    print "\n";
+    for $i (0 .. $#helix) {
+	for $j (0 .. $#{@{$helix[$i]}}) {
+	    for $region (0 .. $#{@{$helix[$i][$j]}}) {
+		if ($region == 0) {
+		    $curr_strand = $helix[$i]->[$j]->[$region]->{"Strand"} -1;
+		} else {
+		    $curr_strand = $helix[$i]->[$j]->[$region - 1]->{"Strand"} -1;
+		}
+		$startno = $helix[$i]->[$j]->[$region]->{"StartUnit"};
+		$endno = $helix[$i][$j]->[$region]->{"EndUnit"};
+		if ($startno > $endno) {
+		    ($startno, $endno) = Swap($startno, $endno);
+		}
+#		print "region: [$i][$j][$region], strand: $curr_strand, start: $startno, end: $endno\n";
+		for $counter ($startno .. $endno) {
+		    $structure_unit = ($curr_strand * $strand_len) + $counter;
+		    $helix_unit++;
+		    $tmp = sprintf("%4d", $helix_unit);
+#		    print "In: $tmp, out: $structure_unit\n";
+		    $helix_layout{$tmp} = sprintf("%4d", $structure_unit);
+		}
+	    }
+	}
+    }
+#    print "\n";
+}
+
+
+sub IsCrossoverAtUnit(@) {
+    my ($pointInQuestion) = $_[0];
+    my ($i);
+    my ($returnval) = 0;
+
+#    print "Looking for crossovers at point $pointInQuestion\n";
+    for $i (@crossovers) {
+	if ($i == $pointInQuestion) {
+	    $returnval = 1;
+#	    print "\tCrossover at point $pointInQuestion\n";
+	    last;
+	}
+    }
+
+    return $returnval;
+}

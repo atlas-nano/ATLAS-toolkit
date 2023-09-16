@@ -1,0 +1,289 @@
+17a18,19
+> sub GenerateAngles(@);
+> sub GenerateTorsions(@);
+39c41
+< my (%ERRORS, $counter, $index, $PARMS, $ATOMS, $CONNECTIONS, $scale_torsions, $BBOX, $INVERSIONS);
+---
+> my (%ERRORS, $counter, $index, $PARMS, $ATOMS, $CONNECTIONS, $scale_torsions, $BBOX);
+79,88d80
+< if (%ERRORS) {
+<     print "Done\n\n---===ATOMTYPE ERRORS===----\n";
+<     print "The following atom types were not found in the forcefield. Script cannot continue.\n";
+< 	
+<     for $index(keys %{ $ERRORS{"ATOMTYPES"} }) {
+< 	print "$index: " . $ERRORS{"ATOMTYPES"}{$index} . "\n";
+<     }
+<     die "Terminating execution\n";
+< }
+< 
+99,103d90
+< print "Done\n\tc.INVERSIONS...";
+< sleep(1);
+< ($INVERSIONS,$PresentValence) = GenerateValence($CONNECTIONS, "INVERSIONS", 4);
+< UpdateValenceList(\%{ $PARMS->{"INVERSIONS"} }, \%{ $INVERSIONS }, $PresentValence);
+< 
+129,130d115
+< PrintValence("Impropers", $INVERSIONS);
+< 
+154,156c139,141
+<     my ($type_id, $type_id2, @bonds, $type_id3, @angles, $tmp1, @inversions);
+<     my ($type_id4, @torsions, $key_code, $torsion_type, $inversion_type);
+<     my ($bond_counter, $angle_counter, $torsion_counter,@tmp, $inversion_counter);
+---
+>     my ($type_id, $type_id2, @bonds, $type_id3, @angles, $tmp1);
+>     my ($type_id4, @torsions, $key_code, $torsion_type);
+>     my ($bond_counter, $angle_counter, $torsion_counter,@tmp);
+184,185d168
+< 	} elsif ($in_data =~ /^INVERSIONS/) {
+< 	    $which_var = 7;
+209c192
+< #		GetAbs(\@vdws);
+---
+> 		GetAbs(\@vdws);
+250c233
+< #		GetAbs(\@vdws);
+---
+> 		GetAbs(\@vdws);
+282c265
+< #		GetAbs(\@bonds);
+---
+> 		GetAbs(\@bonds);
+308c291
+< #		GetAbs(\@angles);
+---
+> 		GetAbs(\@angles);
+352c335
+< #		GetAbs(\@torsions);
+---
+> 		GetAbs(\@torsions);
+375c358
+< #	    GetAbs(\@torsions);
+---
+> 	    GetAbs(\@torsions);
+389,434d371
+< 	} elsif ($in_data =~ /^\s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\w+)\s+(.+)/ and ($which_var == 7)) {
+< 	    $inversion_type = $5;
+< 	    if (uc($inversion_type) ne "IGNORE") {
+< 		$inversion_counter++;
+< 		$type_id = $PARMS{"ATOMTYPES"}{$1}{"TYPEID"};
+< 		next
+< 		    if (! defined($type_id) and lc($1) ne "x");
+< 		$type_id2 = $PARMS{"ATOMTYPES"}{$2}{"TYPEID"};
+< 		next
+< 		    if (! defined($type_id2) and lc($2) ne "x");
+< 		$type_id3 = $PARMS{"ATOMTYPES"}{$3}{"TYPEID"};
+< 		next
+< 		    if (! defined($type_id3) and lc($3) ne "x");
+< 		$type_id4 = $PARMS{"ATOMTYPES"}{$4}{"TYPEID"};
+< 		next
+< 		    if (! defined($type_id4) and lc($4) ne "x");
+< 		
+<                 $type_id = $1
+<                    if (! defined($type_id)); 
+<                 $type_id2 = $2
+<                     if (! defined($type_id2)); 
+<                 $type_id3 = $3
+<                     if (! defined($type_id3)); 
+<                 $type_id4 = $4
+<                     if (! defined($type_id4));
+<                 @inversions = split /\s+/, $6;
+< #		GetAbs(\@torsions);
+<  
+<                 if (lc($inversion_type) eq "it_jikl") {
+< 		    if ($inversions[1] == 180) {
+< 			$inversions[1] = 1;
+< 		    } else {
+< 			$inversions[1] = -1;
+< 		    }
+<                 }
+<                 $inversions[0] = $inversions[0] / 2; #1/2 fix again
+< 		$key_code = "$type_id - $type_id2 - $type_id3 - $type_id4";
+< 		$PARMS{"INVERSIONS"}{$inversion_counter} = (
+< 							     {
+< 								 "TYPE"     => $inversion_type,
+< 								 "KEY"      => $key_code,
+< 								 "VALS"     => [@inversions],
+< 							     }
+< 							     );
+< #		print "TORSION $torsion_counter: $key_code\n";
+< 	    }
+448d384
+<     $PARMS{"INVERSIONS"}{"Lammps"}{"LABEL"} = "improper";
+461,462c397,398
+< 	if ($use_ele) {
+< 	    $atm_name = $atoms->{$counter}{"FFTYPE"};
+---
+> 	if (defined($use_ele) and $use_ele =~ /1/) {
+> 	    $atm_name = $atoms->{$counter}{"REALATM"};
+496,497c432
+<     @holder = keys %{ $INVERSIONS };
+<     printf OUTFILE "%12s  impropers\n\n", ($#holder + 1);
+---
+>     printf OUTFILE "%12s  impropers\n\n", 0;
+499c434
+<     for $index ("ATOMTYPES", "BONDS", "ANGLES", "TORSIONS", "INVERSIONS") {
+---
+>     for $index ("ATOMTYPES", "BONDS", "ANGLES", "TORSIONS") {
+504a440
+>     printf OUTFILE "%12s  improper types\n\n", 0;
+530c466
+<     for $counter ("BONDS", "ANGLES", "TORSIONS", "INVERSIONS", "VDW") {
+---
+>     for $counter ("BONDS", "ANGLES", "TORSIONS", "VDW") {
+654c590,591
+< 	    
+---
+> 
+> 
+659c596
+<     my ($angle_index, $torsion_index, $type, $inversion_index);
+---
+>     my ($angle_index, $torsion_index, $type);
+669,673c606
+< 	    if ($use_ele) {
+< 		$error_code = $ATOMS->{$counter}{"FFTYPE"} . " - " . $ATOMS->{$bond_index}{"FFTYPE"};
+< 	    } else {
+< 		$error_code = $ATOMS->{$counter}{"ATMNAME"} . " - " . $ATOMS->{$bond_index}{"ATMNAME"};
+< 	    }
+---
+> 	    $error_code = $ATOMS->{$counter}{"ATMNAME"} . " - " . $ATOMS->{$bond_index}{"ATMNAME"};
+676c609
+< 								       $valence_counter, $which_valence, $error_code, 0);
+---
+> 								       $valence_counter, $which_valence, $error_code);
+694,700c627,628
+< 		    if ($use_ele) {
+< 			$error_code = $ATOMS->{$counter}{"FFTYPE"} . " - " . $ATOMS->{$bond_index}{"FFTYPE"} . 
+< 			    " - " . $ATOMS->{$angle_index}{"FFTYPE"};
+< 		    } else {
+< 			$error_code = $ATOMS->{$counter}{"ATMNAME"} . " - " . $ATOMS->{$bond_index}{"ATMNAME"} . 
+< 			    " - " . $ATOMS->{$angle_index}{"ATMNAME"};
+< 		    }
+---
+> 		    $error_code = $ATOMS->{$counter}{"ATMNAME"} . " - " . $ATOMS->{$bond_index}{"ATMNAME"} . 
+> 			" - " . $ATOMS->{$angle_index}{"ATMNAME"};
+703c631
+< 									 $valence_counter, $which_valence, $error_code, 0);
+---
+> 								  $valence_counter, $which_valence, $error_code);
+714,742d641
+< 		    } elsif (($iter + 3) == $depth and $#{ $connections->{$bond_index} } == 2) { #Central bond connected to 3 others so inversion
+< 			$atm_code = $bond_index;
+< 			$key_code = $ATOMS->{$bond_index}{"TYPEID"};
+< 			if ($use_ele) {
+< 			    $error_code = $ATOMS->{$bond_index}{"FFTYPE"};
+< 			} else {
+< 			    $error_code = $ATOMS->{$bond_index}{"ATMNAME"};
+< 			}
+< 			for $inversion_index (@{ $connections->{$bond_index} }) {
+< 			    $atm_code .= " - $inversion_index";
+< 			    $key_code .= " - " . $ATOMS->{$inversion_index}{"TYPEID"};
+< 			    if ($use_ele) {
+< 				$error_code .= " - " . $ATOMS->{$inversion_index}{"FFTYPE"};
+< 			    } else {
+< 				$error_code .= " - " . $ATOMS->{$inversion_index}{"ATMNAME"};
+< 			    }
+< 			}
+< 
+< 			($result, $valence_counter, $type) = FindKeyCode(\%{ $PARMS->{$which_valence} }, $key_code, $atm_code, 
+< 									 $valence_counter, $which_valence, $error_code, 1);
+< 			if ($result ne "") {
+< 			    if (! AlreadyUsed($atm_code,\%USED)) { 
+< 				$OUTPUT{$valence_counter} = $result;
+< 				$USED{$atm_code} = 1;
+< 				$PRESENT{$type} = 1;
+< 			    } else {
+< 				$valence_counter--;
+< 			    }
+< 			}
+751,757c650,652
+< 			    if ($use_ele) {
+< 				$error_code = $ATOMS->{$counter}{"FFTYPE"} . " - " . $ATOMS->{$bond_index}{"FFTYPE"} . 
+< 				    " - " . $ATOMS->{$angle_index}{"FFTYPE"} . " - " . $ATOMS->{$torsion_index}{"FFTYPE"};
+< 			    } else {
+< 				$error_code = $ATOMS->{$counter}{"ATMNAME"} . " - " . $ATOMS->{$bond_index}{"ATMNAME"} . 
+< 				    " - " . $ATOMS->{$angle_index}{"ATMNAME"} . " - " . $ATOMS->{$torsion_index}{"ATMNAME"};
+< 			    }				
+---
+> 
+> 			    $error_code = $ATOMS->{$counter}{"ATMNAME"} . " - " . $ATOMS->{$bond_index}{"ATMNAME"} . 
+> 				" - " . $ATOMS->{$angle_index}{"ATMNAME"} . " - " . $ATOMS->{$torsion_index}{"ATMNAME"};
+759c654
+< 								      $valence_counter, $which_valence, $error_code, 0);
+---
+> 								      $valence_counter, $which_valence, $error_code);
+787,788c682,683
+<     my ($valence_object, $key_code, $atm_code, $index, $which_valence, $error_code, $is_inversion) = @_;
+<     my ($counter, $result, $i,@valenceKeys,$isFound,$atms, $valence_type, $iAtom);
+---
+>     my ($valence_object, $key_code, $atm_code, $index, $which_valence, $error_code) = @_;
+>     my ($counter, $result, $i,@valenceKeys,$isFound,$atms, $valence_type);
+800,823c695,701
+< 	    if (! $is_inversion) {
+< 		for $atms (0 .. $#valenceKeys) {
+< 		    if (($valenceKeys[$atms] ne $IDS[$atms]) and lc($valenceKeys[$atms]) ne "x") {
+< 			$isFound = 0;
+< 			last;
+< 		    }
+< 		}
+<             } else {
+< 		for $atms (@IDS) {
+< 		    $iAtom = 0;
+< 		    while ($iAtom <= $#valenceKeys) {
+< 			if ($valenceKeys[$iAtom] eq $atms or lc($valenceKeys[$iAtom]) eq "x") {
+< 			    splice @valenceKeys, $iAtom, 1;
+< 			} else {
+< 			    $iAtom++;
+< 			}
+< 		    }
+< 		}
+< 		if ($#valenceKeys == -1) {
+< 		    $isFound = 1;
+< 		} else {
+< 		    $isFound = 0;
+< 		}
+< 	    }
+---
+>             for $atms (0 .. $#valenceKeys) {
+>                 if (($valenceKeys[$atms] ne $IDS[$atms]) and lc($valenceKeys[$atms]) ne "x") {
+>                     $isFound = 0;
+>                     last;
+>                 }
+>             }
+> 
+915c793
+< $parm->{"INVERSIONS"}{"header"}
+---
+> improper_style none
+985,990c863,867
+< 						  "vdw"        => "pair_style",
+< 						  "bonds"      => "bond_style",
+< 						  "angles"     => "angle_style",
+< 						  "torsions"   => "dihedral_style",
+< 						  "hbond"      => "pair_style",
+< 						  "inversions" => "improper_style",
+---
+> 						  "vdw"       => "pair_style",
+> 						  "bonds"     => "bond_style",
+> 						  "angles"    => "angle_style",
+> 						  "torsions"  => "dihedral_style",
+> 						  "hbond"    => "pair_style",
+1058,1063d934
+< 			     "it_ijkl"    => (
+< 					      {
+< 						  "name"  => "cvff",
+< 						  "opts"  => "",
+< 					      }
+< 					      ),
+1257c1128
+< 	    if (! exists($parms->{$hashKey}{"TYPEID"})); 
+---
+> 	    if ($hashKey =~ /Lammps/); 
+1307,1311c1178
+< 		if (lc($index) ne "x") {
+< 		    $newKey .= $USED{$index} . " - ";
+< 		} else {
+< 		    $newKey .= "X - ";
+< 		}
+---
+> 		$newKey .= $USED{$index} . " - ";

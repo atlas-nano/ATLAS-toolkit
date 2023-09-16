@@ -1,0 +1,357 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ GENERATE_UNDEFINED_TERMS              F
+ IGNORE_UNDEFINED_TERMS                F
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          1.00000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NON_BOND_LIST                         T
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                      100.00000
+ COU_SPLINE_OFF                           8.50000
+ COU_SPLINE_ON                            8.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_AUTO_OPT                T
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            DIRECT    
+ COU_DIRECT_CUT-OFF                       8.00000
+ VDW_COMBINATION_RULE                  ARITHMETIC
+ VDW_INTER_CUT_OFF                      100.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            DIRECT    
+ VDW_SPLINE_ON                            8.00000
+ VDW_SPLINE_OFF                           8.50000
+ EWALD_SUM_VDW_AUTO_OPT                T
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ATOM_TYPE                             F
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ H_         H       1.00790  0.0000   0   0   0
+ H___A      H       1.00790  0.0000   0   0   0
+ C_3        C      12.01100  0.0000   3   0   0
+ C_S        C      12.01100  0.0000   3   0   0
+ C_2        C      12.01100  0.0000   2   0   0
+ C_R        C      12.01100  0.0000   2   0   0
+ C_B        C      12.01100  0.0000   2   0   0
+ C_1        C      12.01100  0.0000   1   0   0
+ N_3        N      14.00670  0.0000   3   0   1
+ N_2        N      14.00670  0.0000   2   0   1
+ N_R        N      14.00670  0.0000   2   0   1
+ N_RL       N      14.00670  0.0000   2   0   1
+ N_1        N      14.00670  0.0000   1   0   1
+ O_3        O      15.99940  0.0000   3   0   2
+ O_S        O      15.99940  0.0000   3   0   2
+ O_2        O      15.99940  0.0000   2   0   2
+ O_P        O      15.99940  0.0000   2   0   2
+ O_R        O      15.99940  0.0000   2   0   1
+ O_1        O      15.99940  0.0000   1   0   1
+ P_3        P      30.97376  0.0000   3   0   1
+ P_3+3      P      30.97376  0.0000   3   0   0
+ S_31       S      33.06790  0.0000   3   1   2
+ S_3        S      32.06000  0.0000   3   0   2
+ Cl         Cl     35.45300 -1.0000   0   0   3
+ Na         Na     22.98977  1.0000   0   0   0
+ Ca         Ca     40.08000  2.0000   0   0   0
+ NaH        Na     22.98977  1.0000   0   0   0
+ ClH        Cl     35.45300 -1.0000   0   0   3
+ H__OJ      H       1.00800  0.0000   0   0   0
+ O_3_J      O      15.99940  0.0000   3   0   2
+ Mg         Mg     24.30500  2.0000   0   0   0
+ F_         F      18.99840  0.0000   0   0   0
+END
+#
+DIAGONAL_VDW
+ H_          EXPO_6         3.1950  0.1520E-01   12.3820
+ H___A       EXPO_6         3.1950  0.1000E-03   12.0000
+ C_3         EXPO_6         3.8983  0.9510E-01   14.0340
+ C_S         EXPO_6         3.8983  0.9510E-01   14.0340
+ C_2         EXPO_6         3.8983  0.9510E-01   14.0340
+ C_R         EXPO_6         3.8983  0.9510E-01   14.0340
+ C_B         EXPO_6         3.8983  0.9510E-01   14.0340
+ C_1         EXPO_6         3.8983  0.9510E-01   14.0340
+ N_3         EXPO_6         3.6621  0.7740E-01   13.8430
+ N_2         EXPO_6         3.6621  0.7740E-01   13.8430
+ N_R         EXPO_6         3.6621  0.7740E-01   13.8430
+ N_RL        EXPO_6         3.6621  0.7740E-01   13.8430
+ N_1         EXPO_6         3.6621  0.7740E-01   13.8430
+ O_3         EXPO_6         3.4046  0.9570E-01   13.4830
+ O_S         EXPO_6         3.4046  0.9570E-01   13.4830
+ O_2         EXPO_6         3.4046  0.9570E-01   13.4830
+ O_P         EXPO_6         3.4046  0.9570E-01   13.4830
+ O_R         EXPO_6         3.4046  0.9570E-01   13.4830
+ O_1         EXPO_6         3.4046  0.9570E-01   13.4830
+ P_3         EXPO_6         4.1500  0.3200E+00   12.0000
+ P_3+3       EXPO_6         4.1500  0.3200E+00   12.0000
+ S_31        EXPO_6         4.0300  0.3440E+00   12.0000
+ S_3         EXPO_6         4.0300  0.3440E+00   12.0000
+ Cl          EXPO_6         3.9503  0.2833E+00   13.8610
+ Na          EXPO_6         2.8500  0.5000E+00   12.0000
+ Ca          EXPO_6         3.4720  0.5000E-01   12.0000
+ NaH         EXPO_6         5.0000  0.1000E+00   12.0000
+ ClH         EXPO_6         5.0000  0.1000E+00   12.0000
+ H__OJ       EXPO_6         3.1950  0.1000E-03   12.3800
+ O_3_J       EXPO_6         3.5364  0.1521E+00   13.4830
+ Mg          EXPO_6         2.5549  0.3649E+00   12.0000
+ F_          EXPO_6         3.3640  0.5000E-01   13.4830
+END
+#
+ATOM_TYPING_RULES
+END
+#
+#
+OFF_DIAGONAL_VDW
+ N_RL     H___A       VDW_MORSE      2.7000  0.2000E+00    9.4000
+ O_3      H___A       VDW_MORSE      2.7500  0.2000E+00    9.0000
+ O_2      H___A       VDW_MORSE      2.5500  0.2000E+00    9.0000
+END
+#
+BOND_STRETCH
+ C_3      H_          HARMONIC     659.7507    1.1110
+ C_3      C_3         HARMONIC     699.5920    1.5140
+ C_S      H_          HARMONIC     659.7507    1.1110
+ C_S      C_3         HARMONIC     699.5920    1.5140
+ C_R      H_          HARMONIC     712.2570    1.0830
+ C_R      C_3         HARMONIC     739.8881    1.4690
+ C_R      C_R         HARMONIC     951.8002    1.4074
+ C_B      H_          HARMONIC     712.2570    1.0830
+ C_B      C_R         HARMONIC     951.8002    1.3664
+ N_3      C_3         HARMONIC     700.0000    1.4620
+ N_2      H___A       HARMONIC    1030.9469    1.0830
+ N_2      C_R         HARMONIC    1359.2566    1.3726
+ N_R      H_          HARMONIC    1030.9469    1.0830
+ N_R      H___A       HARMONIC    1030.9469    1.0830
+ N_R      C_3         HARMONIC    1046.4963    1.4560
+ N_R      C_R         HARMONIC    1359.2566    1.3726
+ N_R      C_B         HARMONIC    1359.2566    1.3726
+ N_RL     C_3         HARMONIC    1046.4963    1.4560
+ N_RL     C_R         HARMONIC    1359.2566    1.3726
+ N_RL     C_B         HARMONIC    1359.2566    1.3726
+ O_3      H_          HARMONIC    1050.0039    1.0120
+ O_3      H___A       HARMONIC    1128.3962    0.9880
+ O_3      C_3         HARMONIC    1030.7742    1.4150
+ O_3      C_S         HARMONIC    1030.7742    1.4150
+ O_S      H_          HARMONIC    1050.0039    1.0120
+ O_S      C_3         HARMONIC    1030.7742    1.4150
+ O_2      C_3         HARMONIC    1085.0542    1.3910
+ O_2      C_R         HARMONIC    1621.0470    1.2440
+ P_3+3    O_3         HARMONIC     803.3712    1.7590
+ P_3+3    O_P         HARMONIC    1050.0000    1.4800
+ P_3+3    O_R         HARMONIC    1082.4950    1.5930
+ O_3_J    H__OJ       HARMONIC     700.0000    0.9800
+ F_       C_3         HARMONIC     761.3979    1.4250
+ F_       C_S         HARMONIC     761.3979    1.4250
+END
+#
+ANGLE_BEND
+ H_       C_3      H_          COS_HARMON    75.6040  109.4710
+ C_3      C_3      H_          COS_HARMON   117.3990  109.4710
+ C_3      C_3      C_3         COS_HARMON   214.2065  109.4710
+ C_S      C_3      H_          COS_HARMON   117.3990  109.4710
+ C_S      C_3      C_3         COS_HARMON   214.2065  109.4710
+ C_R      C_3      H_          COS_HARMON   121.8610  109.4710
+ C_B      C_3      H_          COS_HARMON   121.8610  109.4710
+ N_3      C_3      H_          COS_HARMON   170.1120  109.4710
+ N_3      C_3      C_3         COS_HARMON   214.2065  109.4710
+ N_R      C_3      H_          COS_HARMON   170.1120  109.4710
+ N_R      C_3      C_3         COS_HARMON   303.5660  109.4710
+ N_RL     C_3      H_          COS_HARMON   170.1120  109.4710
+ N_RL     C_3      C_3         COS_HARMON   303.5660  109.4710
+ O_3      C_3      H_          COS_HARMON   165.8800  109.4710
+ O_3      C_3      C_3         COS_HARMON   290.0060  109.4710
+ O_3      C_3      C_S         COS_HARMON   290.0060  109.4710
+ O_3      C_3      N_R         COS_HARMON   413.4660  109.4710
+ O_3      C_3      N_RL        COS_HARMON   413.4660  109.4710
+ O_S      C_3      H_          COS_HARMON   165.8800  109.4710
+ O_S      C_3      C_3         COS_HARMON   290.0060  109.4710
+ O_S      C_3      C_S         COS_HARMON   290.0060  109.4710
+ O_S      C_3      N_3         COS_HARMON   413.4660  109.4710
+ O_S      C_3      N_R         COS_HARMON   413.4660  109.4710
+ O_S      C_3      N_RL        COS_HARMON   413.4660  109.4710
+ F_       C_3      H_          COS_HARMON   119.8158  109.4710
+ C_3      C_S      H_          COS_HARMON   117.3990  109.4710
+ C_3      C_S      C_3         COS_HARMON   214.2065  109.4710
+ O_3      C_S      H_          COS_HARMON   165.8800  109.4710
+ O_3      C_S      C_3         COS_HARMON   290.0060  109.4710
+ F_       C_S      H_          COS_HARMON   119.8158  109.4710
+ F_       C_S      C_3         COS_HARMON   212.2212  109.4710
+ H_       C_R      H_          COS_HARMON   117.0535  120.0000
+ C_R      C_R      H_          COS_HARMON   117.0535  120.0000
+ C_R      C_R      C_3         COS_HARMON   202.4230  120.0000
+ C_R      C_R      C_R         COS_HARMON   229.2697  120.0000
+ C_B      C_R      H_          COS_HARMON   117.0535  120.0000
+ C_B      C_R      C_3         COS_HARMON   202.4230  120.0000
+ C_B      C_R      C_R         COS_HARMON   229.2697  120.0000
+ N_2      C_R      C_R         COS_HARMON   314.5356  120.0000
+ N_R      C_R      H_          COS_HARMON   162.4060  120.0000
+ N_R      C_R      C_R         COS_HARMON   314.5356  120.0000
+ N_R      C_R      N_2         COS_HARMON   433.7220  120.0000
+ N_R      C_R      N_R         COS_HARMON   433.7220  120.0000
+ N_RL     C_R      H_          COS_HARMON   162.4060  120.0000
+ N_RL     C_R      C_R         COS_HARMON   314.5356  120.0000
+ N_RL     C_R      N_2         COS_HARMON   433.7220  120.0000
+ N_RL     C_R      N_R         COS_HARMON   433.7220  120.0000
+ N_RL     C_R      N_RL        COS_HARMON   433.7220  120.0000
+ O_2      C_R      C_R         COS_HARMON   326.3435  120.0000
+ O_2      C_R      N_R         COS_HARMON   451.2690  120.0000
+ O_2      C_R      N_RL        COS_HARMON   451.2690  120.0000
+ H_       C_B      H_          COS_HARMON   117.0535  120.0000
+ C_R      C_B      H_          COS_HARMON   117.0535  120.0000
+ N_R      C_B      H_          COS_HARMON   162.4060  120.0000
+ N_R      C_B      C_R         COS_HARMON   314.5356  120.0000
+ N_R      C_B      N_R         COS_HARMON   433.7220  120.0000
+ N_RL     C_B      H_          COS_HARMON   162.4060  120.0000
+ N_RL     C_B      C_R         COS_HARMON   314.5356  120.0000
+ N_RL     C_B      N_R         COS_HARMON   433.7220  120.0000
+ H___A    N_3      H___A       COS_HARMON    71.3950  109.4710
+ H___A    N_2      H___A       COS_HARMON    71.3950  120.0000
+ C_3      N_2      H___A       COS_HARMON   126.4483  109.4710
+ C_R      N_2      H___A       COS_HARMON   126.4483  120.0000
+ H___A    N_R      H___A       COS_HARMON    71.3950  120.0000
+ C_3      N_R      H___A       COS_HARMON   126.4483  120.0000
+ C_3      N_R      C_3         COS_HARMON   126.4483  120.0000
+ C_R      N_R      H_          COS_HARMON   126.4483  120.0000
+ C_R      N_R      H___A       COS_HARMON   126.4483  120.0000
+ C_R      N_R      C_3         COS_HARMON   216.7528  120.0000
+ C_R      N_R      C_R         COS_HARMON   247.1814  120.0000
+ C_B      N_R      H___A       COS_HARMON   126.4483  120.0000
+ C_B      N_R      C_3         COS_HARMON   216.7528  120.0000
+ C_B      N_R      C_R         COS_HARMON   247.1814  120.0000
+ C_R      N_RL     C_R         COS_HARMON   247.1814  120.0000
+ C_B      N_RL     C_R         COS_HARMON   247.1814  120.0000
+ H___A    O_3      H___A       COS_HARMON   175.0000  109.5000
+ C_3      O_3      H_          COS_HARMON   174.2860  109.5000
+ C_3      O_3      H___A       COS_HARMON   174.2860  109.5000
+ C_3      O_3      C_3         COS_HARMON   311.6010  109.5000
+ C_S      O_3      H_          COS_HARMON   174.2860  109.5000
+ C_S      O_3      H___A       COS_HARMON   174.2860  109.5000
+ P_3+3    O_3      C_3         COS_HARMON   321.2860  120.0000
+ P_3+3    O_3      C_S         COS_HARMON   321.2860  120.0000
+ C_3      O_S      H_          COS_HARMON   165.6001  104.5100
+ C_3      O_S      C_3         COS_HARMON   297.8331  112.0000
+ O_3      P_3+3    O_3         COS_HARMON   200.0000  104.5100
+ O_P      P_3+3    O_3         COS_HARMON   200.0000  108.2000
+ O_P      P_3+3    O_P         COS_HARMON   280.0000  119.9000
+ H__OJ    O_3_J    H__OJ       COS_HARMON   320.0000  104.5100
+END
+#
+TORSIONS
+ X        C_3      C_3      X           DIHEDRAL       2.1190    3.0000   -1.0000
+ O_3      C_3      C_3      N_R         DIHEDRAL       3.0000    2.0000   -1.0000
+                                                       2.1190    3.0000   -1.0000
+                                                      18.0000    4.0000    1.0000
+ O_S      C_3      C_3      C_3         DIHEDRAL      16.2000    2.0000   -1.0000
+                                                       2.1190    3.0000   -1.0000
+ O_S      C_3      C_3      O_3         DIHEDRAL       3.0000    2.0000   -1.0000
+                                                       2.1190    3.0000   -1.0000
+                                                      18.0000    4.0000    1.0000
+ X        C_S      C_3      X           DIHEDRAL       2.1190    3.0000   -1.0000
+ C_3      C_S      C_3      O_S         DIHEDRAL      16.2000    2.0000   -1.0000
+                                                       2.1190    3.0000   -1.0000
+ O_3      C_S      C_3      O_3         DIHEDRAL       3.0000    2.0000   -1.0000
+                                                       2.1190    3.0000   -1.0000
+                                                      18.0000    4.0000    1.0000
+ O_3      C_S      C_3      O_S         DIHEDRAL       3.0000    2.0000   -1.0000
+                                                       2.1190    3.0000   -1.0000
+                                                      18.0000    4.0000    1.0000
+ C_B      N_R      C_3      O_S         DIHEDRAL      10.0000    1.0000   -1.0000
+                                                      30.0000    2.0000   -1.0000
+                                                       7.0000    3.0000    1.0000
+                                                      10.0000    5.0000   -1.0000
+ H___A    O_3      C_3      H_          DIHEDRAL       6.0000    2.0000   -1.0000
+                                                       2.0000    3.0000   -1.0000
+ H___A    O_3      C_S      H_          DIHEDRAL       6.0000    2.0000   -1.0000
+                                                       2.0000    3.0000   -1.0000
+ X        C_R      C_3      X           DIHEDRAL       1.0000    6.0000    1.0000
+ X        C_R      C_R      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        C_B      C_3      X           DIHEDRAL       1.0000    6.0000    1.0000
+ X        C_B      C_R      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        N_3      C_3      X           DIHEDRAL       2.1190    3.0000   -1.0000
+ X        N_2      C_R      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        N_R      C_3      X           DIHEDRAL       1.0000    6.0000    1.0000
+ X        N_R      C_R      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        N_R      C_B      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        N_RL     C_R      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        N_RL     C_B      X           DIHEDRAL      30.0000    2.0000    1.0000
+ X        O_3      C_3      X           DIHEDRAL       2.0000    3.0000   -1.0000
+ X        O_3      C_S      X           DIHEDRAL       2.0000    3.0000   -1.0000
+ X        O_S      C_3      X           DIHEDRAL       2.0000    3.0000   -1.0000
+ X        P_3+3    O_3      X           DIHEDRAL       3.6000    3.0000   -1.0000
+ O_3      P_3+3    O_3      C_3         DIHEDRAL       2.7022    1.0000   -1.0000
+                                                       8.6752    2.0000   -1.0000
+END
+#
+INVERSIONS
+ C_R      X        X        X           UMBRELLA       6.0000    0.0000
+ C_R      O_2      X        X           UMBRELLA      50.0000    0.0000
+ C_R      X        X        O_2         UMBRELLA      50.0000    0.0000
+ C_B      X        X        X           UMBRELLA       6.0000    0.0000
+ N_2      X        X        X           UMBRELLA       6.0000    0.0000
+ N_R      X        X        X           UMBRELLA       6.0000    0.0000
+ N_RL     X        X        X           UMBRELLA       6.0000    0.0000
+END
+#
+COULOMBIC
+ X        X           CONST-EPS 
+END

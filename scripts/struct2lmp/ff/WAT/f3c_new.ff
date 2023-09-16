@@ -1,0 +1,135 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+Original F3C water model
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          0.40000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           F
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST                          
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                   1.00000
+ COU_INTER_CUT_OFF                       99.00000
+ COU_SPLINE_OFF                          10.00000
+ COU_SPLINE_ON                            9.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        3.57500
+ EWALD_SUM_COU_KCUT                       0.33900
+ EWALD_SUM_COU_RCUT                      10.72000
+ EWALD_SUM_COU_OPTIMIZE                SMART                         
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            EWALD                         
+ COU_DIRECT_CUT-OFF                       6.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC                     
+ VDW_INTER_CUT_OFF                       99.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            EWALD                         
+ VDW_SPLINE_ON                            9.00000
+ VDW_SPLINE_OFF                          10.00000
+ EWALD_SUM_VDW_OPTIMIZE                SMART                         
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        7.75000
+ EWALD_SUM_VDW_KCUT                       0.00000
+ EWALD_SUM_VDW_RCUT                      10.40000
+ EWALD_SUM_VDW_REP_CUT                    4.37000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         T
+ ASSIGN_HYBRIDIZATION                  F
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ H_F        H       1.00800  0.4100   1   0   0
+ O_3F       O      15.99940 -0.8200   2   0   2
+END
+#
+DIAGONAL_VDW
+ H_F         LJ_6_12      0.8999999761581421       0.9999999776482582E-02
+ O_3F        LJ_6_12       3.553200006484985       0.1847999989986420    
+END
+#
+ATOM_TYPING_RULES
+ H_F             H            0           0           1           1
+                 O            3           0           2           1
+                 H            0           0           0           1
+                 H            0           0           0           1
+ O_3F            O            3           0           2           1
+                 H            0           0           0           1
+                 H            0           0           0           1
+END
+#
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ O_3F     H_F         HARMONIC  1105.0000    1.0000               
+END
+#
+ANGLE_BEND
+ H_F      O_3F     H_F         THETA_HARM   100.5000  109.4700               
+END
+#
+TORSIONS
+END
+#
+INVERSIONS
+END
+#
+HYDROGEN_BONDS
+#Donor     Hydrogen    Aceptor    DREIDING III
+END
+#
+COULOMBIC
+ X        X           CONST-EPS 
+END

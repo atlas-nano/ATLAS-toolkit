@@ -1,0 +1,10 @@
+set style line 1 lt rgb "#000000" lw 1 pt 5
+set style line 2 lt rgb "#224499" lw 2 pt 7
+set style line 3 lt rgb "#025214" lw 2 pt 9
+set style line 5 lt rgb "#031A49" lw 2 pt 11
+set style line 7 lt rgb "#6D0D03" lw 2 pt 1
+set style line 6 lt rgb "#E69F17" lw 2 pt 6
+set style line 8 lt rgb "#1D4599" lw 2 pt 4
+set style line 4 lt rgb "#E62B17" lw 2 pt 10 
+set style line 9 lt rgb "#8F643F" lw 2 pt 12 
+set style line 10 lt rgb "#2F6C3D" lw 2 pt 14

@@ -1,0 +1,20 @@
+Example simulation: alanine/HCl/H2O energy minimization
+
+Energy minimization using SHANNO conjugate gradient
+method
+
+Input files:
+
+exe: UNIX-script; call this to start the program
+control: ReaxFF-keywords
+geo: input geometry (in .bgf-format)
+ffield: force field parameters
+
+Key output files:
+
+fort.57: energy and RMSG
+fort.58: partial energies
+fort.7: connnection table
+fort.90: output geometry
+xmolout: trajectory files (in .xyz-format)
+molfra.out:  molecular composition

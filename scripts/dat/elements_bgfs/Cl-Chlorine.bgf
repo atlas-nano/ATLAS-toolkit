@@ -1,0 +1,29 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Cl-Chlorine.bgf modified FFTYPE:Cl
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     6.24000     8.26000     4.48000    90.00000    90.00000    90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 CL1   RES A   444   0.00000   0.82600   0.58200 Cl     1 0  0.00000
+HETATM     2 CL2   RES A   444   3.12000  -0.82600   1.65800 Cl     1 0  0.00000
+HETATM     3 CL3   RES A   444  -0.00000  -0.82600  -0.58200 Cl     1 0  0.00000
+HETATM     4 CL4   RES A   444   3.12000   3.30400   0.58200 Cl     1 0  0.00000
+HETATM     5 CL5   RES A   444   0.00000   3.30400   2.82200 Cl     1 0  0.00000
+HETATM     6 CL6   RES A   444   3.12000   4.95600  -0.58200 Cl     1 0  0.00000
+HETATM     7 CL7   RES A   444   0.00000   4.95600   1.65800 Cl     1 0  0.00000
+HETATM     8 CL8   RES A   444   3.12000   0.82600   2.82200 Cl     1 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     3
+CONECT     2     8
+CONECT     3     1
+CONECT     4     6
+CONECT     5     7
+CONECT     6     4
+CONECT     7     5
+CONECT     8     2
+END

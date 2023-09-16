@@ -1,0 +1,46 @@
+#PBS -q vulcan_batch
+#PBS -l nodes=nodes_here:ppn=ppn_here
+#PBS -l walltime=96:00:00
+#PBS -j oe
+
+export rtemp=rtemp_here
+export fprefix=fprefix_here
+
+#PBS -N ${fprefix}.${rtemp}K.cp2k.md
+#!/bin/bash
+#Job name:
+#SBATCH --job-name=fprefix_here
+#
+#Partition:
+#SBATCH --partition=vulcan
+#
+#Account
+#SBATCH --account=vulcan
+#
+#QOS
+#SBATCH --qos=normal
+#
+#Nodes
+#SBATCH --nodes=nodes_here
+#
+#Processors:
+#SBATCH --ntasks=nprocs_here
+#
+#QUEUE
+#SBATCH --constraint=vulcan
+#
+#Wall clock limit:
+#SBATCH --time=48:0:0
+#
+
+
+export results_dir=$PBS_O_WORKDIR/results
+mkdir -p $SCRATCH/md/cp2k/${fprefix}/${rtemp}K ${results_dir}/
+
+cd $SCRATCH/md/cp2k/${fprefix}/${rtemp}K
+cp $PBS_O_WORKDIR/${fprefix}.${rtemp}K.cp2k.in ./
+cp $PBS_O_WORKDIR/${fprefix}.cp2k.xyz ./
+cp ~tpascal/codes/cp2k/tests/QS/dft3d.dat ./
+
+mpirun -mca btl self,sm,openib ~tpascal/codes/bin/cp2k.popt -in ${fprefix}.${rtemp}K.cp2k.in > ${fprefix}.${rtemp}K.out 
+cp ${fprefix}.* $results_dir/

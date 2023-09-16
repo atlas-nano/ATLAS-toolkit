@@ -1,0 +1,71 @@
+sub CombineMols {
+	my ($mol1, $mol2, $CONN, $connections, $updateRes) = @_;
+	my ($atom, $tot_atoms, $tot_res, @tmp, $ATOMS, @BONDS, %CONS, $bond);
+
+	$updateRes = 1 if (! defined($updateRes));
+	@tmp = sort numerically keys %{ $mol1 };
+	$tot_atoms = $tmp[$#tmp];
+	$tot_res = $mol1->{$tot_atoms}{"RESNUM"};
+	@tmp = sort numerically keys %{ $mol2 };
+
+	$ATOMS = $mol1;
+	%CONS = %{ $CONN };
+	for $atom (@tmp) {
+		$ATOMS->{($atom + $tot_atoms)} = dclone($mol2->{$atom});
+		$ATOMS->{($atom + $tot_atoms)}{"RESNUM"} += $tot_res if($updateRes);
+		$ATOMS->{($atom + $tot_atoms)}{"INDEX"} = $atom + $tot_atoms;
+		@BONDS = ();
+		@BONDS = @{ $connections->{$atom} } if (defined($connections->{$atom}));
+		for $bond (@BONDS) {
+			push @{ $CONS{($atom + $tot_atoms)} }, ($bond + $tot_atoms);
+		}
+	}
+
+	return ($ATOMS, \%CONS);
+}
+
+sub PrintProgress {
+	my ($currPos, $total, $start, $pStr) = @_;
+	my ($progress, $str, $end);
+	
+	$end = time();
+
+	$progress = $currPos/$total;
+	
+	$str = sprintf("%.2f%% complete %s\r", 
+				   100*$progress, getEta(($end - $start), $progress));
+	
+	print "${pStr}${str}" if (defined($pStr));
+	return length($str);
+}
+
+sub GetTime {
+	my ($timeLeft) = $_[0];
+	my ($returnStr);
+ 
+	if ($timeLeft > 60) {
+		if ($timeLeft > 3600) {
+			if ($timeLeft > 86400) {
+				$returnStr = int($timeLeft/86400) . "d ";
+				$timeLeft = $timeLeft % 86400;
+			}
+			$returnStr .= int($timeLeft/3600) . "h ";
+			$timeLeft = $timeLeft % 3600;
+		}
+		$returnStr .= int($timeLeft/60) . "m ";
+		$timeLeft = $timeLeft % 60;
+	}
+	$returnStr .= sprintf("%.0f", $timeLeft);
+	return $returnStr;
+}
+
+sub getEta {
+	my ($elapsed, $percentage) = @_;
+	my ($totalTime) = $elapsed/$percentage;
+	my ($timeLeft) = $totalTime - $elapsed;
+	my ($returnStr) = "(";
+	
+	$returnStr .= GetTime($timeLeft) . "s remaining)		  ";
+	
+	return $returnStr;
+}

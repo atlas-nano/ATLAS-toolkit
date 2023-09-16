@@ -1,0 +1,218 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ GENERATE_UNDEFINED_TERMS              F
+ IGNORE_UNDEFINED_TERMS                F
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      F
+ SCALE_BY_N_DEFINED_TORSIONS           F
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          1.00000
+ SINGLE_INVERSION                      T
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NON_BOND_LIST                         T
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                       50.00000
+ COU_SPLINE_OFF                          10.00000
+ COU_SPLINE_ON                            9.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_AUTO_OPT                T
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     0.83000
+ COU_METHOD                            EWALD    
+ COU_DIRECT_CUT-OFF                       8.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC
+ VDW_INTER_CUT_OFF                       10.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     0.50000
+ VDW_METHOD                            DIRECT    
+ VDW_SPLINE_ON                            9.00000
+ VDW_SPLINE_OFF                          10.00000
+ EWALD_SUM_VDW_AUTO_OPT                T
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         F
+ CALCULATE_BOND_ORDER                  F
+END
+ATOMTYPES
+ C3         C      12.01000  0.0000   0   0   0 # Carbon
+ C4         C      12.01000  0.0000   0   0   0 # Carbon
+ C2         C      12.01000  0.0000   0   0   0 # Carbon
+ C1         C      12.01000  0.0000   0   0   0 # Carbon
+END
+#
+DIAGONAL_VDW
+ C3          LJ_6_12        3.8160  0.0860
+ C4          LJ_6_12        3.8160  0.0860
+ C2          LJ_6_12        3.8160  0.0860
+ C1          LJ_6_12        3.8160  0.0860
+END
+#
+ATOM_TYPING_RULES
+END
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ C3       H4          HARMONIC     734.0000    1.0800
+ C3       N*          HARMONIC     896.0000    1.3650
+ C3       CM          HARMONIC    1098.0000    1.3500
+ C4       H4          HARMONIC     734.0000    1.0800
+ C4       N*          HARMONIC     896.0000    1.3650
+ C4       CM          HARMONIC    1098.0000    1.3500
+ C2       N*          HARMONIC     880.0000    1.3710
+ C2       H5          HARMONIC     734.0000    1.0800
+ C2       NB          HARMONIC    1058.0000    1.3040
+ C1       N*          HARMONIC     880.0000    1.3710
+ C1       H5          HARMONIC     734.0000    1.0800
+ C1       NB          HARMONIC    1058.0000    1.3040
+END
+#
+ANGLE_BEND
+ CM       C3       H4          THETA_HARM  100.0000  119.7000
+ CM       C3       N*          THETA_HARM  140.0000  121.2000
+ CM       C4       H4          THETA_HARM  100.0000  119.7000
+ CM       C4       N*          THETA_HARM  140.0000  121.2000
+ CB       N*       C2          THETA_HARM  140.0000  105.4000
+ CB       N*       C1          THETA_HARM  140.0000  105.4000
+ CB       NB       C2          THETA_HARM  140.0000  103.8000
+ CB       NB       C1          THETA_HARM  140.0000  103.8000
+ H5       C2       N*          THETA_HARM  100.0000  123.0500
+ H5       C2       NB          THETA_HARM  100.0000  123.0500
+ H5       C1       N*          THETA_HARM  100.0000  123.0500
+ H5       C1       NB          THETA_HARM  100.0000  123.0500
+ HA       CM       C3          THETA_HARM  100.0000  119.7000
+ HA       CM       C4          THETA_HARM  100.0000  119.7000
+ C4       CM       CT          THETA_HARM  140.0000  119.7000
+ C1       N*       CT          THETA_HARM  140.0000  128.8000
+ H4       C3       N*          THETA_HARM  100.0000  119.1000
+ H4       C4       N*          THETA_HARM  100.0000  119.1000
+ N*       C2       NB          THETA_HARM  140.0000  113.9000
+ N*       C1       NB          THETA_HARM  140.0000  113.9000
+ CT       N*       C3          THETA_HARM  140.0000  121.2000
+ CT       N*       C4          THETA_HARM  140.0000  121.2000
+ CT       N*       C2          THETA_HARM  140.0000  128.8000
+ C        CM       C4          THETA_HARM  126.0000  120.7000
+ C        N*       C3          THETA_HARM  140.0000  121.6000
+ C        N*       C4          THETA_HARM  140.0000  121.6000
+ CA       CM       C3          THETA_HARM  126.0000  117.0000
+END
+#
+UREY_BRADLEY
+END
+#
+TORSIONS
+ HC       CT       CM       C4          SHFT_DIHDR   0.760000    3.0000  180.0000
+                                                     2.300000    1.0000    0.0000
+ CT       CT       N*       C3          SHFT_DIHDR   0.132853    4.0000    0.0000
+                                                     4.575780    3.0000    0.0000
+                                                     1.253680    2.0000  180.0000
+                                                     3.449600    1.0000    0.0000
+ CT       CT       N*       C4          SHFT_DIHDR   0.295000    4.0000    0.0000
+                                                     4.554020    3.0000    0.0000
+                                                     1.367276    2.0000  180.0000
+                                                     2.471800    1.0000    0.0000
+ CT       CT       N*       C2          SHFT_DIHDR   0.263814    4.0000    0.0000
+                                                     1.811046    3.0000  180.0000
+                                                     0.103290    2.0000  180.0000
+                                                     2.095840    1.0000    0.0000
+ CT       CT       N*       C1          SHFT_DIHDR   0.457636    4.0000    0.0000
+                                                     2.535960    3.0000    0.0000
+                                                     0.556394    2.0000  180.0000
+                                                     3.207080    1.0000    0.0000
+ OS       CT       N*       C3          SHFT_DIHDR   0.233612    4.0000  180.0000
+                                                     6.216360    3.0000  180.0000
+                                                     1.184450    2.0000    0.0000
+                                                     0.663524    1.0000    0.0000
+ OS       CT       N*       C4          SHFT_DIHDR   0.020955    4.0000  180.0000
+                                                     5.373980    3.0000  180.0000
+                                                     1.209234    2.0000    0.0000
+                                                     0.081903    1.0000    0.0000
+ OS       CT       N*       C2          SHFT_DIHDR   0.367070    4.0000    0.0000
+                                                     0.703784    3.0000    0.0000
+                                                     1.579698    2.0000    0.0000
+                                                     1.670872    1.0000    0.0000
+ OS       CT       N*       C1          SHFT_DIHDR   0.304850    4.0000    0.0000
+                                                     3.398860    3.0000  180.0000
+                                                     1.009750    2.0000    0.0000
+                                                     2.711140    1.0000    0.0000
+ X        C3       N*       X           SHFT_DIHDR  14.800000    2.0000  180.0000
+ X        C3       CM       X           SHFT_DIHDR  53.200000    2.0000  180.0000
+ X        C4       N*       X           SHFT_DIHDR  14.800000    2.0000  180.0000
+ X        C4       CM       X           SHFT_DIHDR  53.200000    2.0000  180.0000
+ X        C2       N*       X           SHFT_DIHDR  13.600000    2.0000  180.0000
+ X        C2       NB       X           SHFT_DIHDR  40.000000    2.0000  180.0000
+ X        C1       N*       X           SHFT_DIHDR  13.600000    2.0000  180.0000
+ X        C1       NB       X           SHFT_DIHDR  40.000000    2.0000  180.0000
+ C4       CM       C        O           SHFT_DIHDR   4.350000    2.0000  180.0000
+                                                     0.600000    3.0000    0.0000
+END
+#
+INVERSIONS
+ N*       C3       C        CT          IT_JIKL        2.0000  180.0000    2.0000
+ CM       C4       C        CT          IT_JIKL        2.2000  180.0000    2.0000
+ N*       C4       C        CT          IT_JIKL        2.0000  180.0000    2.0000
+ C3       X        X        H4          IT_JIKL        2.2000  180.0000    2.0000
+ C4       X        X        H4          IT_JIKL        2.2000  180.0000    2.0000
+ C2       X        X        H5          IT_JIKL        2.2000  180.0000    2.0000
+ C1       X        X        H5          IT_JIKL        2.2000  180.0000    2.0000
+ N*       C2       CB       CT          IT_JIKL        2.0000  180.0000    2.0000
+ N*       C1       CB       CT          IT_JIKL        2.0000  180.0000    2.0000
+END
+#
+COULOMBIC
+ X        X           CONST-EPS
+END

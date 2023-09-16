@@ -1,0 +1,17 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Cd-Cadmium.bgf modified FFTYPE:Cd
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     2.97900     2.97900     5.61800    90.00000    90.00000   120.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 CD1   RES A   444  -0.00000   1.72000   1.40400 Cd     9 0  0.00000
+HETATM     2 CD2   RES A   444   1.48900   0.86000   4.21300 Cd     9 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     1     1     1     1     1     1     1     1     2     2     2     2
+CONECT     2     1     1     1     1     2     2     2     2     2     2     2     2
+END

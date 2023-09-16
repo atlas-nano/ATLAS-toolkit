@@ -1,0 +1,51 @@
+read 
+    mol pqr 
+end
+
+# SOLVATED STATE
+elec name solvated_state
+    mg-manual
+    dime 65 65 65
+    nlev 4
+    glen 
+    gcent mol 1
+    mol 1
+    npbe
+    bcfl sdh
+    pdie 2.0
+    _sdie 80.37
+    chgm spl2
+    srfm smol
+    srad 1.4
+    swin 0.3
+    temp 298.00
+    gamma 0.105
+    calcenergy total
+    calcforce no            
+end
+
+# REFERENCE STATE
+elec name reference_state
+    mg-manual
+    dime 65 65 65
+    nlev 4
+    glen 
+    gcent mol 1
+    mol 1
+    npbe
+    bcfl sdh
+    pdie 2.0
+    sdie 1.00
+    chgm spl2
+    srfm smol
+    srad 1.4
+    swin 0.3
+    temp 298.00
+    gamma 0.105
+    calcenergy total
+    calcforce no
+end
+
+# solvation energy
+print energy solvated_state - reference_state end
+quit

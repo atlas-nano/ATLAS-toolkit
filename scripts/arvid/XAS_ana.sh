@@ -1,0 +1,306 @@
+if [ -n "$SLURM_SUBMIT_DIR" ]; then
+    PARA_JOB_DIR=$SLURM_SUBMIT_DIR
+elif [ -n "$PBS_O_WORKDIR" ]; then
+    PARA_JOB_DIR=$PBS_O_WORKDIR
+else
+    PARA_JOB_DIR=$(pwd)
+fi
+
+cd "$PARA_JOB_DIR"
+source "$PARA_JOB_DIR/Input_Block.in"
+
+DIR=$(pwd)
+SHIRLEY_BIB="$SHIRLEY_ROOT/scripts/arvid/Bibliothek"
+
+export SHIRLEY_BIB
+
+source "$SHIRLEY_BIB/Util.sh"
+source "$SHIRLEY_BIB/Parallel.sh"
+
+print "____________________________________________________________________________________________________"
+print "             ____ _  _ _ ____ _    ____ _   _    ____ _  _ ____ _    _   _ ____ _ ____              "
+print "             [__  |__| | |__/ |    |___  \_/     |__| |\ | |__| |     \_/  [__  | [__               "
+print "             ___] |  | | |  \ |___ |___   |      |  | | \| |  | |___   |   ___] | ___]              "
+print "____________________________________________________________________________________________________"
+print
+
+# Reset the number of simultaneous calculations
+PARA_NJOB=1
+
+setup_parallel_environment
+
+# Chop up the total number of processors into chunks defined by PPN
+$SHIRLEY_BIB/Chop.sh $PARA_NODEFILE $PARA_NPROCS_PER_ATOM
+
+# Get timestamp
+DATE_START=$(date)
+TIMESTAMP_START=$(date +"%s")
+
+print_line
+print " Starting execution at: $DATE_START"
+print " Running on $PARA_NPROCS_PER_ATOM processors"
+print_line
+print
+print "Running directory $DIR"
+
+# QLIST variable only applicable for XRS so we reset it for XAS
+if [ $DOWHAT = "XAS" ]; then
+	QLIST="1"
+fi
+
+REF=atom
+CALCGS=GS
+ixyz=0
+
+for xyzfile in $XYZFILES; do
+
+    if [ -f "$xyzfile" ]; then
+        print "Working on xyz-file $xyzfile"
+    else
+        print "Error: unable to find xz-file $xyzfile - stopping"
+        exit
+    fi
+
+	# This defines the name of the directory where calculation results are stored
+	CALC=$(echo $xyzfile | sed 's/\.xyz$//')
+
+	if [ ! -d $DIR/XAS/$CALC ]; then
+		print "Error: directory $DIR/XAS/$CALC is missing - stopping"
+		exit
+	fi
+
+	ixyz=$((ixyz + 1))
+	inpblk[$ixyz]="$DIR/XAS/$CALC/Input_Block.in"
+	cp "$DIR/Input_Block.in" ${inpblk[$ixyz]}
+	$SHIRLEY_BIB/../xyz2inp.sh "$xyzfile" $XYZUNIT $XASELEMENTS >> ${inpblk[$ixyz]} &
+	done
+wait
+nxyz=$ixyz
+
+DIR_NODE="$DIR/XAS"
+$SHIRLEY_BIB/GetNode.sh "$DIR_NODE" "$PARA_NODEPOOL" || continue
+ls $DIR_NODE/Node-${PARA_JOB_ID}-* > /dev/null
+
+setup_parallel_prefix "$DIR_NODE"
+LOCAL_PARA_PREFIX=$PARA_PREFIX
+
+# now loop over excited atoms of this type
+for q in $QLIST; do
+
+	TYPES=""
+
+	for ixyz in `seq 1 $nxyz`; do
+
+		# Source the right file
+		source ${inpblk[$ixyz]}
+		dir=$(dirname ${inpblk[$ixyz]})
+
+		Atoms=""
+
+		# Find all excited atoms
+		for i in $(seq 1 $NAT) ; do
+			IA=${ATOM_SYMBOL[$i]}
+			if [ ${IND_EXCITATION[$i]} -eq 1 ]; then
+				Atoms="$Atoms $i"
+			fi
+		done
+
+		# Shift spectra
+		for atom in $Atoms ; do
+
+			cd $DIR
+
+			print "Reference atom calculations from directory: XAS/$REF/${ATOM_SYMBOL[$atom]}"
+
+			if [ ! -f "XAS/$REF/${ATOM_SYMBOL[$atom]}/atom.${ATOM_SYMBOL[$atom]}-GS.scf.out" ]; then
+				print "Error: missing atom GS file: XAS/$REF/${ATOM_SYMBOL[$atom]}/atom.${ATOM_SYMBOL[$atom]}-GS.scf.out"
+				exit
+			fi
+			ERefGS0=$(grep '^!' XAS/$REF/${ATOM_SYMBOL[$atom]}/atom.${ATOM_SYMBOL[$atom]}-GS.scf.out | awk '{print $5}' | tail -1)
+
+			if [ ! -f "XAS/$REF/${ATOM_SYMBOL[$atom]}/atom.${ATOM_SYMBOL[$atom]}-${CHAPPROX}.scf.out" ]; then
+				print "Error: missing atom ${CHAPPROX} file: XAS/$REF/${ATOM_SYMBOL[$atom]}/atom.${ATOM_SYMBOL[$atom]}-${CHAPPROX}.scf.out"
+				exit
+			fi
+			ERefES0=$(grep '^!' XAS/$REF/${ATOM_SYMBOL[$atom]}/atom.${ATOM_SYMBOL[$atom]}-${CHAPPROX}.scf.out | awk '{print $5}' | tail -1)
+
+
+			if [ $DOWHAT = "XAS" ]; then
+				SpecDir="$DIR/XAS/Spectrum-${ATOM_SYMBOL[$atom]}"
+			else
+				SpecDir="$DIR/XAS/Spectrum-${ATOM_SYMBOL[$atom]}-$q"
+			fi
+
+			if [ ! -d "$SpecDir" ]; then
+				mkdir "$SpecDir"
+			fi
+			cd "$SpecDir"
+
+			# if this is a new type, create a new Spectra file and zero counter
+			n=$(echo "$TYPES" | grep -c "${ATOM_SYMBOL[$atom]}")
+			if [[ $n == 0 ]]; then
+				:> Spectra
+				TYPES="$TYPES ${ATOM_SYMBOL[$atom]}"
+				echo TYPES="$TYPES"
+
+				declare "NAVE_${ATOM_SYMBOL[$atom]}"=0
+			fi
+
+			atomw=$(seq -w $atom $NAT | head -1)
+			XASPrefix="$dir/${ATOM_SYMBOL[$atom]}${atom}/$MOLNAME.${ATOM_SYMBOL[$atom]}${atomw}-$CHAPPROX"
+
+			# Get the specific energies for shift
+			if [ ! -f "${XASPrefix}.scf.out" ]; then
+				print "Error: missing SCF output: ${XASPrefix}.scf.out"
+				exit
+			fi
+			EXCH=$(grep '^!' ${XASPrefix}.scf.out | awk '{print $5}' | tail -1)
+
+			if [ ! -f "$dir/$CALCGS/$MOLNAME.scf.out" ]; then
+				print "Error: missing GS output: $dir/$CALCGS/$MOLNAME.scf.out"
+				exit
+			fi
+			EGS=$(grep '^!' $dir/$CALCGS/$MOLNAME.scf.out | awk '{print $5}' | tail -1)
+
+			if [ -z "$ETEMP" ]; then
+				ETEMP=0.0
+			fi
+
+			# Find the Fermi level (and CBM)
+			$LOCAL_PARA_PREFIX "$SHIRLEY_ROOT/bin/efermi.x" $ETEMP ${XASPrefix}.xas.$XAS_ARG $NELEC > ${XASPrefix}.xas.${XAS_ARG}-fermi.out
+
+			ELUMO=$(tail ${XASPrefix}.xas.${XAS_ARG}-fermi.out | grep 'CBM =' | awk '{print $3}')
+			CHEM_SHIFT=$(echo | awk -v exch=$EXCH -v erefes0=$ERefES0 -v egs=$EGS -v erefgs0=$ERefGS0 -v elumo=$ELUMO '{print (exch-erefes0-egs+erefgs0)*13.6056923 - elumo }')
+			E=$(echo | awk -v chem_shift=$CHEM_SHIFT -v eshift=$ESHIFT '{print chem_shift + eshift}')
+
+			print "Energy correction : (XCH - XCH0) - (GS - GS0) - LUMO + ESHIFT = Delta"
+			print "For element ${ATOM_SYMBOL[$atom]}${atom} : ($EXCH - ($ERefES0)) - ($EGS - ($ERefGS0)) * Ryd - ${ELUMO} eV + ${ESHIFT} eV = ${E} eV"
+
+			# check for previous .xas file and save
+			for file in `ls $dir/${ATOM_SYMBOL[$atom]}${atom}/*.xas 2> /dev/null`; do
+				mv $file ${file}-raw
+			done
+
+			# Run XRS or XAS
+			if [ $DOWHAT = "XAS" ]
+			then
+				XARS_PARA="$LOCAL_PARA_PREFIX $SHIRLEY_ROOT/bin/xars_para.x $PARA_POSTFIX $ELOW $EHIGH $NENER $SIGMA $CHEM_SHIFT $ESHIFT $ELUMO $DILATION $ETEMP $DOWHAT $EVEC $KVEC ${XASPrefix}.xas.$XAS_ARG"
+				print_labeled ${ATOM_SYMBOL[$atom]} "Running XAS with xars_para.x as: $XARS_PARA"
+				$LOCAL_PARA_PREFIX "$SHIRLEY_ROOT/bin/xars_para.x" $PARA_POSTFIX $ELOW $EHIGH $NENER $SIGMA $CHEM_SHIFT $ESHIFT $ELUMO $DILATION $ETEMP $DOWHAT $EVEC $KVEC ${XASPrefix}.xas.$XAS_ARG
+			elif [ $DOWHAT = "XRS" ]
+			then
+				XARS_PARA="$LOCAL_PARA_PREFIX $SHIRLEY_ROOT/bin/xars_para.x $PARA_POSTFIX $ELOW $EHIGH $NENER $SIGMA $CHEM_SHIFT $ESHIFT $ELUMO $DILATION $ETEMP $DOWHAT $q $QVEC ${XASPrefix}.xas.$XAS_ARG"
+				print_labeled ${ATOM_SYMBOL[$atom]} "Running XRS with xars_para.x as: $XARS_PARA"
+				$LOCAL_PARA_PREFIX "$SHIRLEY_ROOT/bin/xars_para.x" $PARA_POSTFIX $ELOW $EHIGH $NENER $SIGMA $CHEM_SHIFT $ESHIFT $ELUMO $DILATION $ETEMP $DOWHAT $q $QVEC ${XASPrefix}.xas.$XAS_ARG
+			fi
+
+			XASFile="`echo $dir | sed 's/^.*\///'`-`basename ${XASPrefix}.xas.$XAS_ARG.xas`"
+			mv ${XASPrefix}.xas.$XAS_ARG.xas $XASFile
+
+			paste Spectra $XASFile > $$
+			mv $$ Spectra
+			declare "NAVE_${ATOM_SYMBOL[$atom]}"=$(( NAVE_${ATOM_SYMBOL[$atom]} + 1 ))
+
+		done # atoms
+
+	done # ixyz structure
+
+	print
+	print_line '-'
+	print "Individual spectra computed, computing average"
+	print_line '-'
+
+	# Loop over types and generate average spectra
+	for t in $TYPES; do
+		if [ $DOWHAT = "XAS" ]; then
+			SubSpecDir="$DIR/XAS/Spectrum-$t"
+		else
+			SubSpecDir="$DIR/XAS/Spectrum-$t-$q"
+		fi
+
+		if [ ! -d $SubSpecDir ]; then
+			print "Error: unable to find Spectrum directory for type $t $SubSpecDir"
+			exit
+		fi
+		cd $SubSpecDir
+
+		# This part of the script will take all the separate atomic spectrum files and create an average 
+		# over all atoms for each column. To that end all the individual spectra files are first concatenated 
+		# to one file called Spectra. The number of columns output by xars_para changes often and so the script 
+		# has to determine for itself what number of columns are in each spectrum output. It should also check 
+		# that each individual file has the same number of columns or something went wrong
+		NFILE=0
+		NCOL="";
+		header="";
+		for f in $(find "$SubSpecDir" -name "*.xas"); do
+
+			NFILE=$((NFILE+1))
+
+			# Pass each spectrum file to awk minus its header and get maximum column count
+			NCOL_max=$(tail -n+3 "$f" | awk '{if(NF > max) max = NF} END {print max}')
+
+			# Take the header from one of the xas file
+			if [ $NFILE -eq 1 ]; then
+				header=$(sed -n '2p' $f)
+			fi
+
+			# First pass NCOL is unset so set it
+			if [ -z $NCOL ]; then
+				NCOL=$NCOL_max
+				continue;
+			fi
+
+			if [ ! $NCOL_max -eq $NCOL ]; then
+				echo "Caution: not all xas files have an equal amount of columns, the averaged output may be wrong"
+			fi
+			NCOL=$NCOL_max
+		done
+		print "Found $NFILE individual spectra files for averaging in $SubSpecDir"
+
+		echo "$header" > Spectrum-Ave-$t
+		tail -n+3 Spectra | awk -v ncol=$NCOL -v nfile=$NFILE '{
+			for (c=2; c<=ncol; c++) {
+				for (i=1; i<=nfile; i++) {
+					col=((i-1)*ncol)+c
+					a[c] += $col
+				}
+			}
+			printf "%16.5f", $1
+			for (c=2; c<=ncol; c++) {
+				printf "%19.9E", a[c]/nfile
+			}
+			printf "\n"
+			split("", a, ":")
+		}' >> Spectrum-Ave-$t
+
+		print "Average spectrum written to $SpecDir/Spectrum-Ave-$t"
+	done
+
+	if [ $DOWHAT != "XAS" ]; then
+		cp Spectra "$PARA_JOB_DIR/Spectra_$q.dat"
+	fi
+
+done # loop over the q list
+
+release_node "$DIR_NODE"
+
+# Get timestamp
+DATE_STOP=$(date)
+TIMESTAMP_STOP=$(date +"%s")
+
+# Compute time elapsed
+diff=$(($TIMESTAMP_STOP - $TIMESTAMP_START))
+days=$(($diff / 86400))
+rem=$(($diff % 86400))
+hours=$(($rem / 3600))
+rem=$(($rem % 3600))
+mins=$(($rem / 60))
+secs=$(($rem % 60))
+
+print
+print_line
+print " Stopping execution at: $DATE_STOP"
+print " Wall time: ${days}d ${hours}h ${mins}m ${secs}s"
+print_line
+
+exit

@@ -1,0 +1,2259 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ GENERATE_UNDEFINED_TERMS              F
+ IGNORE_UNDEFINED_TERMS                F
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      F
+ SCALE_BY_N_DEFINED_TORSIONS           F
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          1.00000
+ SINGLE_INVERSION                      T
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NON_BOND_LIST                         T
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                       50.00000
+ COU_SPLINE_OFF                          10.00000
+ COU_SPLINE_ON                            9.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_AUTO_OPT                T
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     0.50000
+ COU_METHOD                            EWALD    
+ COU_DIRECT_CUT-OFF                      12.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC
+ VDW_INTER_CUT_OFF                        7.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     0.50000
+ VDW_METHOD                            DIRECT    
+ VDW_SPLINE_ON                            9.00000
+ VDW_SPLINE_OFF                          10.00000
+ EWALD_SUM_VDW_AUTO_OPT                T
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         F
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ H304       H       1.00800  0.0000   0   0   0 # H: guanidinium NHR
+ C209       C      12.01100  0.0000   0   0   0 # all-atom C: CH3, sulfides
+ C508       C      12.01100  0.0000   0   0   0 # CG in HID, CD2 in HIE
+ S200       S      32.06000  0.0000   0   0   0 # all-atom S: thiols (mod 11/99)
+ H140       H       1.00800  0.0000   0   0   0 # H all-atom H: alkanes
+ H155       H       1.00800  0.0000   0   0   0 # all-atom H(O): mono alcohols
+ C245       C      12.01100  0.0000   0   0   0 # C on N: tertiary N-CH2R amide (Pro Cdelta)
+ H301       H       1.00800  0.0000   0   0   0 # H: guanidinium NH2
+ C502       C      12.01100  0.0000   0   0   0 # CE C in TRP
+ C214       C      12.01100  0.0000   0   0   0 # all-atom C: CH2, disulfides
+ O167       O      15.99940  0.0000   0   0   0 # O phenol atom C, H
+ C206       C      12.01100  0.0000   0   0   0 # all-atom C: CH2, thiols
+ C158       C      12.01100  0.0000   0   0   0 # all-atom C: CH, alcohols
+ N237       N      14.00700  0.0000   0   0   0 # N: primary amide. alkane parameters.
+ C267       C      12.01100  0.0000   0   0   0 # Co in CCOOH carboxylic acid
+ O154       O      15.99940  0.0000   0   0   0 # all-atom O: mono alcohols
+ C246       C      12.01100  0.0000   0   0   0 # C on N: tertiary N-CHR2 amide (Pro Calpha)
+ C292       C      12.01100  0.0000   0   0   0 # C in RCH2NH3+ & CA in N-term Gly
+ C223       C      12.01100  0.0000   0   0   0 # C in RCH2NH2 and Gly CA (See 900 for amines)
+ N303       N      14.00700  0.0000   0   0   0 # N: guanidinium NHR
+ H240       H       1.00800  0.0000   0   0   0 # H on N: primary amide
+ H146       H       1.00800  0.0000   0   0   0 # Benzene H - 12 site "
+ N309       N      14.00700  0.0000   0   0   0 # N (R2NH2+)
+ C283       C      12.01100  0.0000   0   0   0 # AA C-alpha on C-terminal ALA
+ C235       C      12.01100  0.0000   0   0   0 # C: C=O in amide. Acyl R in amides
+ C307       C      12.01100  0.0000   0   0   0 # C: CH2(D), ARG, ethylguanidinium
+ S203       S      32.06000  0.0000   0   0   0 # all-atom S: disulfides
+ C210       C      12.01100  0.0000   0   0   0 # all-atom C: CH2, sulfides
+ C166       C      12.01100  0.0000   0   0   0 # C(OH) phenol Use with all
+ O268       O      15.99940  0.0000   0   0   0 # Oh in CCOOH R in RCOOH is
+ C137       C      12.01100  0.0000   0   0   0 # CH all-atom C: alkanes FROM HERE ON
+ H270       H       1.00800  0.0000   0   0   0 # H in CCOOH
+ O269       O      15.99940  0.0000   0   0   0 # Oc in CCOOH neutral; use 135-140
+ S202       S      32.06000  0.0000   0   0   0 # all-atom S: sulfides
+ H241       H       1.00800  0.0000   0   0   0 # H on N: secondary amide
+ N239       N      14.00700  0.0000   0   0   0 # N: tertiary amide
+ C505       C      12.01100  0.0000   0   0   0 # CB in HIS
+ H168       H       1.00800  0.0000   0   0   0 # H phenol 145 & 146
+ H504       H       1.00800  0.0000   0   0   0 # H on NE in TRP
+ H310       H       1.00800  0.0000   0   0   0 # H (R2NH2+)
+ H513       H       1.00800  0.0000   0   0   0 # H on N in HIP
+ N503       N      14.00700  0.0000   0   0   0 # NE in TRP
+ C284       C      12.01100  0.0000   0   0   0 # AA C-alpha on C-terminal GLY
+ C271       C      12.01100  0.0000   0   0   0 # C in COO- carboxylate
+ C308       C      12.01100  0.0000   0   0   0 # C: CH2(G), ARG
+ N511       N      14.00700  0.0000   0   0   0 # NE in HID, ND in HIE
+ C302       C      12.01100  0.0000   0   0   0 # C: guanidinium C+
+ N300       N      14.00700  0.0000   0   0   0 # N: guanidinium NH2
+ C500       C      12.01100  0.0000   0   0   0 # CG in TRP
+ C510       C      12.01100  0.0000   0   0   0 # CG, CD2 in HIP
+ C274       C      12.01100  0.0000   0   0   0 # C: CH2, carboxylate ion
+ C145       C      12.01100  0.0000   0   0   0 # Benzene C - 12 site JACS,112,4768-90
+ O272       O      15.99940  0.0000   0   0   0 # O: O in COO- carboxylate
+ C149       C      12.01100  0.0000   0   0   0 # all-atom C: CH2, ethyl benzene
+ H204       H       1.00800  0.0000   0   0   0 # all-atom H(S): thiols (mod 11/99)
+ C224       C      12.01100  0.0000   0   0   0 # C in R2CHNH2 and Ala CA
+ C514       C      12.01100  0.0000   0   0   0 # CD1 in TRP
+ C501       C      12.01100  0.0000   0   0   0 # CD C in TRP
+ C136       C      12.01100  0.0000   0   0   0 # CH2 all-atom C: alkanes PARAMETERS
+ C506       C      12.01100  0.0000   0   0   0 # CE1 in HID, HIE
+ C293       C      12.01100  0.0000   0   0   0 # C in R2CHNH3+ & CA in N-term Ala, etc.
+ C296       C      12.01100  0.0000   0   0   0 # AA:C-delta in N-term PRO
+ C135       C      12.01100  0.0000   0   0   0 # CH3 all-atom C: alkanes ALL-ATOM
+ C507       C      12.01100  0.0000   0   0   0 # CD2 in HID, CG in HIE
+ N287       N      14.00700  0.0000   0   0   0 # N (RNH3+) "
+ O236       O      15.99940  0.0000   0   0   0 # O: C=O in amide. is neutral - use
+ N512       N      14.00700  0.0000   0   0   0 # N in HIP
+ C242       C      12.01100  0.0000   0   0   0 # C on N: secondary N-Me amide
+ N238       N      14.00700  0.0000   0   0   0 # N: secondary amide 279 for formyl H.
+ C285       C      12.01100  0.0000   0   0   0 # AA C-alpha on C-terminal PRO
+ H290       H       1.00800  0.0000   0   0   0 # H (RNH3+) "
+ C295       C      12.01100  0.0000   0   0   0 # AA:C-alpha in N-term PRO
+ C157       C      12.01100  0.0000   0   0   0 # all-atom C: CH3 & CH2, alcohols
+ C509       C      12.01100  0.0000   0   0   0 # CE1 in HIP
+END
+#
+DIAGONAL_VDW
+ H304        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ C209        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C508        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ S200        LJ_6_12        3.9847  0.2500 # 1-4 scaling:  3.98474 0.12500
+ H140        LJ_6_12        2.8062  0.0300 # 1-4 scaling:  2.80616 0.01500
+ H155        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ C245        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ H301        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ C502        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ C214        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ O167        LJ_6_12        3.4460  0.1700 # 1-4 scaling:  3.44596 0.08500
+ C206        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C158        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ N237        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C267        LJ_6_12        4.2092  0.1050 # 1-4 scaling:  4.20923 0.05250
+ O154        LJ_6_12        3.5021  0.1700 # 1-4 scaling:  3.50208 0.08500
+ C246        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C292        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C223        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ N303        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ H240        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ H146        LJ_6_12        2.7164  0.0300 # 1-4 scaling:  2.71636 0.01500
+ N309        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C283        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C235        LJ_6_12        4.2092  0.1050 # 1-4 scaling:  4.20923 0.05250
+ C307        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ S203        LJ_6_12        3.9847  0.2500 # 1-4 scaling:  3.98474 0.12500
+ C210        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C166        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ O268        LJ_6_12        3.3674  0.1700 # 1-4 scaling:  3.36739 0.08500
+ C137        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ H270        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ O269        LJ_6_12        3.3225  0.2100 # 1-4 scaling:  3.32249 0.10500
+ S202        LJ_6_12        3.9847  0.2500 # 1-4 scaling:  3.98474 0.12500
+ H241        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ N239        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C505        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ H168        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ H504        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ H310        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ H513        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ N503        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C284        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C271        LJ_6_12        4.2092  0.1050 # 1-4 scaling:  4.20923 0.05250
+ C308        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ N511        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C302        LJ_6_12        2.5255  0.0500 # 1-4 scaling:  2.52554 0.02500
+ N300        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C500        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ C510        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ C274        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C145        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ O272        LJ_6_12        3.3225  0.2100 # 1-4 scaling:  3.32249 0.10500
+ C149        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ H204        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ C224        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C514        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ C501        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ C136        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C506        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ C293        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C296        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C135        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C507        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+ N287        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ O236        LJ_6_12        3.3225  0.2100 # 1-4 scaling:  3.32249 0.10500
+ N512        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C242        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ N238        LJ_6_12        3.6480  0.1700 # 1-4 scaling:  3.64800 0.08500
+ C285        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ H290        LJ_6_12        0.0000  0.0000 # 1-4 scaling:  0.00000 0.00000
+ C295        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C157        LJ_6_12        3.9286  0.0660 # 1-4 scaling:  3.92862 0.03300
+ C509        LJ_6_12        3.9847  0.0700 # 1-4 scaling:  3.98474 0.03500
+END
+#
+ATOM_TYPING_RULES
+END
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ OT       HT          HARMONIC     900.0000    0.9572
+ HT       HT          HARMONIC       0.0000    1.5139
+ S203     S203        HARMONIC     332.0000    2.0380
+ C135     C136        HARMONIC     536.0000    1.5290
+ C135     C137        HARMONIC     536.0000    1.5290
+ C135     C158        HARMONIC     536.0000    1.5290
+ C135     C224        HARMONIC     536.0000    1.5290
+ C135     C235        HARMONIC     634.0000    1.5220
+ C135     C283        HARMONIC     536.0000    1.5290
+ C135     C293        HARMONIC     536.0000    1.5290
+ C135     H140        HARMONIC     680.0000    1.0900
+ C136     C136        HARMONIC     536.0000    1.5290
+ C136     C137        HARMONIC     536.0000    1.5290
+ C136     C210        HARMONIC     536.0000    1.5290
+ C136     C224        HARMONIC     536.0000    1.5290
+ C136     C235        HARMONIC     634.0000    1.5220
+ C136     C245        HARMONIC     536.0000    1.5290
+ C136     C246        HARMONIC     536.0000    1.5290
+ C136     C267        HARMONIC     634.0000    1.5220
+ C136     C274        HARMONIC     536.0000    1.5290
+ C136     C283        HARMONIC     536.0000    1.5290
+ C136     C285        HARMONIC     536.0000    1.5290
+ C136     C292        HARMONIC     536.0000    1.5290
+ C136     C293        HARMONIC     536.0000    1.5290
+ C136     C295        HARMONIC     536.0000    1.5290
+ C136     C296        HARMONIC     536.0000    1.5290
+ C136     C308        HARMONIC     536.0000    1.5290
+ C136     C500        HARMONIC     634.0000    1.4950
+ C136     H140        HARMONIC     680.0000    1.0900
+ C137     C224        HARMONIC     536.0000    1.5290
+ C137     C283        HARMONIC     536.0000    1.5290
+ C137     C293        HARMONIC     536.0000    1.5290
+ C137     H140        HARMONIC     680.0000    1.0900
+ C145     C145        HARMONIC     938.0000    1.4000
+ C145     C149        HARMONIC     634.0000    1.5100
+ C145     C166        HARMONIC     938.0000    1.4000
+ C145     C501        HARMONIC     938.0000    1.4040
+ C145     C502        HARMONIC     938.0000    1.4000
+ C145     H146        HARMONIC     734.0000    1.0800
+ C149     C224        HARMONIC     536.0000    1.5290
+ C149     C283        HARMONIC     536.0000    1.5290
+ C149     C293        HARMONIC     536.0000    1.5290
+ C149     H140        HARMONIC     680.0000    1.0900
+ C157     C224        HARMONIC     536.0000    1.5290
+ C157     C283        HARMONIC     536.0000    1.5290
+ C157     C293        HARMONIC     536.0000    1.5290
+ C157     H140        HARMONIC     680.0000    1.0900
+ C157     O154        HARMONIC     640.0000    1.4100
+ C158     C224        HARMONIC     536.0000    1.5290
+ C158     C283        HARMONIC     536.0000    1.5290
+ C158     C293        HARMONIC     536.0000    1.5290
+ C158     H140        HARMONIC     680.0000    1.0900
+ C158     O154        HARMONIC     640.0000    1.4100
+ C166     O167        HARMONIC     900.0000    1.3640
+ C206     C224        HARMONIC     536.0000    1.5290
+ C206     C283        HARMONIC     536.0000    1.5290
+ C206     C293        HARMONIC     536.0000    1.5290
+ C206     H140        HARMONIC     680.0000    1.0900
+ C206     S200        HARMONIC     444.0000    1.8100
+ C209     H140        HARMONIC     680.0000    1.0900
+ C209     S202        HARMONIC     444.0000    1.8100
+ C210     H140        HARMONIC     680.0000    1.0900
+ C210     S202        HARMONIC     444.0000    1.8100
+ C214     C224        HARMONIC     536.0000    1.5290
+ C214     C283        HARMONIC     536.0000    1.5290
+ C214     C293        HARMONIC     536.0000    1.5290
+ C214     H140        HARMONIC     680.0000    1.0900
+ C214     S203        HARMONIC     444.0000    1.8100
+ C223     C235        HARMONIC     634.0000    1.5220
+ C223     H140        HARMONIC     680.0000    1.0900
+ C223     N238        HARMONIC     674.0000    1.4490
+ C224     C235        HARMONIC     634.0000    1.5220
+ C224     C274        HARMONIC     536.0000    1.5290
+ C224     C505        HARMONIC     536.0000    1.5290
+ C224     H140        HARMONIC     680.0000    1.0900
+ C224     N238        HARMONIC     674.0000    1.4490
+ C235     C246        HARMONIC     634.0000    1.5220
+ C235     C292        HARMONIC     634.0000    1.5220
+ C235     C293        HARMONIC     634.0000    1.5220
+ C235     C295        HARMONIC     634.0000    1.5220
+ C235     N237        HARMONIC     980.0000    1.3350
+ C235     N238        HARMONIC     980.0000    1.3350
+ C235     N239        HARMONIC     980.0000    1.3350
+ C235     O236        HARMONIC    1140.0000    1.2290
+ C242     H140        HARMONIC     680.0000    1.0900
+ C242     N238        HARMONIC     674.0000    1.4490
+ C245     H140        HARMONIC     680.0000    1.0900
+ C245     N239        HARMONIC     674.0000    1.4490
+ C246     H140        HARMONIC     680.0000    1.0900
+ C246     N239        HARMONIC     674.0000    1.4490
+ C267     O268        HARMONIC     900.0000    1.3640
+ C267     O269        HARMONIC    1140.0000    1.2290
+ C271     C274        HARMONIC     634.0000    1.5220
+ C271     C283        HARMONIC     634.0000    1.5220
+ C271     C284        HARMONIC     634.0000    1.5220
+ C271     C285        HARMONIC     634.0000    1.5220
+ C271     O272        HARMONIC    1312.0000    1.2500
+ C274     C283        HARMONIC     536.0000    1.5290
+ C274     C293        HARMONIC     536.0000    1.5290
+ C274     H140        HARMONIC     680.0000    1.0900
+ C283     C505        HARMONIC     536.0000    1.5290
+ C283     H140        HARMONIC     680.0000    1.0900
+ C283     N238        HARMONIC     674.0000    1.4490
+ C284     H140        HARMONIC     680.0000    1.0900
+ C284     N238        HARMONIC     674.0000    1.4490
+ C285     H140        HARMONIC     680.0000    1.0900
+ C285     N239        HARMONIC     674.0000    1.4490
+ C292     H140        HARMONIC     680.0000    1.0900
+ C292     N287        HARMONIC     734.0000    1.4710
+ C293     C505        HARMONIC     536.0000    1.5290
+ C293     H140        HARMONIC     680.0000    1.0900
+ C293     N287        HARMONIC     734.0000    1.4710
+ C295     H140        HARMONIC     680.0000    1.0900
+ C295     N309        HARMONIC     734.0000    1.4710
+ C296     H140        HARMONIC     680.0000    1.0900
+ C296     N309        HARMONIC     734.0000    1.4710
+ C302     N300        HARMONIC     962.0000    1.3400
+ C302     N303        HARMONIC     962.0000    1.3400
+ C307     C308        HARMONIC     536.0000    1.5290
+ C307     H140        HARMONIC     680.0000    1.0900
+ C307     N303        HARMONIC     674.0000    1.4630
+ C308     H140        HARMONIC     680.0000    1.0900
+ C500     C501        HARMONIC     776.0000    1.4590
+ C500     C514        HARMONIC    1092.0000    1.3520
+ C501     C502        HARMONIC     894.0000    1.4190
+ C502     N503        HARMONIC     856.0000    1.3800
+ C505     C507        HARMONIC     634.0000    1.5040
+ C505     C508        HARMONIC     634.0000    1.5040
+ C505     C510        HARMONIC     634.0000    1.5040
+ C505     H140        HARMONIC     680.0000    1.0900
+ C506     H146        HARMONIC     734.0000    1.0800
+ C506     N503        HARMONIC     954.0000    1.3430
+ C506     N511        HARMONIC     976.0000    1.3350
+ C507     C508        HARMONIC    1040.0000    1.3700
+ C507     H146        HARMONIC     734.0000    1.0800
+ C507     N511        HARMONIC     820.0000    1.3940
+ C508     H146        HARMONIC     734.0000    1.0800
+ C508     N503        HARMONIC     854.0000    1.3810
+ C509     H146        HARMONIC     734.0000    1.0800
+ C509     N512        HARMONIC     954.0000    1.3430
+ C510     C510        HARMONIC    1040.0000    1.3700
+ C510     H146        HARMONIC     734.0000    1.0800
+ C510     N512        HARMONIC     854.0000    1.3810
+ C514     H146        HARMONIC     734.0000    1.0800
+ C514     N503        HARMONIC     854.0000    1.3810
+ H155     O154        HARMONIC    1106.0000    0.9450
+ H168     O167        HARMONIC    1106.0000    0.9450
+ H204     S200        HARMONIC     548.0000    1.3360
+ H240     N237        HARMONIC     868.0000    1.0100
+ H241     N238        HARMONIC     868.0000    1.0100
+ H270     O268        HARMONIC    1106.0000    0.9450
+ H270     O272        HARMONIC    1106.0000    0.9450
+ H290     N287        HARMONIC     868.0000    1.0100
+ H301     N300        HARMONIC     868.0000    1.0100
+ H304     N303        HARMONIC     868.0000    1.0100
+ H310     N309        HARMONIC     868.0000    1.0100
+ H504     N503        HARMONIC     868.0000    1.0100
+ H513     N512        HARMONIC     868.0000    1.0100
+END
+#
+ANGLE_BEND
+ HT       OT       HT        THETA_HARM     110.0000  104.5200
+ H140     C135     H140      THETA_HARM      66.0000  107.8000
+ H140     C136     H140      THETA_HARM      66.0000  107.8000
+ H140     C149     H140      THETA_HARM      66.0000  107.8000
+ H140     C157     H140      THETA_HARM      66.0000  107.8000
+ H140     C206     H140      THETA_HARM      66.0000  107.8000
+ H140     C209     H140      THETA_HARM      66.0000  107.8000
+ H140     C210     H140      THETA_HARM      66.0000  107.8000
+ H140     C214     H140      THETA_HARM      66.0000  107.8000
+ H140     C223     H140      THETA_HARM      66.0000  107.8000
+ H140     C242     H140      THETA_HARM      66.0000  107.8000
+ H140     C245     H140      THETA_HARM      66.0000  107.8000
+ H140     C274     H140      THETA_HARM      66.0000  107.8000
+ H140     C284     H140      THETA_HARM      66.0000  107.8000
+ H140     C292     H140      THETA_HARM      66.0000  107.8000
+ H140     C296     H140      THETA_HARM      66.0000  107.8000
+ H140     C307     H140      THETA_HARM      66.0000  107.8000
+ H140     C308     H140      THETA_HARM      66.0000  107.8000
+ H140     C505     H140      THETA_HARM      66.0000  107.8000
+ H290     N287     H290      THETA_HARM      70.0000  109.5000
+ H310     N309     H310      THETA_HARM      70.0000  109.5000
+ C135     C136     C137      THETA_HARM     116.7000  112.7000
+ C135     C136     H140      THETA_HARM      75.0000  110.7000
+ C135     C137     C135      THETA_HARM     116.7000  112.7000
+ C135     C137     C136      THETA_HARM     116.7000  112.7000
+ C135     C137     C224      THETA_HARM     116.7000  112.7000
+ C135     C137     C283      THETA_HARM     116.7000  112.7000
+ C135     C137     C293      THETA_HARM     116.7000  112.7000
+ C135     C137     H140      THETA_HARM      75.0000  110.7000
+ C135     C158     C224      THETA_HARM     116.7000  112.7000
+ C135     C158     C283      THETA_HARM     116.7000  112.7000
+ C135     C158     C293      THETA_HARM     116.7000  112.7000
+ C135     C158     H140      THETA_HARM      75.0000  110.7000
+ C135     C158     O154      THETA_HARM     100.0000  109.5000
+ C135     C224     C235      THETA_HARM     126.0000  111.1000
+ C135     C224     H140      THETA_HARM      75.0000  110.7000
+ C135     C224     N238      THETA_HARM     160.0000  109.7000
+ C135     C235     N238      THETA_HARM     140.0000  116.6000
+ C135     C235     N239      THETA_HARM     140.0000  116.6000
+ C135     C235     O236      THETA_HARM     160.0000  120.4000
+ C135     C283     C271      THETA_HARM     126.0000  111.1000
+ C135     C283     H140      THETA_HARM      75.0000  110.7000
+ C135     C283     N238      THETA_HARM     160.0000  109.7000
+ C135     C293     C235      THETA_HARM     126.0000  111.1000
+ C135     C293     H140      THETA_HARM      75.0000  110.7000
+ C135     C293     N287      THETA_HARM     160.0000  111.2000
+ C136     C135     H140      THETA_HARM      75.0000  110.7000
+ C136     C136     C136      THETA_HARM     116.7000  112.7000
+ C136     C136     C224      THETA_HARM     116.7000  112.7000
+ C136     C136     C235      THETA_HARM     126.0000  111.1000
+ C136     C136     C245      THETA_HARM     116.7000  112.7000
+ C136     C136     C246      THETA_HARM     116.7000  112.7000
+ C136     C136     C267      THETA_HARM     126.0000  111.1000
+ C136     C136     C283      THETA_HARM     116.7000  112.7000
+ C136     C136     C285      THETA_HARM     116.7000  112.7000
+ C136     C136     C292      THETA_HARM     116.7000  112.7000
+ C136     C136     C293      THETA_HARM     116.7000  112.7000
+ C136     C136     C295      THETA_HARM     116.7000  112.7000
+ C136     C136     C296      THETA_HARM     116.7000  112.7000
+ C136     C136     H140      THETA_HARM      75.0000  110.7000
+ C136     C137     C224      THETA_HARM     116.7000  112.7000
+ C136     C137     C283      THETA_HARM     116.7000  112.7000
+ C136     C137     C293      THETA_HARM     116.7000  112.7000
+ C136     C137     H140      THETA_HARM      75.0000  110.7000
+ C136     C210     H140      THETA_HARM      75.0000  110.7000
+ C136     C210     S202      THETA_HARM     100.0000  114.7000
+ C136     C224     C235      THETA_HARM     126.0000  111.1000
+ C136     C224     H140      THETA_HARM      75.0000  110.7000
+ C136     C224     N238      THETA_HARM     160.0000  109.7000
+ C136     C235     N237      THETA_HARM     140.0000  116.6000
+ C136     C235     O236      THETA_HARM     160.0000  120.4000
+ C136     C245     H140      THETA_HARM      75.0000  110.7000
+ C136     C245     N239      THETA_HARM     160.0000  109.7000
+ C136     C246     C235      THETA_HARM     126.0000  111.1000
+ C136     C246     H140      THETA_HARM      75.0000  110.7000
+ C136     C246     N239      THETA_HARM     160.0000  109.7000
+ C136     C267     O268      THETA_HARM     140.0000  108.0000
+ C136     C267     O269      THETA_HARM     160.0000  120.4000
+ C136     C274     C271      THETA_HARM     126.0000  111.1000
+ C136     C274     H140      THETA_HARM      75.0000  110.7000
+ C136     C283     C271      THETA_HARM     126.0000  111.1000
+ C136     C283     H140      THETA_HARM      75.0000  110.7000
+ C136     C283     N238      THETA_HARM     160.0000  109.7000
+ C136     C285     C271      THETA_HARM     126.0000  111.1000
+ C136     C285     H140      THETA_HARM      75.0000  110.7000
+ C136     C285     N239      THETA_HARM     160.0000  109.7000
+ C136     C292     H140      THETA_HARM      75.0000  110.7000
+ C136     C292     N287      THETA_HARM     160.0000  111.2000
+ C136     C293     C235      THETA_HARM     126.0000  111.1000
+ C136     C293     H140      THETA_HARM      75.0000  110.7000
+ C136     C293     N287      THETA_HARM     160.0000  111.2000
+ C136     C295     C235      THETA_HARM     126.0000  111.1000
+ C136     C295     H140      THETA_HARM      75.0000  110.7000
+ C136     C295     N309      THETA_HARM     160.0000  111.2000
+ C136     C296     H140      THETA_HARM      75.0000  110.7000
+ C136     C296     N309      THETA_HARM     160.0000  111.2000
+ C136     C308     C307      THETA_HARM     116.7000  112.7000
+ C136     C308     H140      THETA_HARM      75.0000  110.7000
+ C136     C500     C501      THETA_HARM     140.0000  128.6000
+ C136     C500     C514      THETA_HARM     140.0000  125.0000
+ C137     C135     H140      THETA_HARM      75.0000  110.7000
+ C137     C136     C224      THETA_HARM     116.7000  112.7000
+ C137     C136     C283      THETA_HARM     116.7000  112.7000
+ C137     C136     C293      THETA_HARM     116.7000  112.7000
+ C137     C136     H140      THETA_HARM      75.0000  110.7000
+ C137     C224     C235      THETA_HARM     126.0000  111.1000
+ C137     C224     H140      THETA_HARM      75.0000  110.7000
+ C137     C224     N238      THETA_HARM     160.0000  109.7000
+ C137     C283     C271      THETA_HARM     126.0000  111.1000
+ C137     C283     H140      THETA_HARM      75.0000  110.7000
+ C137     C283     N238      THETA_HARM     160.0000  109.7000
+ C137     C293     C235      THETA_HARM     126.0000  111.1000
+ C137     C293     H140      THETA_HARM      75.0000  110.7000
+ C137     C293     N287      THETA_HARM     160.0000  111.2000
+ C145     C145     C145      THETA_HARM     126.0000  120.0000
+ C145     C145     C149      THETA_HARM     140.0000  120.0000
+ C145     C145     C166      THETA_HARM     126.0000  120.0000
+ C145     C145     C501      THETA_HARM     126.0000  120.0000
+ C145     C145     C502      THETA_HARM     170.0000  120.0000
+ C145     C145     H146      THETA_HARM      70.0000  120.0000
+ C145     C149     C224      THETA_HARM     126.0000  114.0000
+ C145     C149     C283      THETA_HARM     126.0000  114.0000
+ C145     C149     C293      THETA_HARM     126.0000  114.0000
+ C145     C149     H140      THETA_HARM      70.0000  109.5000
+ C145     C166     C145      THETA_HARM     126.0000  120.0000
+ C145     C166     O167      THETA_HARM     140.0000  120.0000
+ C145     C501     C500      THETA_HARM     170.0000  134.9000
+ C145     C501     C502      THETA_HARM     170.0000  116.2000
+ C145     C502     C501      THETA_HARM     170.0000  122.7000
+ C145     C502     N503      THETA_HARM     140.0000  132.8000
+ C149     C224     C235      THETA_HARM     126.0000  111.1000
+ C149     C224     H140      THETA_HARM      75.0000  110.7000
+ C149     C224     N238      THETA_HARM     160.0000  109.7000
+ C149     C283     C271      THETA_HARM     126.0000  111.1000
+ C149     C283     H140      THETA_HARM      75.0000  110.7000
+ C149     C283     N238      THETA_HARM     160.0000  109.7000
+ C149     C293     C235      THETA_HARM     126.0000  111.1000
+ C149     C293     H140      THETA_HARM      75.0000  110.7000
+ C149     C293     N287      THETA_HARM     160.0000  111.2000
+ C157     C224     C235      THETA_HARM     126.0000  111.1000
+ C157     C224     H140      THETA_HARM      75.0000  110.7000
+ C157     C224     N238      THETA_HARM     160.0000  109.7000
+ C157     C283     C271      THETA_HARM     126.0000  111.1000
+ C157     C283     H140      THETA_HARM      75.0000  110.7000
+ C157     C283     N238      THETA_HARM     160.0000  109.7000
+ C157     C293     C235      THETA_HARM     126.0000  111.1000
+ C157     C293     H140      THETA_HARM      75.0000  110.7000
+ C157     C293     N287      THETA_HARM     160.0000  111.2000
+ C157     O154     H155      THETA_HARM     110.0000  108.5000
+ C158     C135     H140      THETA_HARM      75.0000  110.7000
+ C158     C224     C235      THETA_HARM     126.0000  111.1000
+ C158     C224     H140      THETA_HARM      75.0000  110.7000
+ C158     C224     N238      THETA_HARM     160.0000  109.7000
+ C158     C283     C271      THETA_HARM     126.0000  111.1000
+ C158     C283     H140      THETA_HARM      75.0000  110.7000
+ C158     C283     N238      THETA_HARM     160.0000  109.7000
+ C158     C293     C235      THETA_HARM     126.0000  111.1000
+ C158     C293     H140      THETA_HARM      75.0000  110.7000
+ C158     C293     N287      THETA_HARM     160.0000  111.2000
+ C158     O154     H155      THETA_HARM     110.0000  108.5000
+ C166     C145     H146      THETA_HARM      70.0000  120.0000
+ C166     O167     H168      THETA_HARM      70.0000  113.0000
+ C206     C224     C235      THETA_HARM     126.0000  111.1000
+ C206     C224     H140      THETA_HARM      75.0000  110.7000
+ C206     C224     N238      THETA_HARM     160.0000  109.7000
+ C206     C283     C271      THETA_HARM     126.0000  111.1000
+ C206     C283     H140      THETA_HARM      75.0000  110.7000
+ C206     C283     N238      THETA_HARM     160.0000  109.7000
+ C206     C293     C235      THETA_HARM     126.0000  111.1000
+ C206     C293     H140      THETA_HARM      75.0000  110.7000
+ C206     C293     N287      THETA_HARM     160.0000  111.2000
+ C206     S200     H204      THETA_HARM      88.0000   96.0000
+ C209     S202     C210      THETA_HARM     124.0000   98.9000
+ C210     C136     C224      THETA_HARM     116.7000  112.7000
+ C210     C136     C283      THETA_HARM     116.7000  112.7000
+ C210     C136     C293      THETA_HARM     116.7000  112.7000
+ C210     C136     H140      THETA_HARM      75.0000  110.7000
+ C214     C224     C235      THETA_HARM     126.0000  111.1000
+ C214     C224     H140      THETA_HARM      75.0000  110.7000
+ C214     C224     N238      THETA_HARM     160.0000  109.7000
+ C214     C283     C271      THETA_HARM     126.0000  111.1000
+ C214     C283     H140      THETA_HARM      75.0000  110.7000
+ C214     C283     N238      THETA_HARM     160.0000  109.7000
+ C214     C293     C235      THETA_HARM     126.0000  111.1000
+ C214     C293     H140      THETA_HARM      75.0000  110.7000
+ C214     C293     N287      THETA_HARM     160.0000  111.2000
+ C214     S203     S203      THETA_HARM     136.0000  103.7000
+ C223     C235     N238      THETA_HARM     140.0000  116.6000
+ C223     C235     N239      THETA_HARM     140.0000  116.6000
+ C223     C235     O236      THETA_HARM     160.0000  120.4000
+ C223     N238     C235      THETA_HARM     100.0000  121.9000
+ C223     N238     H241      THETA_HARM      76.0000  118.4000
+ C224     C135     H140      THETA_HARM      75.0000  110.7000
+ C224     C136     C235      THETA_HARM     126.0000  111.1000
+ C224     C136     C267      THETA_HARM     126.0000  111.1000
+ C224     C136     C274      THETA_HARM     116.7000  112.7000
+ C224     C136     C308      THETA_HARM     116.7000  112.7000
+ C224     C136     C500      THETA_HARM     126.0000  115.6000
+ C224     C136     H140      THETA_HARM      75.0000  110.7000
+ C224     C137     H140      THETA_HARM      75.0000  110.7000
+ C224     C149     H140      THETA_HARM      75.0000  110.7000
+ C224     C157     H140      THETA_HARM      75.0000  110.7000
+ C224     C157     O154      THETA_HARM     100.0000  109.5000
+ C224     C158     H140      THETA_HARM      75.0000  110.7000
+ C224     C158     O154      THETA_HARM     100.0000  109.5000
+ C224     C206     H140      THETA_HARM      75.0000  110.7000
+ C224     C206     S200      THETA_HARM     100.0000  108.6000
+ C224     C214     H140      THETA_HARM      75.0000  110.7000
+ C224     C214     S203      THETA_HARM     100.0000  114.7000
+ C224     C235     N238      THETA_HARM     140.0000  116.6000
+ C224     C235     N239      THETA_HARM     140.0000  116.6000
+ C224     C235     O236      THETA_HARM     160.0000  120.4000
+ C224     C274     C271      THETA_HARM     126.0000  111.1000
+ C224     C274     H140      THETA_HARM      75.0000  110.7000
+ C224     C505     C507      THETA_HARM     126.0000  114.0000
+ C224     C505     C508      THETA_HARM     126.0000  114.0000
+ C224     C505     C510      THETA_HARM     126.0000  114.0000
+ C224     C505     H140      THETA_HARM      75.0000  110.7000
+ C224     N238     C235      THETA_HARM     100.0000  121.9000
+ C224     N238     H241      THETA_HARM      76.0000  118.4000
+ C235     C135     H140      THETA_HARM      70.0000  109.5000
+ C235     C136     C283      THETA_HARM     126.0000  111.1000
+ C235     C136     C293      THETA_HARM     126.0000  111.1000
+ C235     C136     H140      THETA_HARM      70.0000  109.5000
+ C235     C223     H140      THETA_HARM      70.0000  109.5000
+ C235     C223     N238      THETA_HARM     126.0000  110.1000
+ C235     C224     C274      THETA_HARM     126.0000  111.1000
+ C235     C224     C505      THETA_HARM     126.0000  111.1000
+ C235     C224     H140      THETA_HARM      70.0000  109.5000
+ C235     C224     N238      THETA_HARM     126.0000  110.1000
+ C235     C246     H140      THETA_HARM      70.0000  109.5000
+ C235     C246     N239      THETA_HARM     126.0000  110.1000
+ C235     C292     H140      THETA_HARM      70.0000  109.5000
+ C235     C292     N287      THETA_HARM     160.0000  111.2000
+ C235     C293     C274      THETA_HARM     126.0000  111.1000
+ C235     C293     C505      THETA_HARM     126.0000  111.1000
+ C235     C293     H140      THETA_HARM      70.0000  109.5000
+ C235     C293     N287      THETA_HARM     160.0000  111.2000
+ C235     C295     H140      THETA_HARM      70.0000  109.5000
+ C235     C295     N309      THETA_HARM     160.0000  111.2000
+ C235     N237     H240      THETA_HARM      70.0000  119.8000
+ C235     N238     C242      THETA_HARM     100.0000  121.9000
+ C235     N238     C283      THETA_HARM     100.0000  121.9000
+ C235     N238     C284      THETA_HARM     100.0000  121.9000
+ C235     N238     H241      THETA_HARM      70.0000  119.8000
+ C235     N239     C245      THETA_HARM     100.0000  121.9000
+ C235     N239     C246      THETA_HARM     100.0000  121.9000
+ C235     N239     C285      THETA_HARM     100.0000  121.9000
+ C242     N238     H241      THETA_HARM      76.0000  118.4000
+ C245     C136     H140      THETA_HARM      75.0000  110.7000
+ C245     N238     C285      THETA_HARM     100.0000  118.0000
+ C245     N239     C246      THETA_HARM     100.0000  118.0000
+ C245     N239     C285      THETA_HARM     100.0000  118.0000
+ C246     C136     H140      THETA_HARM      75.0000  110.7000
+ C246     C235     N238      THETA_HARM     140.0000  116.6000
+ C246     C235     N239      THETA_HARM     140.0000  116.6000
+ C246     C235     O236      THETA_HARM     160.0000  120.4000
+ C267     C136     C283      THETA_HARM     126.0000  111.1000
+ C267     C136     C293      THETA_HARM     126.0000  111.1000
+ C267     C136     H140      THETA_HARM      70.0000  109.5000
+ C267     O268     H270      THETA_HARM      70.0000  113.0000
+ C271     O272     H270      THETA_HARM      70.0000  113.0000
+ C271     C274     C283      THETA_HARM     126.0000  111.1000
+ C271     C274     C293      THETA_HARM     126.0000  111.1000
+ C271     C274     H140      THETA_HARM      70.0000  109.5000
+ C271     C283     C274      THETA_HARM     126.0000  111.1000
+ C271     C283     C505      THETA_HARM     126.0000  111.1000
+ C271     C283     H140      THETA_HARM      70.0000  109.5000
+ C271     C283     N238      THETA_HARM     126.0000  110.1000
+ C271     C284     H140      THETA_HARM      70.0000  109.5000
+ C271     C284     N238      THETA_HARM     126.0000  110.1000
+ C271     C285     H140      THETA_HARM      70.0000  109.5000
+ C271     C285     N239      THETA_HARM     126.0000  110.1000
+ C274     C136     C283      THETA_HARM     116.7000  112.7000
+ C274     C136     C293      THETA_HARM     116.7000  112.7000
+ C274     C136     H140      THETA_HARM      75.0000  110.7000
+ C274     C224     H140      THETA_HARM      75.0000  110.7000
+ C274     C224     N238      THETA_HARM     160.0000  109.7000
+ C274     C271     O272      THETA_HARM     140.0000  117.0000
+ C274     C283     H140      THETA_HARM      75.0000  110.7000
+ C274     C283     N238      THETA_HARM     160.0000  109.7000
+ C274     C293     H140      THETA_HARM      75.0000  110.7000
+ C274     C293     N287      THETA_HARM     160.0000  111.2000
+ C283     C135     H140      THETA_HARM      75.0000  110.7000
+ C283     C136     C308      THETA_HARM     116.7000  112.7000
+ C283     C136     C500      THETA_HARM     126.0000  115.6000
+ C283     C136     H140      THETA_HARM      75.0000  110.7000
+ C283     C137     H140      THETA_HARM      75.0000  110.7000
+ C283     C149     H140      THETA_HARM      75.0000  110.7000
+ C283     C157     H140      THETA_HARM      75.0000  110.7000
+ C283     C157     O154      THETA_HARM     100.0000  109.5000
+ C283     C158     H140      THETA_HARM      75.0000  110.7000
+ C283     C158     O154      THETA_HARM     100.0000  109.5000
+ C283     C206     H140      THETA_HARM      75.0000  110.7000
+ C283     C206     S200      THETA_HARM     100.0000  108.6000
+ C283     C214     H140      THETA_HARM      75.0000  110.7000
+ C283     C214     S203      THETA_HARM     100.0000  114.7000
+ C283     C271     O272      THETA_HARM     140.0000  117.0000
+ C283     C274     H140      THETA_HARM      75.0000  110.7000
+ C283     C505     C507      THETA_HARM     126.0000  114.0000
+ C283     C505     C508      THETA_HARM     126.0000  114.0000
+ C283     C505     C510      THETA_HARM     126.0000  114.0000
+ C283     C505     H140      THETA_HARM      75.0000  110.7000
+ C283     N238     H241      THETA_HARM      76.0000  118.4000
+ C284     C271     O272      THETA_HARM     140.0000  117.0000
+ C284     N238     H241      THETA_HARM      76.0000  118.4000
+ C285     C136     H140      THETA_HARM      75.0000  110.7000
+ C285     C271     O272      THETA_HARM     140.0000  117.0000
+ C292     C136     H140      THETA_HARM      75.0000  110.7000
+ C292     C235     N238      THETA_HARM     140.0000  116.6000
+ C292     C235     N239      THETA_HARM     140.0000  116.6000
+ C292     C235     O236      THETA_HARM     160.0000  120.4000
+ C292     N287     H290      THETA_HARM      70.0000  109.5000
+ C293     C135     H140      THETA_HARM      75.0000  110.7000
+ C293     C136     C308      THETA_HARM     116.7000  112.7000
+ C293     C136     C500      THETA_HARM     126.0000  115.6000
+ C293     C136     H140      THETA_HARM      75.0000  110.7000
+ C293     C137     H140      THETA_HARM      75.0000  110.7000
+ C293     C149     H140      THETA_HARM      75.0000  110.7000
+ C293     C157     H140      THETA_HARM      75.0000  110.7000
+ C293     C157     O154      THETA_HARM     100.0000  109.5000
+ C293     C158     H140      THETA_HARM      75.0000  110.7000
+ C293     C158     O154      THETA_HARM     100.0000  109.5000
+ C293     C206     H140      THETA_HARM      75.0000  110.7000
+ C293     C206     S200      THETA_HARM     100.0000  108.6000
+ C293     C214     H140      THETA_HARM      75.0000  110.7000
+ C293     C214     S203      THETA_HARM     100.0000  114.7000
+ C293     C235     N238      THETA_HARM     140.0000  116.6000
+ C293     C235     N239      THETA_HARM     140.0000  116.6000
+ C293     C235     O236      THETA_HARM     160.0000  120.4000
+ C293     C274     H140      THETA_HARM      75.0000  110.7000
+ C293     C505     C507      THETA_HARM     126.0000  114.0000
+ C293     C505     C508      THETA_HARM     126.0000  114.0000
+ C293     C505     C510      THETA_HARM     126.0000  114.0000
+ C293     C505     H140      THETA_HARM      75.0000  110.7000
+ C293     N287     H290      THETA_HARM      70.0000  109.5000
+ C295     C136     H140      THETA_HARM      75.0000  110.7000
+ C295     C235     N238      THETA_HARM     140.0000  116.6000
+ C295     C235     N239      THETA_HARM     140.0000  116.6000
+ C295     C235     O236      THETA_HARM     160.0000  120.4000
+ C295     N309     C296      THETA_HARM     100.0000  113.0000
+ C295     N309     H310      THETA_HARM      70.0000  109.5000
+ C296     C136     H140      THETA_HARM      75.0000  110.7000
+ C296     N309     H310      THETA_HARM      70.0000  109.5000
+ C302     N300     H301      THETA_HARM      70.0000  120.0000
+ C302     N303     C307      THETA_HARM     100.0000  123.2000
+ C302     N303     H304      THETA_HARM      70.0000  120.0000
+ C307     C308     H140      THETA_HARM      75.0000  110.7000
+ C307     N303     H304      THETA_HARM      70.0000  118.4000
+ C308     C136     H140      THETA_HARM      75.0000  110.7000
+ C308     C307     H140      THETA_HARM      75.0000  110.7000
+ C308     C307     N303      THETA_HARM     160.0000  111.2000
+ C500     C136     H140      THETA_HARM      70.0000  109.5000
+ C500     C501     C502      THETA_HARM     170.0000  108.8000
+ C500     C514     H146      THETA_HARM      70.0000  120.0000
+ C500     C514     N503      THETA_HARM     140.0000  108.7000
+ C501     C145     H146      THETA_HARM      70.0000  120.0000
+ C501     C500     C514      THETA_HARM     170.0000  106.4000
+ C501     C502     N503      THETA_HARM     140.0000  104.4000
+ C502     C145     H146      THETA_HARM      70.0000  120.0000
+ C502     N503     C514      THETA_HARM     140.0000  111.6000
+ C502     N503     H504      THETA_HARM      70.0000  123.1000
+ C505     C224     H140      THETA_HARM      75.0000  110.7000
+ C505     C224     N238      THETA_HARM     160.0000  109.7000
+ C505     C283     H140      THETA_HARM      75.0000  110.7000
+ C505     C283     N238      THETA_HARM     160.0000  109.7000
+ C505     C293     H140      THETA_HARM      75.0000  110.7000
+ C505     C293     N287      THETA_HARM     160.0000  111.2000
+ C505     C507     C508      THETA_HARM     140.0000  130.7000
+ C505     C507     N511      THETA_HARM     140.0000  124.5000
+ C505     C508     C507      THETA_HARM     140.0000  130.7000
+ C505     C508     N503      THETA_HARM     140.0000  121.6000
+ C505     C510     C510      THETA_HARM     140.0000  130.7000
+ C505     C510     N512      THETA_HARM     140.0000  121.6000
+ C506     N503     C508      THETA_HARM     140.0000  109.8000
+ C506     N503     H504      THETA_HARM      70.0000  120.0000
+ C506     N511     C507      THETA_HARM     140.0000  110.0000
+ C507     C505     H140      THETA_HARM      70.0000  109.5000
+ C507     C508     H146      THETA_HARM      70.0000  130.7000
+ C507     C508     N503      THETA_HARM     140.0000  106.3000
+ C508     C505     H140      THETA_HARM      70.0000  109.5000
+ C508     C507     H146      THETA_HARM      70.0000  128.2000
+ C508     C507     N511      THETA_HARM     140.0000  111.0000
+ C508     N503     H504      THETA_HARM      70.0000  120.0000
+ C509     N512     C510      THETA_HARM     140.0000  109.8000
+ C509     N512     H513      THETA_HARM      70.0000  120.0000
+ C510     C505     H140      THETA_HARM      70.0000  109.5000
+ C510     C510     H146      THETA_HARM      70.0000  130.7000
+ C510     C510     N512      THETA_HARM     140.0000  106.3000
+ C510     N512     H513      THETA_HARM      70.0000  120.0000
+ C514     N503     H504      THETA_HARM      70.0000  120.0000
+ H140     C157     O154      THETA_HARM      70.0000  109.5000
+ H140     C158     O154      THETA_HARM      70.0000  109.5000
+ H140     C206     S200      THETA_HARM      70.0000  109.5000
+ H140     C209     S202      THETA_HARM      70.0000  109.5000
+ H140     C210     S202      THETA_HARM      70.0000  109.5000
+ H140     C214     S203      THETA_HARM      70.0000  109.5000
+ H140     C223     N238      THETA_HARM      70.0000  109.5000
+ H140     C224     N238      THETA_HARM      70.0000  109.5000
+ H140     C242     N238      THETA_HARM      70.0000  109.5000
+ H140     C245     N239      THETA_HARM      70.0000  109.5000
+ H140     C246     N239      THETA_HARM      70.0000  109.5000
+ H140     C283     N238      THETA_HARM      70.0000  109.5000
+ H140     C284     N238      THETA_HARM      70.0000  109.5000
+ H140     C285     N239      THETA_HARM      70.0000  109.5000
+ H140     C292     N287      THETA_HARM      70.0000  109.5000
+ H140     C293     N287      THETA_HARM      70.0000  109.5000
+ H140     C295     N309      THETA_HARM      70.0000  109.5000
+ H140     C296     N309      THETA_HARM      70.0000  109.5000
+ H140     C307     N303      THETA_HARM      70.0000  109.5000
+ H146     C506     N503      THETA_HARM      70.0000  120.0000
+ H146     C506     N511      THETA_HARM      70.0000  120.0000
+ H146     C507     N511      THETA_HARM      70.0000  120.0000
+ H146     C508     N503      THETA_HARM      70.0000  121.6000
+ H146     C509     N512      THETA_HARM      70.0000  120.0000
+ H146     C510     N512      THETA_HARM      70.0000  120.0000
+ H146     C514     N503      THETA_HARM      70.0000  121.6000
+ H240     N237     H240      THETA_HARM      70.0000  120.0000
+ H301     N300     H301      THETA_HARM      70.0000  120.0000
+ N237     C235     O236      THETA_HARM     160.0000  122.9000
+ N238     C235     O236      THETA_HARM     160.0000  122.9000
+ N239     C235     O236      THETA_HARM     160.0000  122.9000
+ N300     C302     N300      THETA_HARM     140.0000  120.0000
+ N300     C302     N303      THETA_HARM     140.0000  120.0000
+ N503     C506     N511      THETA_HARM     140.0000  120.0000
+ N512     C509     N512      THETA_HARM     140.0000  120.0000
+ O268     C267     O269      THETA_HARM     160.0000  121.0000
+ O272     C271     O272      THETA_HARM     160.0000  126.0000
+END
+#
+UREY_BRADLEY
+END
+#
+TORSIONS
+ X        C145     C145     X         SHFT_DIHDR       7.2500    2.0000  180.0000
+ X        C145     C166     X         SHFT_DIHDR       7.2500    2.0000  180.0000
+ X        C145     C501     X         SHFT_DIHDR       7.0000    2.0000  180.0000
+ X        C145     C502     X         SHFT_DIHDR       7.2500    2.0000  180.0000
+ X        C302     N300     X         SHFT_DIHDR       3.9000    2.0000  180.0000
+ X        C500     C501     X         SHFT_DIHDR       3.3500    2.0000  180.0000
+ X        C500     C514     X         SHFT_DIHDR      13.0500    2.0000  180.0000
+ X        C501     C502     X         SHFT_DIHDR       6.0000    2.0000  180.0000
+ X        C502     N503     X         SHFT_DIHDR       3.0500    2.0000  180.0000
+ X        C506     N503     X         SHFT_DIHDR       4.6500    2.0000  180.0000
+ X        C506     N511     X         SHFT_DIHDR      10.0000    2.0000  180.0000
+ X        C507     C508     X         SHFT_DIHDR      10.7500    2.0000  180.0000
+ X        C507     N511     X         SHFT_DIHDR       4.8000    2.0000  180.0000
+ X        C509     N512     X         SHFT_DIHDR       4.6500    2.0000  180.0000
+ X        C510     C510     X         SHFT_DIHDR      10.7500    2.0000  180.0000
+ X        C514     N503     X         SHFT_DIHDR       3.0000    2.0000  180.0000
+ C135     C136     C137     C135      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C136     C137     C135      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C136     C137     C135      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C136     C137     C224      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C136     C137     C224      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C136     C137     C224      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C136     C137     C283      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C136     C137     C283      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C136     C137     C283      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C136     C137     C293      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C136     C137     C293      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C136     C137     C293      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C136     C137     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C137     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C137     C136     C224      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C137     C136     C224      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C137     C136     C224      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C137     C136     C283      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C137     C136     C283      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C137     C136     C283      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C137     C136     C293      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C135     C137     C136     C293      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C135     C137     C136     C293      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C135     C137     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C137     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C135     C137     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C135     C137     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C135     C137     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C137     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C135     C137     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C135     C137     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C135     C137     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C135     C137     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C135     C137     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C135     C137     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C137     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C135     C137     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C135     C137     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C135     C137     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C135     C137     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C135     C137     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C135     C137     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C137     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C135     C137     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C135     C137     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C135     C158     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C135     C158     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C135     C158     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C135     C158     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C158     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C135     C158     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C135     C158     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C135     C158     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C135     C158     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C135     C158     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C135     C158     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C158     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C135     C158     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C135     C158     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C135     C158     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C135     C158     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C135     C158     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C135     C158     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C135     C158     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C135     C158     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C135     C158     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C135     C158     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C135     C158     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C135     C158     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C135     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C135     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C135     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C135     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C135     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C135     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C135     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C135     C235     N238     C223      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C135     C235     N238     C223      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C135     C235     N238     C224      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C135     C235     N238     C224      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C135     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C135     C235     N239     C245      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C135     C235     N239     C245      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C135     C235     N239     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C135     C235     N239     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C135     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C135     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C135     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C135     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C135     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C135     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C135     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C135     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C135     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C135     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C135     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C136     C136     C136     C224      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C136     C136     C136     C224      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C136     C136     C136     C224      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C136     C136     C136     C283      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C136     C136     C136     C283      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C136     C136     C136     C283      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C136     C136     C136     C292      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C136     C136     C136     C292      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C136     C136     C136     C292      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C136     C136     C136     C293      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C136     C136     C136     C293      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C136     C136     C136     C293      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C136     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C136     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C136     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C136     C235     N237      SHFT_DIHDR       3.2500    1.0000    0.0000
+ C136     C136     C235     N237      SHFT_DIHDR      -0.4020    2.0000  180.0000
+ C136     C136     C235     N237      SHFT_DIHDR      -0.1360    3.0000    0.0000
+ C136     C136     C235     O236      SHFT_DIHDR       1.1660    2.0000  180.0000
+ C136     C136     C245     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C245     N239      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C136     C245     N239      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C136     C245     N239      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C136     C246     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C136     C246     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C136     C246     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C136     C246     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C246     N239      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C136     C246     N239      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C136     C246     N239      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C136     C267     O268      SHFT_DIHDR       1.0000    1.0000    0.0000
+ C136     C136     C267     O268      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C136     C136     C267     O268      SHFT_DIHDR       0.4500    3.0000    0.0000
+ C136     C136     C267     O269      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C136     C136     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C136     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C136     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C136     C285     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C136     C285     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C136     C285     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C136     C285     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C285     N239      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C136     C285     N239      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C136     C285     N239      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C136     C292     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C292     N287      SHFT_DIHDR       2.7320    1.0000    0.0000
+ C136     C136     C292     N287      SHFT_DIHDR      -0.2290    2.0000  180.0000
+ C136     C136     C292     N287      SHFT_DIHDR       0.4850    3.0000    0.0000
+ C136     C136     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C136     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C136     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C136     C295     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C136     C295     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C136     C295     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C136     C295     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C295     N309      SHFT_DIHDR       2.7320    1.0000    0.0000
+ C136     C136     C295     N309      SHFT_DIHDR      -0.2290    2.0000  180.0000
+ C136     C136     C295     N309      SHFT_DIHDR       0.4850    3.0000    0.0000
+ C136     C136     C296     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C136     C296     N309      SHFT_DIHDR       2.7320    1.0000    0.0000
+ C136     C136     C296     N309      SHFT_DIHDR      -0.2290    2.0000  180.0000
+ C136     C136     C296     N309      SHFT_DIHDR       0.4850    3.0000    0.0000
+ C136     C137     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C137     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C137     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C137     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C137     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C137     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C137     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C137     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C137     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C137     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C137     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C137     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C137     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C137     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C137     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C137     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C136     C137     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C136     C137     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C136     C137     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C137     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C136     C137     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C136     C137     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C136     C210     S202     C209      SHFT_DIHDR       0.9250    1.0000    0.0000
+ C136     C210     S202     C209      SHFT_DIHDR      -0.5760    2.0000  180.0000
+ C136     C210     S202     C209      SHFT_DIHDR       0.6770    3.0000    0.0000
+ C136     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C136     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C136     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C136     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C136     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C136     C235     N237     H240      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C136     C245     N239     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C245     N239     C246      SHFT_DIHDR       2.8590    1.0000    0.0000
+ C136     C245     N239     C246      SHFT_DIHDR       2.0580    2.0000  180.0000
+ C136     C245     N239     C246      SHFT_DIHDR     -11.2660    3.0000    0.0000
+ C136     C245     N239     C285      SHFT_DIHDR       2.8590    1.0000    0.0000
+ C136     C245     N239     C285      SHFT_DIHDR       2.0580    2.0000  180.0000
+ C136     C245     N239     C285      SHFT_DIHDR     -11.2660    3.0000    0.0000
+ C136     C246     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C136     C246     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C136     C246     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C136     C246     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C246     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C136     C246     N239     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C246     N239     C245      SHFT_DIHDR       4.7530    1.0000    0.0000
+ C136     C246     N239     C245      SHFT_DIHDR      -0.7340    2.0000  180.0000
+ C136     C267     O268     H270      SHFT_DIHDR       1.5000    1.0000    0.0000
+ C136     C267     O268     H270      SHFT_DIHDR       5.5000    2.0000  180.0000
+ C274     C271     O272     H270      SHFT_DIHDR       1.5000    1.0000    0.0000
+ C274     C271     O272     H270      SHFT_DIHDR       5.5000    2.0000  180.0000
+ C136     C274     C271     O272      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C136     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C136     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C136     C285     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C136     C285     N239     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C136     C285     N239     C245      SHFT_DIHDR       4.7530    1.0000    0.0000
+ C136     C285     N239     C245      SHFT_DIHDR      -0.7340    2.0000  180.0000
+ C136     C292     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C136     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C136     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C136     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C136     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C136     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C136     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C136     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C136     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C136     C295     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C136     C295     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C136     C295     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C136     C295     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C136     C295     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C136     C295     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C136     C295     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C136     C295     N309     C296      SHFT_DIHDR       1.4379    1.0000    0.0000
+ C136     C295     N309     C296      SHFT_DIHDR      -0.1238    2.0000  180.0000
+ C136     C295     N309     C296      SHFT_DIHDR       0.2639    3.0000    0.0000
+ C136     C295     N309     H310      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C136     C296     N309     C295      SHFT_DIHDR       1.4379    1.0000    0.0000
+ C136     C296     N309     C295      SHFT_DIHDR      -0.1238    2.0000  180.0000
+ C136     C296     N309     C295      SHFT_DIHDR       0.2639    3.0000    0.0000
+ C136     C296     N309     H310      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C136     C308     C307     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C136     C308     C307     N303      SHFT_DIHDR       2.7320    1.0000    0.0000
+ C136     C308     C307     N303      SHFT_DIHDR      -0.2290    2.0000  180.0000
+ C136     C308     C307     N303      SHFT_DIHDR       0.4850    3.0000    0.0000
+ C137     C136     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C137     C136     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C137     C136     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C137     C136     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C137     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C137     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C137     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C137     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C137     C136     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C137     C136     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C137     C136     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C137     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C137     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C137     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C137     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C137     C136     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C137     C136     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C137     C136     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C137     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C137     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C137     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C137     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C137     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C137     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C137     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C137     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C137     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C137     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C137     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C137     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C137     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C137     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C137     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C137     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C137     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C137     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C137     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C137     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C137     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C137     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C145     C145     C149     C224      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C145     C145     C149     C283      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C145     C145     C149     C293      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C145     C145     C149     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C145     C149     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C145     C149     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C145     C149     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C145     C149     C224     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C145     C149     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C145     C149     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C145     C149     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C145     C149     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C145     C149     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C145     C149     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C145     C149     C283     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C145     C149     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C145     C149     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C145     C149     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C145     C149     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C145     C149     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C145     C149     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C145     C149     C293     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C145     C149     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C145     C149     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C145     C149     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C145     C166     C145     H146      SHFT_DIHDR       7.2500    2.0000  180.0000
+ C145     C166     O167     H168      SHFT_DIHDR       1.6820    2.0000  180.0000
+ C145     C501     C500     C514      SHFT_DIHDR       3.3500    2.0000  180.0000
+ C145     C502     C501     C500      SHFT_DIHDR       6.0000    2.0000  180.0000
+ C149     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C149     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C149     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C149     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C149     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C149     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C149     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C149     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C149     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C149     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C149     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C149     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C149     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C149     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C149     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C149     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C149     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C149     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C157     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C157     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C157     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C157     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C157     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C157     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C157     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C157     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C157     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C157     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C157     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C157     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C157     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C157     C293     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C157     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C157     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C158     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C158     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C158     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C158     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C158     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C158     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C158     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C158     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C158     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C158     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C158     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C158     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C158     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C158     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C158     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C158     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C158     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C158     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C206     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C206     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C206     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C206     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C206     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C206     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C206     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C206     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C206     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C206     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C206     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C206     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C206     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C206     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C206     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C206     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C206     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C206     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C209     S202     C210     H140      SHFT_DIHDR       0.6470    3.0000    0.0000
+ C210     C136     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C210     C136     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C210     C136     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C210     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C210     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C210     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C210     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C210     C136     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C210     C136     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C210     C136     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C210     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C210     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C210     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C210     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C210     C136     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C210     C136     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C210     C136     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C210     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C210     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C210     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C210     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C210     S202     C209     H140      SHFT_DIHDR       0.6470    3.0000    0.0000
+ C214     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C214     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C214     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C214     C224     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C214     C224     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C214     C224     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C214     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C214     C224     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C214     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C214     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C214     C283     N238     C235      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C214     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C214     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C214     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C214     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C214     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C214     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C214     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C214     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C214     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C214     S203     S203     C214      SHFT_DIHDR      -7.4140    2.0000  180.0000
+ C214     S203     S203     C214      SHFT_DIHDR       1.7050    3.0000    0.0000
+ C223     C235     N238     C223      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N238     C223      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N238     C224      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N238     C224      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N238     C242      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N238     C242      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N238     C283      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N238     C283      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N238     C284      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N238     C284      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C223     C235     N239     C245      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N239     C245      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N239     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N239     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     C235     N239     C285      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     C235     N239     C285      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     N238     C235     C224      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     N238     C235     C224      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     N238     C235     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     N238     C235     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     N238     C235     C292      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     N238     C235     C292      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     N238     C235     C293      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     N238     C235     C293      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     N238     C235     C295      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C223     N238     C235     C295      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C223     N238     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C136     C136     C235      SHFT_DIHDR      -2.0600    1.0000    0.0000
+ C224     C136     C136     C235      SHFT_DIHDR      -0.3130    2.0000  180.0000
+ C224     C136     C136     C235      SHFT_DIHDR       0.3150    3.0000    0.0000
+ C224     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C136     C137     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C136     C210     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C136     C210     S202      SHFT_DIHDR       2.6190    1.0000    0.0000
+ C224     C136     C210     S202      SHFT_DIHDR      -0.6200    2.0000  180.0000
+ C224     C136     C210     S202      SHFT_DIHDR       0.2580    3.0000    0.0000
+ C224     C136     C235     N237      SHFT_DIHDR       3.2500    1.0000    0.0000
+ C224     C136     C235     N237      SHFT_DIHDR      -0.4020    2.0000  180.0000
+ C224     C136     C235     N237      SHFT_DIHDR      -0.1360    3.0000    0.0000
+ C224     C136     C235     O236      SHFT_DIHDR       1.1660    2.0000  180.0000
+ C224     C136     C267     O268      SHFT_DIHDR       1.0000    1.0000    0.0000
+ C224     C136     C267     O268      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C224     C136     C267     O268      SHFT_DIHDR       0.4500    3.0000    0.0000
+ C224     C136     C267     O269      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C224     C136     C274     C271      SHFT_DIHDR      -3.1850    1.0000    0.0000
+ C224     C136     C274     C271      SHFT_DIHDR      -0.8250    2.0000  180.0000
+ C224     C136     C274     C271      SHFT_DIHDR       0.4930    3.0000    0.0000
+ C224     C136     C274     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C136     C308     C307      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C224     C136     C308     C307      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C224     C136     C308     C307      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C224     C136     C308     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C136     C500     C501      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C224     C136     C500     C514      SHFT_DIHDR      -0.7140    1.0000    0.0000
+ C224     C137     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C137     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C157     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C224     C157     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C224     C157     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C224     C158     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C224     C158     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C224     C158     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C224     C158     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C224     C206     S200     H204      SHFT_DIHDR      -0.7590    1.0000    0.0000
+ C224     C206     S200     H204      SHFT_DIHDR      -0.2820    2.0000  180.0000
+ C224     C206     S200     H204      SHFT_DIHDR       0.6800    3.0000    0.0000
+ C224     C214     S203     S203      SHFT_DIHDR       1.9410    1.0000    0.0000
+ C224     C214     S203     S203      SHFT_DIHDR      -0.8360    2.0000  180.0000
+ C224     C214     S203     S203      SHFT_DIHDR       0.9350    3.0000    0.0000
+ C224     C235     N238     C224      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N238     C224      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C235     N238     C242      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N238     C242      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C235     N238     C283      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N238     C283      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C235     N238     C284      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N238     C284      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C224     C235     N239     C245      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N239     C245      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C235     N239     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N239     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C235     N239     C285      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     C235     N239     C285      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     C274     C271     O272      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C224     C505     C507     C508      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C224     C505     C507     N511      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C224     C505     C507     N511      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C224     C505     C507     N511      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C224     C505     C508     C507      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C224     C505     C508     N503      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C224     C505     C508     N503      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C224     C505     C508     N503      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C224     C505     C510     C510      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C224     C505     C510     N512      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C224     C505     C510     N512      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C224     C505     C510     N512      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C224     N238     C235     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     N238     C235     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     N238     C235     C292      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     N238     C235     C292      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     N238     C235     C293      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     N238     C235     C293      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     N238     C235     C295      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C224     N238     C235     C295      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C224     N238     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C235     C136     C136     C283      SHFT_DIHDR      -2.0600    1.0000    0.0000
+ C235     C136     C136     C283      SHFT_DIHDR      -0.3130    2.0000  180.0000
+ C235     C136     C136     C283      SHFT_DIHDR       0.3150    3.0000    0.0000
+ C235     C136     C136     C293      SHFT_DIHDR      -2.0600    1.0000    0.0000
+ C235     C136     C136     C293      SHFT_DIHDR      -0.3130    2.0000  180.0000
+ C235     C136     C136     C293      SHFT_DIHDR       0.3150    3.0000    0.0000
+ C235     C136     C136     H140      SHFT_DIHDR      -0.1000    3.0000    0.0000
+ C235     C136     C224     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C136     C224     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C136     C224     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C235     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C235     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C235     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C235     C136     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C136     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C136     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C235     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C235     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C235     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C235     C136     C293     C235      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C136     C293     C235      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C136     C293     C235      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C235     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C235     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C235     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C235     C223     N238     C235      SHFT_DIHDR      -2.3650    1.0000    0.0000
+ C235     C223     N238     C235      SHFT_DIHDR       0.9120    2.0000  180.0000
+ C235     C223     N238     C235      SHFT_DIHDR      -0.8500    3.0000    0.0000
+ C235     C223     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     C224     C135     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C136     C267      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C136     C267      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C136     C267      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C136     C274      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C136     C274      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C136     C274      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C136     C308      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C136     C308      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C136     C308      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C136     C500      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C136     C500      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C136     C500      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C136     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C137     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C149     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C157     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C157     O154      SHFT_DIHDR      -6.1800    1.0000    0.0000
+ C235     C224     C158     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C158     O154      SHFT_DIHDR      -6.1800    1.0000    0.0000
+ C235     C224     C206     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C206     S200      SHFT_DIHDR      -4.3440    1.0000    0.0000
+ C235     C224     C206     S200      SHFT_DIHDR      -1.7140    2.0000  180.0000
+ C235     C224     C214     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C214     S203      SHFT_DIHDR      -4.3440    1.0000    0.0000
+ C235     C224     C214     S203      SHFT_DIHDR      -1.7140    2.0000  180.0000
+ C235     C224     C274     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C274     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C274     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C274     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     C505     C507      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C505     C507      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C505     C507      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C505     C508      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C505     C508      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C505     C508      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C505     C510      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C224     C505     C510      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C224     C505     C510      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C224     C505     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C224     N238     C235      SHFT_DIHDR      -2.3650    1.0000    0.0000
+ C235     C224     N238     C235      SHFT_DIHDR       0.9120    2.0000  180.0000
+ C235     C224     N238     C235      SHFT_DIHDR      -0.8500    3.0000    0.0000
+ C235     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     C246     C136     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C246     N239     C235      SHFT_DIHDR      -2.3650    1.0000    0.0000
+ C235     C246     N239     C235      SHFT_DIHDR       0.9120    2.0000  180.0000
+ C235     C246     N239     C235      SHFT_DIHDR      -0.8500    3.0000    0.0000
+ C235     C246     N239     C245      SHFT_DIHDR      -1.7370    1.0000    0.0000
+ C235     C246     N239     C245      SHFT_DIHDR       1.2510    2.0000  180.0000
+ C235     C246     N239     C245      SHFT_DIHDR      -3.5010    3.0000    0.0000
+ C235     C292     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C235     C293     C135     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C136     C274      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C136     C274      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C136     C274      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C136     C308      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C136     C308      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C136     C308      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C136     C500      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C136     C500      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C136     C500      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C136     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C137     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C149     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C157     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C157     O154      SHFT_DIHDR      -6.1800    1.0000    0.0000
+ C235     C293     C158     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C158     O154      SHFT_DIHDR      -6.1800    1.0000    0.0000
+ C235     C293     C206     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C206     S200      SHFT_DIHDR      -4.3440    1.0000    0.0000
+ C235     C293     C206     S200      SHFT_DIHDR      -1.7140    2.0000  180.0000
+ C235     C293     C214     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C214     S203      SHFT_DIHDR      -4.3440    1.0000    0.0000
+ C235     C293     C214     S203      SHFT_DIHDR      -1.7140    2.0000  180.0000
+ C235     C293     C274     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C274     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C274     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C274     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     C505     C507      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C505     C507      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C505     C507      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C505     C508      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C505     C508      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C505     C508      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C505     C510      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C235     C293     C505     C510      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C235     C293     C505     C510      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C235     C293     C505     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C235     C295     C136     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C235     C295     N309     C296      SHFT_DIHDR       1.4379    1.0000    0.0000
+ C235     C295     N309     C296      SHFT_DIHDR      -0.1238    2.0000  180.0000
+ C235     C295     N309     C296      SHFT_DIHDR       0.2639    3.0000    0.0000
+ C235     C295     N309     H310      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C235     N238     C223     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N238     C224     C274      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C235     N238     C224     C505      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C235     N238     C224     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N238     C242     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N238     C283     C271      SHFT_DIHDR      -2.3650    1.0000    0.0000
+ C235     N238     C283     C271      SHFT_DIHDR       0.9120    2.0000  180.0000
+ C235     N238     C283     C271      SHFT_DIHDR      -0.8500    3.0000    0.0000
+ C235     N238     C283     C274      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C235     N238     C283     C505      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C235     N238     C283     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N238     C284     C271      SHFT_DIHDR      -2.3650    1.0000    0.0000
+ C235     N238     C284     C271      SHFT_DIHDR       0.9120    2.0000  180.0000
+ C235     N238     C284     C271      SHFT_DIHDR      -0.8500    3.0000    0.0000
+ C235     N238     C284     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N239     C245     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N239     C246     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C235     N239     C285     C271      SHFT_DIHDR      -2.3650    1.0000    0.0000
+ C235     N239     C285     C271      SHFT_DIHDR       0.9120    2.0000  180.0000
+ C235     N239     C285     C271      SHFT_DIHDR      -0.8500    3.0000    0.0000
+ C235     N239     C285     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C242     N238     C235     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C242     N238     C235     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C242     N238     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C245     C136     C136     C246      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C245     C136     C136     C246      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C245     C136     C136     C246      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C245     C136     C136     C285      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C245     C136     C136     C285      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C245     C136     C136     C285      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C245     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C245     N239     C235     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C245     N239     C235     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C245     N239     C235     C292      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C245     N239     C235     C292      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C245     N239     C235     C293      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C245     N239     C235     C293      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C245     N239     C235     C295      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C245     N239     C235     C295      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C245     N239     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C245     N239     C246     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C245     N239     C285     C271      SHFT_DIHDR      -1.7370    1.0000    0.0000
+ C245     N239     C285     C271      SHFT_DIHDR       1.2510    2.0000  180.0000
+ C245     N239     C285     C271      SHFT_DIHDR      -3.5010    3.0000    0.0000
+ C245     N239     C285     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C246     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C246     C235     N238     C283      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     C235     N238     C283      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     C235     N238     C284      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     C235     N238     C284      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C246     C235     N239     C246      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     C235     N239     C246      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     C235     N239     C285      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     C235     N239     C285      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     N239     C235     C292      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     N239     C235     C292      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     N239     C235     C293      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     N239     C235     C293      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     N239     C235     C295      SHFT_DIHDR       2.3000    1.0000    0.0000
+ C246     N239     C235     C295      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     N239     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C246     N239     C245     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C267     C136     C224     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C267     C136     C224     N238      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C274     C136     C283      SHFT_DIHDR      -3.1850    1.0000    0.0000
+ C271     C274     C136     C283      SHFT_DIHDR      -0.8250    2.0000  180.0000
+ C271     C274     C136     C283      SHFT_DIHDR       0.4930    3.0000    0.0000
+ C271     C274     C136     C293      SHFT_DIHDR      -3.1850    1.0000    0.0000
+ C271     C274     C136     C293      SHFT_DIHDR      -0.8250    2.0000  180.0000
+ C271     C274     C136     C293      SHFT_DIHDR       0.4930    3.0000    0.0000
+ C271     C274     C136     H140      SHFT_DIHDR      -0.2250    3.0000    0.0000
+ C271     C274     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C271     C274     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C271     C274     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C271     C274     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C271     C274     C283     C271      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C274     C283     C271      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C274     C283     C271      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C274     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C271     C274     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C271     C274     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C271     C274     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C271     C274     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C271     C274     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C271     C274     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C271     C274     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C271     C283     C135     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C136     C274      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C283     C136     C274      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C283     C136     C274      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C283     C136     C308      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C283     C136     C308      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C283     C136     C308      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C283     C136     C500      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C283     C136     C500      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C283     C136     C500      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C283     C136     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C137     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C149     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C157     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C157     O154      SHFT_DIHDR      -6.1800    1.0000    0.0000
+ C271     C283     C158     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C158     O154      SHFT_DIHDR      -6.1800    1.0000    0.0000
+ C271     C283     C206     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C206     S200      SHFT_DIHDR      -4.3440    1.0000    0.0000
+ C271     C283     C206     S200      SHFT_DIHDR      -1.7140    2.0000  180.0000
+ C271     C283     C214     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C214     S203      SHFT_DIHDR      -4.3440    1.0000    0.0000
+ C271     C283     C214     S203      SHFT_DIHDR      -1.7140    2.0000  180.0000
+ C271     C283     C274     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     C505     C507      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C283     C505     C507      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C283     C505     C507      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C283     C505     C508      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C283     C505     C508      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C283     C505     C508      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C283     C505     C510      SHFT_DIHDR      -1.6970    1.0000    0.0000
+ C271     C283     C505     C510      SHFT_DIHDR      -0.4560    2.0000  180.0000
+ C271     C283     C505     C510      SHFT_DIHDR       0.5850    3.0000    0.0000
+ C271     C283     C505     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C271     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C271     C284     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C271     C285     C136     H140      SHFT_DIHDR      -0.0760    3.0000    0.0000
+ C274     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C274     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C274     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C274     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C274     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C274     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C274     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C274     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C274     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C274     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C274     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C274     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C274     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C274     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C274     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C274     C224     C235     N239      SHFT_DIHDR       0.4620    2.0000  180.0000
+ C274     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C274     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C274     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C274     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C274     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C274     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C274     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C274     C293     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C274     C293     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C274     C293     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C274     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C274     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C283     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C136     C137     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C136     C210     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C136     C210     S202      SHFT_DIHDR       2.6190    1.0000    0.0000
+ C283     C136     C210     S202      SHFT_DIHDR      -0.6200    2.0000  180.0000
+ C283     C136     C210     S202      SHFT_DIHDR       0.2580    3.0000    0.0000
+ C283     C136     C235     N237      SHFT_DIHDR       3.2500    1.0000    0.0000
+ C283     C136     C235     N237      SHFT_DIHDR      -0.4020    2.0000  180.0000
+ C283     C136     C235     N237      SHFT_DIHDR      -0.1360    3.0000    0.0000
+ C283     C136     C235     O236      SHFT_DIHDR       1.1660    2.0000  180.0000
+ C283     C136     C267     O268      SHFT_DIHDR       1.0000    1.0000    0.0000
+ C283     C136     C267     O268      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C283     C136     C267     O268      SHFT_DIHDR       0.4500    3.0000    0.0000
+ C283     C136     C267     O269      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C283     C136     C274     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C136     C308     C307      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C283     C136     C308     C307      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C283     C136     C308     C307      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C283     C136     C308     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C136     C500     C501      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C283     C136     C500     C514      SHFT_DIHDR      -0.7140    1.0000    0.0000
+ C283     C137     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C137     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C157     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C283     C157     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C283     C157     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C283     C158     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C283     C158     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C283     C158     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C283     C158     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C283     C206     S200     H204      SHFT_DIHDR      -0.7590    1.0000    0.0000
+ C283     C206     S200     H204      SHFT_DIHDR      -0.2820    2.0000  180.0000
+ C283     C206     S200     H204      SHFT_DIHDR       0.6800    3.0000    0.0000
+ C283     C214     S203     S203      SHFT_DIHDR       1.9410    1.0000    0.0000
+ C283     C214     S203     S203      SHFT_DIHDR      -0.8360    2.0000  180.0000
+ C283     C214     S203     S203      SHFT_DIHDR       0.9350    3.0000    0.0000
+ C283     C274     C271     O272      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C283     C505     C507     C508      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C283     C505     C507     N511      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C283     C505     C507     N511      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C283     C505     C507     N511      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C283     C505     C508     C507      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C283     C505     C508     N503      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C283     C505     C508     N503      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C283     C505     C508     N503      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C283     C505     C510     C510      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C283     C505     C510     N512      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C283     C505     C510     N512      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C283     C505     C510     N512      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C283     N238     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C284     N238     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C285     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C285     N239     C235     O236      SHFT_DIHDR       6.0890    2.0000  180.0000
+ C285     N239     C245     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C292     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C292     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C293     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C136     C137     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C136     C210     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C136     C210     S202      SHFT_DIHDR       2.6190    1.0000    0.0000
+ C293     C136     C210     S202      SHFT_DIHDR      -0.6200    2.0000  180.0000
+ C293     C136     C210     S202      SHFT_DIHDR       0.2580    3.0000    0.0000
+ C293     C136     C235     N237      SHFT_DIHDR       3.2500    1.0000    0.0000
+ C293     C136     C235     N237      SHFT_DIHDR      -0.4020    2.0000  180.0000
+ C293     C136     C235     N237      SHFT_DIHDR      -0.1360    3.0000    0.0000
+ C293     C136     C235     O236      SHFT_DIHDR       1.1660    2.0000  180.0000
+ C293     C136     C267     O268      SHFT_DIHDR       1.0000    1.0000    0.0000
+ C293     C136     C267     O268      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C293     C136     C267     O268      SHFT_DIHDR       0.4500    3.0000    0.0000
+ C293     C136     C267     O269      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C293     C136     C274     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C136     C308     C307      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C293     C136     C308     C307      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C293     C136     C308     C307      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C293     C136     C308     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C136     C500     C501      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C293     C136     C500     C514      SHFT_DIHDR      -0.7140    1.0000    0.0000
+ C293     C137     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C137     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C157     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C293     C157     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C293     C157     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C293     C158     C135     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C293     C158     O154     H155      SHFT_DIHDR      -0.3560    1.0000    0.0000
+ C293     C158     O154     H155      SHFT_DIHDR      -0.1740    2.0000  180.0000
+ C293     C158     O154     H155      SHFT_DIHDR       0.4920    3.0000    0.0000
+ C293     C206     S200     H204      SHFT_DIHDR      -0.7590    1.0000    0.0000
+ C293     C206     S200     H204      SHFT_DIHDR      -0.2820    2.0000  180.0000
+ C293     C206     S200     H204      SHFT_DIHDR       0.6800    3.0000    0.0000
+ C293     C214     S203     S203      SHFT_DIHDR       1.9410    1.0000    0.0000
+ C293     C214     S203     S203      SHFT_DIHDR      -0.8360    2.0000  180.0000
+ C293     C214     S203     S203      SHFT_DIHDR       0.9350    3.0000    0.0000
+ C293     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C293     C274     C271     O272      SHFT_DIHDR       0.5460    2.0000  180.0000
+ C293     C505     C507     C508      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C293     C505     C507     N511      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C293     C505     C507     N511      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C293     C505     C507     N511      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C293     C505     C508     C507      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C293     C505     C508     N503      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C293     C505     C508     N503      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C293     C505     C508     N503      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C293     C505     C510     C510      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C293     C505     C510     N512      SHFT_DIHDR       2.3660    1.0000    0.0000
+ C293     C505     C510     N512      SHFT_DIHDR      -0.2620    2.0000  180.0000
+ C293     C505     C510     N512      SHFT_DIHDR       0.5050    3.0000    0.0000
+ C295     C136     C136     C296      SHFT_DIHDR       1.3000    1.0000    0.0000
+ C295     C136     C136     C296      SHFT_DIHDR      -0.0500    2.0000  180.0000
+ C295     C136     C136     C296      SHFT_DIHDR       0.2000    3.0000    0.0000
+ C295     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C295     C235     N238     H241      SHFT_DIHDR       4.9000    2.0000  180.0000
+ C295     N309     C296     H140      SHFT_DIHDR       0.3017    3.0000    0.0000
+ C296     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C296     N309     C295     H140      SHFT_DIHDR       0.3017    3.0000    0.0000
+ C302     N303     C307     C308      SHFT_DIHDR       1.8290    1.0000    0.0000
+ C302     N303     C307     C308      SHFT_DIHDR       0.2430    2.0000  180.0000
+ C302     N303     C307     C308      SHFT_DIHDR      -0.4980    3.0000    0.0000
+ C302     N303     C307     H140      SHFT_DIHDR       0.1770    3.0000    0.0000
+ C307     C308     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C307     N303     C302     N300      SHFT_DIHDR       7.9360    2.0000  180.0000
+ C308     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C308     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C308     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C308     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C308     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C308     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C308     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C308     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C308     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ C308     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C308     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C308     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C308     C307     N303     H304      SHFT_DIHDR      -0.1900    1.0000    0.0000
+ C308     C307     N303     H304      SHFT_DIHDR      -0.4170    2.0000  180.0000
+ C308     C307     N303     H304      SHFT_DIHDR       0.4180    3.0000    0.0000
+ C500     C136     C224     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C500     C136     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C500     C136     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C500     C136     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C500     C136     C283     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C500     C136     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C500     C136     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C500     C136     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C500     C136     C293     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C500     C136     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C500     C136     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C500     C136     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C500     C501     C145     H146      SHFT_DIHDR       7.0000    2.0000  180.0000
+ C501     C500     C136     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C501     C502     C145     H146      SHFT_DIHDR       7.2500    2.0000  180.0000
+ C502     C501     C145     H146      SHFT_DIHDR       7.0000    2.0000  180.0000
+ C502     C501     C500     C514      SHFT_DIHDR       3.3500    2.0000  180.0000
+ C502     N503     C514     H146      SHFT_DIHDR       3.0000    2.0000  180.0000
+ C505     C224     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C505     C224     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C505     C224     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C505     C224     C235     N239      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C505     C224     C235     N239      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C505     C224     C235     N239      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C505     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C505     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C505     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ C505     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C505     C293     C235     N238      SHFT_DIHDR       1.1730    1.0000    0.0000
+ C505     C293     C235     N238      SHFT_DIHDR       0.1890    2.0000  180.0000
+ C505     C293     C235     N238      SHFT_DIHDR      -1.2000    3.0000    0.0000
+ C505     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C505     C293     N287     H290      SHFT_DIHDR       0.3470    3.0000    0.0000
+ C505     C508     C507     H146      SHFT_DIHDR      10.7500    2.0000  180.0000
+ C505     C508     C507     N511      SHFT_DIHDR      10.7500    2.0000  180.0000
+ C505     C508     N503     C506      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C505     C508     N503     H504      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C505     C510     N512     C509      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C505     C510     N512     H513      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C506     N503     C508     C507      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C506     N503     C508     H146      SHFT_DIHDR       3.2000    2.0000  180.0000
+ C506     N511     C507     C508      SHFT_DIHDR       4.8000    2.0000  180.0000
+ C506     N511     C507     H146      SHFT_DIHDR       4.8000    2.0000  180.0000
+ C507     C505     C224     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C507     C505     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C507     C505     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C507     C505     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C507     C505     C283     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C507     C505     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C507     C505     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C507     C505     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C507     C505     C293     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C507     C505     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C507     C505     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C507     C505     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C507     C508     C505     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C507     C508     N503     H504      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C507     N511     C506     H146      SHFT_DIHDR      10.0000    2.0000  180.0000
+ C507     N511     C506     N503      SHFT_DIHDR      10.0000    2.0000  180.0000
+ C508     C505     C224     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C508     C505     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C508     C505     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C508     C505     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C508     C505     C283     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C508     C505     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C508     C505     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C508     C505     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C508     C505     C293     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C508     C505     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C508     C505     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C508     C505     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C508     C507     C505     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C508     N503     C506     H146      SHFT_DIHDR       4.6500    2.0000  180.0000
+ C508     N503     C506     N511      SHFT_DIHDR       4.6500    2.0000  180.0000
+ C509     N512     C510     C510      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C509     N512     C510     H146      SHFT_DIHDR       3.2000    2.0000  180.0000
+ C510     C505     C224     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C510     C505     C224     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C510     C505     C224     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C510     C505     C224     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C510     C505     C283     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C510     C505     C283     N238      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C510     C505     C283     N238      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C510     C505     C283     N238      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C510     C505     C293     H140      SHFT_DIHDR       0.4620    3.0000    0.0000
+ C510     C505     C293     N287      SHFT_DIHDR       0.8450    1.0000    0.0000
+ C510     C505     C293     N287      SHFT_DIHDR      -0.9620    2.0000  180.0000
+ C510     C505     C293     N287      SHFT_DIHDR       0.7130    3.0000    0.0000
+ C510     C510     C505     H140      SHFT_DIHDR       0.0000    1.0000    0.0000
+ C510     C510     N512     H513      SHFT_DIHDR       2.8000    2.0000  180.0000
+ C510     N512     C509     H146      SHFT_DIHDR       4.6500    2.0000  180.0000
+ C510     N512     C509     N512      SHFT_DIHDR       4.6500    2.0000  180.0000
+ C514     C500     C136     H140      SHFT_DIHDR      -0.4800    3.0000    0.0000
+ H140     C135     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C135     C137     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C135     C158     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C135     C158     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C135     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C135     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C135     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C135     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C135     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C135     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C135     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C135     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C135     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C136     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C137     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C210     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C210     S202      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C136     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C235     N237      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C136     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C136     C245     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C245     N239      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C246     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C246     N239      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C267     O268      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C136     C267     O269      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C136     C274     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C285     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C285     N239      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C292     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C292     N287      SHFT_DIHDR       0.3840    3.0000    0.0000
+ H140     C136     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C136     C295     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C295     N309      SHFT_DIHDR       0.3840    3.0000    0.0000
+ H140     C136     C296     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C136     C296     N309      SHFT_DIHDR       0.3840    3.0000    0.0000
+ H140     C136     C308     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C137     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C137     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C137     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C137     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C137     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C137     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C149     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C149     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C149     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C149     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C149     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C149     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C157     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C157     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C157     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C157     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C157     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C157     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C157     O154     H155      SHFT_DIHDR       0.4500    3.0000    0.0000
+ H140     C158     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C158     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C158     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C158     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C158     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C158     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C158     O154     H155      SHFT_DIHDR       0.4500    3.0000    0.0000
+ H140     C206     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C206     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C206     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C206     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C206     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C206     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C206     S200     H204      SHFT_DIHDR       0.4800    3.0000    0.0000
+ H140     C214     C224     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C214     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C214     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C214     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C214     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C214     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C214     S203     S203      SHFT_DIHDR       0.5580    3.0000    0.0000
+ H140     C223     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C223     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C223     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C223     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C224     C157     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C224     C158     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C224     C206     S200      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C224     C214     S203      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C224     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C224     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C224     C274     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C224     C505     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C224     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C242     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C246     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C246     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C246     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C274     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C274     C271     O272      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C274     C283     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C274     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C274     C293     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C274     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C283     C157     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C283     C158     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C283     C206     S200      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C283     C214     S203      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C283     C271     O272      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C283     C505     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C283     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C284     C271     O272      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C284     N238     H241      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C285     C271     O272      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C292     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C292     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C292     N287     H290      SHFT_DIHDR       0.2610    3.0000    0.0000
+ H140     C293     C157     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C293     C158     O154      SHFT_DIHDR       0.4680    3.0000    0.0000
+ H140     C293     C206     S200      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C293     C214     S203      SHFT_DIHDR       0.4520    3.0000    0.0000
+ H140     C293     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C293     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C293     C505     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C293     N287     H290      SHFT_DIHDR       0.2610    3.0000    0.0000
+ H140     C295     C235     N238      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C295     C235     N239      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C295     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C295     N309     H310      SHFT_DIHDR       0.2610    3.0000    0.0000
+ H140     C296     N309     H310      SHFT_DIHDR       0.3840    3.0000    0.0000
+ H140     C307     C308     H140      SHFT_DIHDR       0.3000    3.0000    0.0000
+ H140     C307     N303     H304      SHFT_DIHDR       0.0000    1.0000    0.0000
+ H140     C308     C307     N303      SHFT_DIHDR      -0.5820    3.0000    0.0000
+ H140     C505     C224     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C505     C283     N238      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C505     C293     N287      SHFT_DIHDR       0.4640    3.0000    0.0000
+ H140     C505     C507     N511      SHFT_DIHDR       0.4190    3.0000    0.0000
+ H140     C505     C508     N503      SHFT_DIHDR       0.4190    3.0000    0.0000
+ H140     C505     C510     N512      SHFT_DIHDR       0.4190    3.0000    0.0000
+ H146     C508     C507     N511      SHFT_DIHDR      10.7500    2.0000  180.0000
+ H146     C508     N503     H504      SHFT_DIHDR       3.2000    2.0000  180.0000
+ H146     C510     N512     H513      SHFT_DIHDR       3.2000    2.0000  180.0000
+ H240     N237     C235     O236      SHFT_DIHDR       4.9000    2.0000  180.0000
+ H241     N238     C235     O236      SHFT_DIHDR       4.9000    2.0000  180.0000
+ H270     O268     C267     O269      SHFT_DIHDR       5.5000    2.0000  180.0000
+ H270     O272     C271     O272      SHFT_DIHDR       5.5000    2.0000  180.0000
+ H301     N300     C302     N300      SHFT_DIHDR       3.9000    2.0000  180.0000
+ H301     N300     C302     N303      SHFT_DIHDR       3.9000    2.0000  180.0000
+ H304     N303     C302     N300      SHFT_DIHDR       3.9000    2.0000  180.0000
+ H504     N503     C506     N511      SHFT_DIHDR       4.6500    2.0000  180.0000
+ H513     N512     C509     N512      SHFT_DIHDR       4.6500    2.0000  180.0000
+ N238     C223     C235     N238      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C223     C235     N238      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C223     C235     N238      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C223     C235     N239      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C223     C235     N239      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C223     C235     N239      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C223     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ N238     C224     C157     O154      SHFT_DIHDR       6.2800    1.0000    0.0000
+ N238     C224     C157     O154      SHFT_DIHDR      -1.4670    2.0000  180.0000
+ N238     C224     C157     O154      SHFT_DIHDR       2.0300    3.0000    0.0000
+ N238     C224     C158     O154      SHFT_DIHDR       6.2800    1.0000    0.0000
+ N238     C224     C158     O154      SHFT_DIHDR      -1.4670    2.0000  180.0000
+ N238     C224     C158     O154      SHFT_DIHDR       2.0300    3.0000    0.0000
+ N238     C224     C206     S200      SHFT_DIHDR       1.4280    1.0000    0.0000
+ N238     C224     C206     S200      SHFT_DIHDR       0.0860    2.0000  180.0000
+ N238     C224     C206     S200      SHFT_DIHDR       0.0290    3.0000    0.0000
+ N238     C224     C214     S203      SHFT_DIHDR       1.4280    1.0000    0.0000
+ N238     C224     C214     S203      SHFT_DIHDR       0.0860    2.0000  180.0000
+ N238     C224     C214     S203      SHFT_DIHDR       0.0290    3.0000    0.0000
+ N238     C224     C235     N238      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C224     C235     N238      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C224     C235     N238      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C224     C235     N239      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C224     C235     N239      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C224     C235     N239      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C224     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ N238     C235     C246     N239      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C235     C246     N239      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C235     C246     N239      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C235     C292     N287      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C235     C292     N287      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C235     C292     N287      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C235     C293     N287      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C235     C293     N287      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C235     C293     N287      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C235     C295     N309      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N238     C235     C295     N309      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N238     C235     C295     N309      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N238     C283     C157     O154      SHFT_DIHDR       6.2800    1.0000    0.0000
+ N238     C283     C157     O154      SHFT_DIHDR      -1.4670    2.0000  180.0000
+ N238     C283     C157     O154      SHFT_DIHDR       2.0300    3.0000    0.0000
+ N238     C283     C158     O154      SHFT_DIHDR       6.2800    1.0000    0.0000
+ N238     C283     C158     O154      SHFT_DIHDR      -1.4670    2.0000  180.0000
+ N238     C283     C158     O154      SHFT_DIHDR       2.0300    3.0000    0.0000
+ N238     C283     C206     S200      SHFT_DIHDR       1.4280    1.0000    0.0000
+ N238     C283     C206     S200      SHFT_DIHDR       0.0860    2.0000  180.0000
+ N238     C283     C206     S200      SHFT_DIHDR       0.0290    3.0000    0.0000
+ N238     C283     C214     S203      SHFT_DIHDR       1.4280    1.0000    0.0000
+ N238     C283     C214     S203      SHFT_DIHDR       0.0860    2.0000  180.0000
+ N238     C283     C214     S203      SHFT_DIHDR       0.0290    3.0000    0.0000
+ N238     C283     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ N238     C284     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ N239     C235     C246     N239      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N239     C235     C246     N239      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N239     C235     C246     N239      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N239     C235     C293     N287      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N239     C235     C293     N287      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N239     C235     C293     N287      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N239     C235     C295     N309      SHFT_DIHDR       1.8160    1.0000    0.0000
+ N239     C235     C295     N309      SHFT_DIHDR       1.2220    2.0000  180.0000
+ N239     C235     C295     N309      SHFT_DIHDR       1.5810    3.0000    0.0000
+ N239     C246     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ N239     C285     C271     O272      SHFT_DIHDR       0.8200    2.0000  180.0000
+ N287     C292     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ N287     C293     C157     O154      SHFT_DIHDR       6.2800    1.0000    0.0000
+ N287     C293     C157     O154      SHFT_DIHDR      -1.4670    2.0000  180.0000
+ N287     C293     C157     O154      SHFT_DIHDR       2.0300    3.0000    0.0000
+ N287     C293     C158     O154      SHFT_DIHDR       6.2800    1.0000    0.0000
+ N287     C293     C158     O154      SHFT_DIHDR      -1.4670    2.0000  180.0000
+ N287     C293     C158     O154      SHFT_DIHDR       2.0300    3.0000    0.0000
+ N287     C293     C206     S200      SHFT_DIHDR       1.4280    1.0000    0.0000
+ N287     C293     C206     S200      SHFT_DIHDR       0.0860    2.0000  180.0000
+ N287     C293     C206     S200      SHFT_DIHDR       0.0290    3.0000    0.0000
+ N287     C293     C214     S203      SHFT_DIHDR       1.4280    1.0000    0.0000
+ N287     C293     C214     S203      SHFT_DIHDR       0.0860    2.0000  180.0000
+ N287     C293     C214     S203      SHFT_DIHDR       0.0290    3.0000    0.0000
+ N287     C293     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ N309     C295     C235     O236      SHFT_DIHDR       0.0000    1.0000    0.0000
+ N503     C508     C507     N511      SHFT_DIHDR      10.7500    2.0000  180.0000
+END
+#
+INVERSIONS
+ C500     C136     C501     C514         IT_JIKL       2.2000  180.0000    2.0000
+ C500     C136     C514     C501         IT_JIKL       2.2000  180.0000    2.0000
+ C502     C145     C501     N503         IT_JIKL       2.2000  180.0000    2.0000
+ C502     C145     N503     C501         IT_JIKL       2.2000  180.0000    2.0000
+ C145     C149     C145     C145         IT_JIKL       2.2000  180.0000    2.0000
+ N238     C245     C235     C285         IT_JIKL       2.0000  180.0000    2.0000
+ N238     C245     C285     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N239     C245     C235     C246         IT_JIKL       2.0000  180.0000    2.0000
+ N239     C245     C235     C285         IT_JIKL       2.0000  180.0000    2.0000
+ N239     C245     C246     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N239     C245     C285     C235         IT_JIKL       2.0000  180.0000    2.0000
+ C501     C502     C145     C500         IT_JIKL       2.2000  180.0000    2.0000
+ C501     C502     C500     C145         IT_JIKL       2.2000  180.0000    2.0000
+ C507     C505     C508     N511         IT_JIKL       2.2000  180.0000    2.0000
+ C507     C505     N511     C508         IT_JIKL       2.2000  180.0000    2.0000
+ C508     C505     C507     N503         IT_JIKL       2.2000  180.0000    2.0000
+ C508     C505     N503     C507         IT_JIKL       2.2000  180.0000    2.0000
+ C510     C505     C510     N512         IT_JIKL       2.2000  180.0000    2.0000
+ C510     C505     N512     C510         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C145     C145         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C166     C145         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C145     C166         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C145     C501         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C501     C145         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C145     C502         IT_JIKL       2.2000  180.0000    2.0000
+ C145     H146     C502     C145         IT_JIKL       2.2000  180.0000    2.0000
+ C506     H146     N503     N511         IT_JIKL       2.2000  180.0000    2.0000
+ C506     H146     N511     N503         IT_JIKL       2.2000  180.0000    2.0000
+ C507     H146     C508     N511         IT_JIKL       2.2000  180.0000    2.0000
+ C507     H146     N511     C508         IT_JIKL       2.2000  180.0000    2.0000
+ C508     H146     C507     N503         IT_JIKL       2.2000  180.0000    2.0000
+ C508     H146     N503     C507         IT_JIKL       2.2000  180.0000    2.0000
+ C509     H146     N512     N512         IT_JIKL       2.2000  180.0000    2.0000
+ C510     H146     C510     N512         IT_JIKL       2.2000  180.0000    2.0000
+ C510     H146     N512     C510         IT_JIKL       2.2000  180.0000    2.0000
+ C514     H146     C500     N503         IT_JIKL       2.2000  180.0000    2.0000
+ C514     H146     N503     C500         IT_JIKL       2.2000  180.0000    2.0000
+ N237     H240     C235     H240         IT_JIKL       2.0000  180.0000    2.0000
+ N237     H240     H240     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C223     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C224     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C235     C223         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C235     C224         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C235     C242         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C235     C283         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C235     C284         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C242     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C283     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N238     H241     C284     C235         IT_JIKL       2.0000  180.0000    2.0000
+ N300     H301     C302     H301         IT_JIKL       2.0000  180.0000    2.0000
+ N300     H301     H301     C302         IT_JIKL       2.0000  180.0000    2.0000
+ N303     H304     C302     C307         IT_JIKL       2.0000  180.0000    2.0000
+ N303     H304     C307     C302         IT_JIKL       2.0000  180.0000    2.0000
+ N503     H504     C502     C514         IT_JIKL       2.0000  180.0000    2.0000
+ N503     H504     C506     C508         IT_JIKL       2.0000  180.0000    2.0000
+ N503     H504     C508     C506         IT_JIKL       2.0000  180.0000    2.0000
+ N503     H504     C514     C502         IT_JIKL       2.0000  180.0000    2.0000
+ N512     H513     C509     C510         IT_JIKL       2.0000  180.0000    2.0000
+ N512     H513     C510     C509         IT_JIKL       2.0000  180.0000    2.0000
+ C302     N300     N300     N303         IT_JIKL      21.0000  180.0000    2.0000
+ C302     N300     N303     N300         IT_JIKL      21.0000  180.0000    2.0000
+ C166     O167     C145     C145         IT_JIKL       2.2000  180.0000    2.0000
+ C235     O236     C135     N239         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C135     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C136     N237         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C223     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C223     N239         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C224     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C224     N239         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C246     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C246     N239         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C292     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C293     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C293     N239         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C295     N238         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     C295     N239         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N237     C136         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C135         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C223         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C224         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C246         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C292         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C293         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N238     C295         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N239     C135         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N239     C223         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N239     C224         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N239     C246         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N239     C293         IT_JIKL      21.0000  180.0000    2.0000
+ C235     O236     N239     C295         IT_JIKL      21.0000  180.0000    2.0000
+ C267     O269     C136     O268         IT_JIKL      21.0000  180.0000    2.0000
+ C267     O269     O268     C136         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     C274     O272         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     C283     O272         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     C284     O272         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     C285     O272         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     O272     C274         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     O272     C283         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     O272     C284         IT_JIKL      21.0000  180.0000    2.0000
+ C271     O272     O272     C285         IT_JIKL      21.0000  180.0000    2.0000
+ C267     O268     C136     O269         IT_JIKL      21.0000  180.0000    2.0000
+END
+#
+COULOMBIC
+ X        X           CONST-EPS
+END

@@ -1,0 +1,160 @@
+#!/bin/bash
+# This file contains details which build the periodic table of information
+# for elements in terms of atomic symbols, masses, and corresponding 
+# pseudopotentials - it also provides a function to obtain the atomic number
+# for a given input atomic symbol
+# The pseudopotentials are generated with respect to a given functional
+#  if no argument is provided pbe is used by default
+#  other possibilities include: ... not implemented
+
+# details
+SYMBOL[1]=H
+SYMBOL[2]=He
+SYMBOL[3]=Li
+SYMBOL[4]=Be
+SYMBOL[5]=B
+SYMBOL[6]=C
+SYMBOL[7]=N
+SYMBOL[8]=O
+SYMBOL[9]=F
+SYMBOL[10]=Ne
+SYMBOL[11]=Na
+SYMBOL[12]=Mg
+SYMBOL[13]=Al
+SYMBOL[14]=Si
+SYMBOL[15]=P
+SYMBOL[16]=S
+SYMBOL[17]=Cl
+SYMBOL[18]=Ar
+SYMBOL[19]=K
+SYMBOL[20]=Ca
+SYMBOL[21]=Sc
+SYMBOL[22]=Ti
+SYMBOL[23]=V
+SYMBOL[24]=Cr
+SYMBOL[25]=Mn
+SYMBOL[26]=Fe
+SYMBOL[27]=Co
+SYMBOL[28]=Ni
+SYMBOL[29]=Cu
+SYMBOL[30]=Zn
+SYMBOL[31]=Ga
+SYMBOL[32]=Ge
+SYMBOL[33]=As
+SYMBOL[34]=Se
+SYMBOL[35]=Br
+SYMBOL[36]=Kr
+SYMBOL[37]=Rb
+SYMBOL[38]=Sr
+SYMBOL[39]=Y
+SYMBOL[40]=Zr
+SYMBOL[41]=Nb
+SYMBOL[42]=Mo
+SYMBOL[43]=Tc
+SYMBOL[44]=Ru
+SYMBOL[45]=Rh
+SYMBOL[46]=Pd
+SYMBOL[47]=Ag
+SYMBOL[48]=Cd
+SYMBOL[49]=In
+SYMBOL[50]=Sn
+SYMBOL[51]=Sb
+SYMBOL[52]=Te
+SYMBOL[53]=I
+SYMBOL[54]=Xe
+SYMBOL[55]=Cs
+SYMBOL[56]=Ba
+SYMBOL[57]=La
+SYMBOL[58]=Ce
+SYMBOL[59]=Pr
+SYMBOL[60]=Nd
+SYMBOL[61]=Pm
+SYMBOL[62]=Sm
+SYMBOL[63]=Eu
+SYMBOL[64]=Gd
+SYMBOL[65]=Tb
+SYMBOL[66]=Dy
+SYMBOL[67]=Ho
+SYMBOL[68]=Er
+SYMBOL[69]=Tm
+SYMBOL[70]=Yb
+SYMBOL[71]=Lu
+SYMBOL[72]=Hf
+SYMBOL[73]=Ta
+SYMBOL[74]=W
+SYMBOL[75]=Re
+SYMBOL[76]=Os
+SYMBOL[77]=Ir
+SYMBOL[78]=Pt
+SYMBOL[79]=Au
+SYMBOL[80]=Hg
+SYMBOL[81]=Tl
+SYMBOL[82]=Pb
+
+MASS[1]=1.0079
+MASS[3]=6.941
+MASS[5]=10.811
+MASS[6]=12.00
+MASS[7]=14.007
+MASS[8]=15.999
+MASS[9]=18.998
+MASS[11]=22.990
+MASS[14]=28.086
+MASS[15]=30.974
+MASS[16]=32.065
+MASS[17]=35.453
+MASS[22]=47.867
+MASS[26]=55.847
+MASS[27]=58.933
+MASS[28]=58.693
+MASS[29]=63.546
+MASS[34]=78.96
+MASS[44]=101.07
+MASS[48]=112.41
+MASS[82]=207.20
+
+if [[ -z $1 || $1 = 'pbe' ]]
+then
+
+PSEUDO[1]=H.pbe-van_bm.UPF
+PSEUDO[3]=Li.pbe-van-dgp.UPF
+PSEUDO[5]=B.pbe-van-dgp.UPF
+PSEUDO[6]=C.pbe-van_bm.UPF
+PSEUDO[7]=N.pbe-van_bm.UPF
+PSEUDO[8]=O.pbe-van_bm.UPF
+PSEUDO[9]=F.pbe-n-van.UPF
+PSEUDO[11]=Na.pbe-sp-van_ak.UPF
+PSEUDO[14]=Si.pbe-n-van.UPF
+PSEUDO[15]=P.pbe-n-van.UPF
+PSEUDO[16]=S.pbe-van_bm.UPF
+PSEUDO[17]=Cl.pbe-n-van.UPF
+PSEUDO[22]=Ti.pbe-sp-van_ak.UPF
+PSEUDO[26]=Fe.pbe-sp-van.UPF
+PSEUDO[27]=Co.pbe-nd-rrkjus.UPF
+PSEUDO[28]=Ni.pbe-nd-rrkjus.UPF
+PSEUDO[29]=Cu.pbe-d-rrkjus.UPF
+PSEUDO[34]=Se.pbe-van.UPF
+PSEUDO[44]=Ru.pbe-n-van.UPF
+PSEUDO[48]=Cd.pbe-n-van.UPF
+PSEUDO[82]=Pb.pbe-d-van.UPF
+
+else
+
+echo unrecognized functional
+
+fi
+
+function get_atomicnumber {
+S=$1
+#remove numbers
+S=`echo $S | sed 's/[0-9]*//g'`
+for i in `seq 1 ${#SYMBOL[*]}`
+do
+  if [ "${SYMBOL[$i]}" == $S ]
+  then
+    echo $i
+    break
+  fi
+done
+}
+

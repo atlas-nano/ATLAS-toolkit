@@ -1,0 +1,179 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+The field is developed for H-storage with Li doped graphite and nanotube
+Feb. 12, 2002, Weiqiao Deng, Rick Muller and William A. Goddard.
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          0.40000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST                          
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                        8.50000
+ COU_SPLINE_OFF                           8.50000
+ COU_SPLINE_ON                            8.00000
+ EWALD_SUM_COU_ACCURACY                   0.00010
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                NEVER                         
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            SPLINE                        
+ COU_DIRECT_CUT-OFF                       8.00000
+ VDW_COMBINATION_RULE                  ARITHMETIC                    
+ VDW_INTER_CUT_OFF                        8.50000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE                        
+ VDW_SPLINE_ON                            8.00000
+ VDW_SPLINE_OFF                           8.50000
+ EWALD_SUM_VDW_OPTIMIZE                NEVER                         
+ EWALD_SUM_VDW_ACCURACY                   0.00010
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ H_         H       1.00800  0.0000   0   0   0
+ C_2G       C      12.01100     0.0   2   0   0
+ K_         K      39.94800     0.0   0   0   0
+ C_2        C      12.01100     0.0   3   0   0
+ H_2	    H       1.00800  0.0000   0   0   0
+ F_         F      18.99840 -1.0000   0   0   3
+ O_3        O      15.99940  0.0000   3   0   2
+ H___A      H       1.00800  0.0000   0   0   0
+ OW         O      16.00000  0.0000   2   0   0
+ HW         H       1.00800  0.0000   3   0   0
+END
+#
+DIAGONAL_VDW
+# H_          VDW_MORSE     3.200000000000000       0.2200000000000000E-01    11.17000000000000
+ H_	     LJ_6_12        3.1950  0.1000E-03
+ C_2G        LJ_6_12        3.8050  0.6920E-01
+ K_          LJ_6_12        4.0010  0.7000E-01
+ F_          LJ_6_12        3.4720  0.7250E-01
+ O_3         LJ_6_12        3.4046  0.9570E-01
+ H___A       LJ_6_12        3.1950  0.1000E-03
+ OW          LJ_6_12        3.5534  0.1553
+ HW          LJ_6_12        0.0000  0.0000
+END
+#
+ATOM_TYPING_RULES
+ H___A           H            0           0           0           1
+ H___A           H            0           0           1           1
+                 N            0           0           0           1
+ H___A           H            0           0           1           1
+                 O            0           0           0           1
+ H___A           H            0           0           1           1
+                 S            0           0           0           1
+ H_              H            0           0           1           1
+                 C            0           0           0           1
+ C_2G            C            2           0           0           1
+ K_              K            0           0           0           1
+ F_              F            0           0           0           1
+ O_3             O            3           0           0           1
+END
+#
+#
+OFF_DIAGONAL_VDW
+ C_2G     N3      LJ_6_12	372.5673   0.11951
+END
+#
+BOND_STRETCH
+ C_2G     H_          HARMONIC     700.0000    1.0200               
+ F_       C_2G        HARMONIC     700.0000    1.3710
+ C_2G     C_2G        MORSE        720.0000    1.4114  133.0000    0.0000
+ O_3      H___A       HARMONIC     700.0000    0.9800
+ O_3      C_2G        HARMONIC     700.0000    1.4200
+ HW       HW          HARMONIC    1106.0000    1.6330
+ OW       HW          HARMONIC    1106.0000    1.0000
+END
+#
+ANGLE_BEND
+ C_2G     C_2G     C_2G        COS_HARMON   196.1300  120.0000
+ C_2G     C_2G     H_          COS_HARMON   200.1300  120.0000
+ X	  C_2G     C_2G	       COS_HARMON   200.1300  120.0000
+ X        O_3      X           THETA_HARM   100.0000  104.5100
+ HW       HW       OW          THETA_HARM    0.0000  127.0000
+ HW       OW       HW          THETA_HARM  200.0000  104.0000
+END
+#
+TORSIONS
+ C_2G     C_2G     C_2G     C_2G        DIHEDRAL      21.2800    2.0000    1.0000
+ X        C_2G     C_2G     X           DIHEDRAL      25.0000    2.0000    1.0000
+ X        O_3      C_2G     X           DIHEDRAL       2.0000    3.0000   -1.0000               
+END
+#
+STRETCH_BEND_STRETCH
+ C_2G     C_2G     C_2G        R-COSINE       1.4114    1.4114  120.0000   62.7089   62.7089
+END
+#
+STRETCH_STRETCH
+ C_2G     C_2G     C_2G        R-R            1.4114    1.4114   68.0000
+END
+#
+COULOMBIC
+ X        X           CONST-EPS 
+END
+#
+HYDROGEN_BONDS
+END
+#
+GENERATOR
+END

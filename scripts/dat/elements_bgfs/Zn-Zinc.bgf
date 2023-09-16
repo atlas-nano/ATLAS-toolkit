@@ -1,0 +1,17 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Zn-Zinc.bgf modified FFTYPE:Zn
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     2.66500     2.66500     4.94700    90.00000    90.00000   120.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 ZN1   RES A   444  -0.00000   1.53900   1.23700 Zn     9 0  0.00000
+HETATM     2 ZN2   RES A   444   1.33200   0.76900   3.71000 Zn     9 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     1     1     1     1     1     1     1     1     2     2     2     2
+CONECT     2     1     1     1     1     2     2     2     2     2     2     2     2
+END

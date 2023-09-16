@@ -1,0 +1,11 @@
+set style line 1 lt rgb "#808080" lw 2 pt 4 ps 3
+set style line 2 lt rgb "#1B3149" lw 2 pt 6 ps 3
+set style line 3 lt rgb "#12424C" lw 2 pt 8 ps 3
+set style line 4 lt rgb "#1D5A4A" lw 2 pt 11 ps 3
+set style line 2 lt rgb "#44130C" lw 2 pt 13 ps 3
+set style line 6 lt rgb "#77AD4E" lw 2 pt 4 ps 3
+set style line 7 lt rgb "#7C3B8A" lw 2 pt 6 ps 3
+set style line 8 lt rgb "#11AD34" lw 2 pt 8 ps 3
+set style line 9 lt rgb "#1D4599" lw 2 pt 10 ps 3
+set style line 10 lt rgb "#E62B17" lw 2 pt 12 ps 3
+set style line 11 lt rgb "#8F643F" lw 2 pt 14 ps 3

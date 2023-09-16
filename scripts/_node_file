@@ -1,0 +1,205 @@
+node-7-1.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643921.hive.wag.caltech.edu, 1/643921.hive.wag.caltech.edu, 2/643921.hive.wag.caltech.edu, 3/643921.hive.wag.caltech.edu, 4/643921.hive.wag.caltech.edu, 5/643921.hive.wag.caltech.edu, 6/643921.hive.wag.caltech.edu, 7/643921.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-1.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=5493 13361,nsessions=2,nusers=2,idletime=1565276,totmem=9186060kb,availmem=5796236kb,physmem=8165944kb,ncpus=8,loadave=8.00,netload=135042010332,state=free,jobs=643099.hive.wag.caltech.edu 643100.hive.wag.caltech.edu 643101.hive.wag.caltech.edu 643102.hive.wag.caltech.edu 643103.hive.wag.caltech.edu 643921.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-2.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644094.hive.wag.caltech.edu, 1/643827.hive.wag.caltech.edu, 2/643828.hive.wag.caltech.edu, 3/643829.hive.wag.caltech.edu, 4/643875.hive.wag.caltech.edu, 5/643869.hive.wag.caltech.edu, 6/643119.hive.wag.caltech.edu, 7/643871.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-2.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=4833 4918 6706 6843 24076 8973 9183 9189 9595 17282 10951 11249 11583 10454 12552 12554 12949 13374 16864 17056 17256 17419 18002 18671 24663,nsessions=25,nusers=7,idletime=14397096,totmem=9186064kb,availmem=7058996kb,physmem=8165948kb,ncpus=8,loadave=8.28,netload=4110741106840,state=free,jobs=585520.hive.wag.caltech.edu 643098.hive.wag.caltech.edu 643119.hive.wag.caltech.edu 643827.hive.wag.caltech.edu 643828.hive.wag.caltech.edu 643829.hive.wag.caltech.edu 643869.hive.wag.caltech.edu 643871.hive.wag.caltech.edu 643875.hive.wag.caltech.edu 644094.hive.wag.caltech.edu,rectime=1258542810
+
+node-7-3.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644086.hive.wag.caltech.edu, 1/643814.hive.wag.caltech.edu, 2/643816.hive.wag.caltech.edu, 3/641535.hive.wag.caltech.edu, 4/644086.hive.wag.caltech.edu, 5/644140.hive.wag.caltech.edu, 6/643819.hive.wag.caltech.edu, 7/644140.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-3.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=1142 1216 1297 1432 1735 1881 2037 8799 8806 8812 12070 18260 21692 22015 23451 30245 26061,nsessions=17,nusers=5,idletime=6993604,totmem=9186060kb,availmem=7459844kb,physmem=8165944kb,ncpus=8,loadave=6.67,netload=107300945821,state=free,jobs=641535.hive.wag.caltech.edu 643097.hive.wag.caltech.edu 643814.hive.wag.caltech.edu 643816.hive.wag.caltech.edu 643819.hive.wag.caltech.edu 644086.hive.wag.caltech.edu 644140.hive.wag.caltech.edu,rectime=1258542851
+
+node-7-4.local
+     state = down,job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643531.hive.wag.caltech.edu, 1/643531.hive.wag.caltech.edu, 2/643531.hive.wag.caltech.edu, 3/643531.hive.wag.caltech.edu, 4/643531.hive.wag.caltech.edu, 5/643531.hive.wag.caltech.edu, 6/643531.hive.wag.caltech.edu, 7/643531.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-4.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=2231 7582 378 18334 18338 18342 18346 18350 18354 18358 18362 21491 21495 21499 21503 21507 21511 21515 21519 24379 24383 24387 24391 24395 24399 24403 24407 27253 27257 27261 27265 27269 27273 27277 27281,nsessions=35,nusers=2,idletime=78001,totmem=9186060kb,availmem=31116kb,physmem=8165944kb,ncpus=8,loadave=10.06,netload=60860661170,state=free,jobs=643531.hive.wag.caltech.edu,rectime=1258419152
+
+node-7-5.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643205.hive.wag.caltech.edu, 1/643813.hive.wag.caltech.edu, 2/641994.hive.wag.caltech.edu, 3/641995.hive.wag.caltech.edu, 4/641996.hive.wag.caltech.edu, 5/641997.hive.wag.caltech.edu, 6/641998.hive.wag.caltech.edu, 7/641999.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-5.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=816 3113 3156 4176 5600 5606 6246 6330 6482 8303 8304 17784 9484 11358 11364 11374 11383 11394 11399 16551 16557 18349 21774,nsessions=23,nusers=7,idletime=28768402,totmem=9186060kb,availmem=7737064kb,physmem=8165944kb,ncpus=8,loadave=8.22,netload=1203693229772,state=free,jobs=578681.hive.wag.caltech.edu 578682.hive.wag.caltech.edu 578684.hive.wag.caltech.edu 638141.hive.wag.caltech.edu 638142.hive.wag.caltech.edu 638143.hive.wag.caltech.edu 641994.hive.wag.caltech.edu 641995.hive.wag.caltech.edu 641996.hive.wag.caltech.edu 641997.hive.wag.caltech.edu 641998.hive.wag.caltech.edu 641999.hive.wag.caltech.edu 643205.hive.wag.caltech.edu 643813.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-6.local
+     state = down
+     np = 8
+     ntype = cluster
+
+node-7-7.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643203.hive.wag.caltech.edu, 1/642191.hive.wag.caltech.edu, 2/643206.hive.wag.caltech.edu, 3/643809.hive.wag.caltech.edu, 4/643810.hive.wag.caltech.edu, 5/643811.hive.wag.caltech.edu, 6/643812.hive.wag.caltech.edu, 7/641993.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-7.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=404 2652 3687 3954 4224 4490 31957 11093 17849 17982 18587 18283 11946 12099 12180 16310 16653 17341 18215 19194,nsessions=20,nusers=9,idletime=4637189,totmem=9186060kb,availmem=7390712kb,physmem=8165944kb,ncpus=8,loadave=9.16,netload=369127145804,state=free,jobs=638187.hive.wag.caltech.edu 641513.hive.wag.caltech.edu 641993.hive.wag.caltech.edu 642191.hive.wag.caltech.edu 643203.hive.wag.caltech.edu 643206.hive.wag.caltech.edu 643809.hive.wag.caltech.edu 643810.hive.wag.caltech.edu 643811.hive.wag.caltech.edu 643812.hive.wag.caltech.edu,rectime=1258542849
+
+node-7-8.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643852.hive.wag.caltech.edu, 1/643982.hive.wag.caltech.edu, 2/644128.hive.wag.caltech.edu, 3/644126.hive.wag.caltech.edu, 4/643878.hive.wag.caltech.edu, 5/644093.hive.wag.caltech.edu, 6/644117.hive.wag.caltech.edu, 7/641992.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-8.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=3498 5509 8256 8886 9378 11034 13594 15450 15875 19112 19876 25315 30762 31329 31339 31362,nsessions=16,nusers=9,idletime=1051451,totmem=9186060kb,availmem=7215996kb,physmem=8165944kb,ncpus=8,loadave=10.00,netload=3408162398270,state=free,jobs=581873.hive.wag.caltech.edu 640522.hive.wag.caltech.edu 641992.hive.wag.caltech.edu 643096.hive.wag.caltech.edu 643852.hive.wag.caltech.edu 643878.hive.wag.caltech.edu 644093.hive.wag.caltech.edu 644117.hive.wag.caltech.edu 643982.hive.wag.caltech.edu 644126.hive.wag.caltech.edu 644128.hive.wag.caltech.edu,rectime=1258542848
+
+node-7-9.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643525.hive.wag.caltech.edu, 1/643525.hive.wag.caltech.edu, 2/643525.hive.wag.caltech.edu, 3/643525.hive.wag.caltech.edu, 4/643525.hive.wag.caltech.edu, 5/643525.hive.wag.caltech.edu, 6/643525.hive.wag.caltech.edu, 7/643525.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-9.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=31038 16881,nsessions=2,nusers=1,idletime=1391936,totmem=9186060kb,availmem=8670368kb,physmem=8165944kb,ncpus=8,loadave=0.00,netload=436144564319,state=free,jobs=643525.hive.wag.caltech.edu,rectime=1258542852
+
+node-7-10.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/642518.hive.wag.caltech.edu, 1/642518.hive.wag.caltech.edu, 2/642518.hive.wag.caltech.edu, 3/642518.hive.wag.caltech.edu, 4/642518.hive.wag.caltech.edu, 5/642518.hive.wag.caltech.edu, 6/642518.hive.wag.caltech.edu, 7/642518.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-10.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=3085 3734 3764 3793 3824 3854 3971 4054 4119 4185 4216 4228 4946 6641 6803 6809 15184 15190 16037 16101 16631 19324 22684 22812 22887 22917 22962 22968 32274 32280 32366,nsessions=31,nusers=5,idletime=13769143,totmem=9186064kb,availmem=7582120kb,physmem=8165948kb,ncpus=8,loadave=8.06,netload=725546696993,state=free,jobs=640521.hive.wag.caltech.edu 642518.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-11.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643526.hive.wag.caltech.edu, 1/643526.hive.wag.caltech.edu, 2/643526.hive.wag.caltech.edu, 3/643526.hive.wag.caltech.edu, 4/643526.hive.wag.caltech.edu, 5/643526.hive.wag.caltech.edu, 6/643526.hive.wag.caltech.edu, 7/643526.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-11.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=6830 15969 17204 17787 18398 24695,nsessions=6,nusers=2,idletime=7979352,totmem=9186064kb,availmem=8687136kb,physmem=8165948kb,ncpus=8,loadave=0.00,netload=173628586158,state=free,jobs=643526.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-12.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643998.hive.wag.caltech.edu, 1/644172.hive.wag.caltech.edu, 2/644127.hive.wag.caltech.edu, 3/644079.hive.wag.caltech.edu, 4/644079.hive.wag.caltech.edu, 5/644082.hive.wag.caltech.edu, 6/644082.hive.wag.caltech.edu, 7/643201.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-12.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=32560 32094 2115 3341 19586 8666 10527 11065 19517 23908 24603 24676 25839 28592 31410 31416,nsessions=16,nusers=7,idletime=481936,totmem=9186060kb,availmem=5734300kb,physmem=8165944kb,ncpus=8,loadave=5.99,netload=1063151176233,state=free,jobs=638138.hive.wag.caltech.edu 643201.hive.wag.caltech.edu 644079.hive.wag.caltech.edu 644082.hive.wag.caltech.edu 644127.hive.wag.caltech.edu 644172.hive.wag.caltech.edu 643998.hive.wag.caltech.edu,rectime=1258542810
+
+node-7-13.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643527.hive.wag.caltech.edu, 1/643527.hive.wag.caltech.edu, 2/643527.hive.wag.caltech.edu, 3/643527.hive.wag.caltech.edu, 4/643527.hive.wag.caltech.edu, 5/643527.hive.wag.caltech.edu, 6/643527.hive.wag.caltech.edu, 7/643527.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-13.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=22738 20831 26607 29038 30832 30839,nsessions=6,nusers=4,idletime=1045721,totmem=9186060kb,availmem=8582312kb,physmem=8165944kb,ncpus=8,loadave=0.10,netload=489961099610,state=free,jobs=582366.hive.wag.caltech.edu 582367.hive.wag.caltech.edu 643527.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-14.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644173.hive.wag.caltech.edu, 1/643977.hive.wag.caltech.edu, 2/643994.hive.wag.caltech.edu, 3/641147.hive.wag.caltech.edu, 4/643986.hive.wag.caltech.edu, 5/641148.hive.wag.caltech.edu, 6/641149.hive.wag.caltech.edu, 7/641150.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-14.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=2003 2200 2206 5714 6472 16513 17447 17452 25670 25682 25694 25705 26553 29173,nsessions=14,nusers=5,idletime=482305,totmem=9186064kb,availmem=5680644kb,physmem=8165948kb,ncpus=8,loadave=7.94,netload=487173206791,state=free,jobs=637938.hive.wag.caltech.edu 641147.hive.wag.caltech.edu 641148.hive.wag.caltech.edu 641149.hive.wag.caltech.edu 641150.hive.wag.caltech.edu 643977.hive.wag.caltech.edu 643986.hive.wag.caltech.edu 643994.hive.wag.caltech.edu 644173.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-15.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643973.hive.wag.caltech.edu, 1/643974.hive.wag.caltech.edu, 2/644111.hive.wag.caltech.edu, 3/643993.hive.wag.caltech.edu, 4/643295.hive.wag.caltech.edu, 5/644174.hive.wag.caltech.edu, 6/644115.hive.wag.caltech.edu, 7/644137.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-15.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=1555 2823 3236 6518 6669 6668 6867 6875 6880 10491 8499 17517 22001 29351 30376 30618 30887 31186 31444 31807 31813,nsessions=21,nusers=11,idletime=482198,totmem=9186064kb,availmem=5259396kb,physmem=8165948kb,ncpus=8,loadave=8.10,netload=1884600084617,state=free,jobs=624971.hive.wag.caltech.edu 624973.hive.wag.caltech.edu 624974.hive.wag.caltech.edu 624976.hive.wag.caltech.edu 643295.hive.wag.caltech.edu 643973.hive.wag.caltech.edu 643974.hive.wag.caltech.edu 644111.hive.wag.caltech.edu 644115.hive.wag.caltech.edu 643993.hive.wag.caltech.edu 644137.hive.wag.caltech.edu 644174.hive.wag.caltech.edu,rectime=1258542852
+
+node-7-16.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644177.hive.wag.caltech.edu, 1/644139.hive.wag.caltech.edu, 2/644169.hive.wag.caltech.edu, 3/643960.hive.wag.caltech.edu, 4/644092.hive.wag.caltech.edu, 5/622934.hive.wag.caltech.edu, 6/644084.hive.wag.caltech.edu, 7/643947.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-16.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=316 334 462 1500 1708 3624 3706 3973 5590 11747 6942 8798 9066 11540 11809 11815 19060 30389 32571,nsessions=19,nusers=11,idletime=3741443,totmem=9186060kb,availmem=2832120kb,physmem=8165944kb,ncpus=8,loadave=8.04,netload=1861407038799,state=free,jobs=581964.hive.wag.caltech.edu 582364.hive.wag.caltech.edu 582365.hive.wag.caltech.edu 582590.hive.wag.caltech.edu 622934.hive.wag.caltech.edu 643947.hive.wag.caltech.edu 643960.hive.wag.caltech.edu 644084.hive.wag.caltech.edu 644092.hive.wag.caltech.edu 644139.hive.wag.caltech.edu 644169.hive.wag.caltech.edu 644177.hive.wag.caltech.edu,rectime=1258542854
+
+node-7-17.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644112.hive.wag.caltech.edu, 1/644136.hive.wag.caltech.edu, 2/644141.hive.wag.caltech.edu, 3/644141.hive.wag.caltech.edu, 4/643589.hive.wag.caltech.edu, 5/643604.hive.wag.caltech.edu, 6/644113.hive.wag.caltech.edu, 7/644077.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-17.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=32592 2591 2811 2817 5567 9160 9614 9916 11608 11797 11955 21651 13188 17160 17233 20338 20750 21741 22160 22239 22297 22401 22469 22556,nsessions=24,nusers=9,idletime=642234,totmem=9186060kb,availmem=6642104kb,physmem=8165944kb,ncpus=8,loadave=7.20,netload=250173009874,state=free,jobs=640544.hive.wag.caltech.edu 641959.hive.wag.caltech.edu 643589.hive.wag.caltech.edu 643604.hive.wag.caltech.edu 644077.hive.wag.caltech.edu 644112.hive.wag.caltech.edu 644113.hive.wag.caltech.edu 644136.hive.wag.caltech.edu 644141.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-18.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643693.hive.wag.caltech.edu, 1/644118.hive.wag.caltech.edu, 2/643702.hive.wag.caltech.edu, 3/643704.hive.wag.caltech.edu, 4/643923.hive.wag.caltech.edu, 5/644075.hive.wag.caltech.edu, 6/643663.hive.wag.caltech.edu, 7/644076.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-18.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=401 799 2363 2611 4206 7383 7675 10700 11289 11360 13009 14900 20022 20012 15669 20502 22639 29445 31269 32440 32707 32741 32764,nsessions=23,nusers=7,idletime=43275,totmem=9186060kb,availmem=6297980kb,physmem=8165944kb,ncpus=8,loadave=9.00,netload=498668302412,state=free,jobs=643094.hive.wag.caltech.edu 643095.hive.wag.caltech.edu 643663.hive.wag.caltech.edu 643693.hive.wag.caltech.edu 643702.hive.wag.caltech.edu 643704.hive.wag.caltech.edu 643923.hive.wag.caltech.edu 644075.hive.wag.caltech.edu 644076.hive.wag.caltech.edu 644118.hive.wag.caltech.edu,rectime=1258542811
+
+node-7-19.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643578.hive.wag.caltech.edu, 1/642914.hive.wag.caltech.edu, 2/644074.hive.wag.caltech.edu, 3/643897.hive.wag.caltech.edu, 4/644178.hive.wag.caltech.edu, 5/644129.hive.wag.caltech.edu, 6/643691.hive.wag.caltech.edu, 7/644091.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-19.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=32746 2562 3525 3871 6312 14316 20138 28500 12864 13000 15753 16254 16551 17089 17095 23749 28109,nsessions=17,nusers=9,idletime=12662841,totmem=9186064kb,availmem=7428992kb,physmem=8165948kb,ncpus=8,loadave=8.15,netload=1518947318449,state=free,jobs=624926.hive.wag.caltech.edu 624927.hive.wag.caltech.edu 624931.hive.wag.caltech.edu 625318.hive.wag.caltech.edu 640823.hive.wag.caltech.edu 640824.hive.wag.caltech.edu 642914.hive.wag.caltech.edu 643578.hive.wag.caltech.edu 643691.hive.wag.caltech.edu 643897.hive.wag.caltech.edu 644074.hive.wag.caltech.edu 644091.hive.wag.caltech.edu 644129.hive.wag.caltech.edu 644178.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-20.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643418.hive.wag.caltech.edu, 1/644175.hive.wag.caltech.edu, 2/644090.hive.wag.caltech.edu, 3/644081.hive.wag.caltech.edu, 4/643992.hive.wag.caltech.edu, 5/644171.hive.wag.caltech.edu, 6/643896.hive.wag.caltech.edu, 7/643818.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-20.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=625 2570 4653 5048 14676 7073 24317 23474 11888 12797 15783 15784 17046 17048 18254 19050 19252 19411 23947 21007 22021 22361 22525 23243 24035 24041 24772 24904 31702,nsessions=29,nusers=11,idletime=3831915,totmem=9186060kb,availmem=3050644kb,physmem=8165944kb,ncpus=8,loadave=8.14,netload=1923586477329,state=free,jobs=569193.hive.wag.caltech.edu 581880.hive.wag.caltech.edu 582279.hive.wag.caltech.edu 582291.hive.wag.caltech.edu 582314.hive.wag.caltech.edu 624924.hive.wag.caltech.edu 624925.hive.wag.caltech.edu 638189.hive.wag.caltech.edu 638625.hive.wag.caltech.edu 639555.hive.wag.caltech.edu 643418.hive.wag.caltech.edu 643818.hive.wag.caltech.edu 643896.hive.wag.caltech.edu 644081.hive.wag.caltech.edu 644090.hive.wag.caltech.edu 643992.hive.wag.caltech.edu 644171.hive.wag.caltech.edu 644175.hive.wag.caltech.edu,rectime=1258542854
+
+node-7-21.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/642739.hive.wag.caltech.edu, 1/643416.hive.wag.caltech.edu, 2/644095.hive.wag.caltech.edu, 3/643598.hive.wag.caltech.edu, 4/643817.hive.wag.caltech.edu, 5/643815.hive.wag.caltech.edu, 6/643895.hive.wag.caltech.edu, 7/643417.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-21.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=946 18326 5593 11763 28767 12256 13226 13300 13374 14625 14757 18240 18306 18524 20120 21388 24429 24507 25377 28229,nsessions=20,nusers=7,idletime=657253,totmem=9186064kb,availmem=7204128kb,physmem=8165948kb,ncpus=8,loadave=9.95,netload=151261352655,state=free,jobs=638190.hive.wag.caltech.edu 642739.hive.wag.caltech.edu 643416.hive.wag.caltech.edu 643417.hive.wag.caltech.edu 643598.hive.wag.caltech.edu 643815.hive.wag.caltech.edu 643817.hive.wag.caltech.edu 643895.hive.wag.caltech.edu 644095.hive.wag.caltech.edu,rectime=1258542853
+
+node-7-22.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644131.hive.wag.caltech.edu, 1/644097.hive.wag.caltech.edu, 2/641152.hive.wag.caltech.edu, 3/643991.hive.wag.caltech.edu, 4/643996.hive.wag.caltech.edu, 5/641182.hive.wag.caltech.edu, 6/641153.hive.wag.caltech.edu, 7/644125.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-22.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=355 599 3222 4773 4958 9401 14579 14585 21117 25657,nsessions=10,nusers=6,idletime=2162593,totmem=9186064kb,availmem=6837408kb,physmem=8165948kb,ncpus=8,loadave=8.24,netload=475456005053,state=free,jobs=640822.hive.wag.caltech.edu 642106.hive.wag.caltech.edu 641152.hive.wag.caltech.edu 641153.hive.wag.caltech.edu 641182.hive.wag.caltech.edu 644097.hive.wag.caltech.edu 644125.hive.wag.caltech.edu 643991.hive.wag.caltech.edu 644131.hive.wag.caltech.edu 643996.hive.wag.caltech.edu,rectime=1258542850
+
+node-7-23.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643990.hive.wag.caltech.edu, 1/643987.hive.wag.caltech.edu, 2/643894.hive.wag.caltech.edu, 3/641181.hive.wag.caltech.edu, 4/642003.hive.wag.caltech.edu, 5/643989.hive.wag.caltech.edu, 6/641151.hive.wag.caltech.edu, 7/643995.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-23.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=607 1553 2332 6588 6662 8378 9406 9408 10008 12685 16263 17669 19465 20374 20647 21914 22142 22434 22805 22811 25875 25881 27110 29777 30037 30043,nsessions=26,nusers=8,idletime=9650353,totmem=9186060kb,availmem=7495072kb,physmem=8165944kb,ncpus=8,loadave=8.01,netload=4519582094418,state=free,jobs=624870.hive.wag.caltech.edu 624921.hive.wag.caltech.edu 637803.hive.wag.caltech.edu 638174.hive.wag.caltech.edu 639906.hive.wag.caltech.edu 641151.hive.wag.caltech.edu 641181.hive.wag.caltech.edu 642003.hive.wag.caltech.edu 643894.hive.wag.caltech.edu 643987.hive.wag.caltech.edu 643989.hive.wag.caltech.edu 643990.hive.wag.caltech.edu 643995.hive.wag.caltech.edu,rectime=1258542854
+
+node-7-24.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/642695.hive.wag.caltech.edu, 1/643574.hive.wag.caltech.edu, 2/644057.hive.wag.caltech.edu, 3/643946.hive.wag.caltech.edu, 4/643893.hive.wag.caltech.edu, 5/642002.hive.wag.caltech.edu, 6/642001.hive.wag.caltech.edu, 7/643879.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-24.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=23362 12111 2851 5483 13027 17856 10207 17230 23570 21546,nsessions=10,nusers=8,idletime=3712675,totmem=9186064kb,availmem=7730896kb,physmem=8165948kb,ncpus=8,loadave=8.02,netload=1189011207234,state=free,jobs=631585.hive.wag.caltech.edu 633940.hive.wag.caltech.edu 637956.hive.wag.caltech.edu 638193.hive.wag.caltech.edu 640821.hive.wag.caltech.edu 642159.hive.wag.caltech.edu 642695.hive.wag.caltech.edu 643574.hive.wag.caltech.edu 642001.hive.wag.caltech.edu 642002.hive.wag.caltech.edu 643879.hive.wag.caltech.edu 643893.hive.wag.caltech.edu 643946.hive.wag.caltech.edu 644057.hive.wag.caltech.edu,rectime=1258542813
+
+node-7-25.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/643573.hive.wag.caltech.edu, 1/643964.hive.wag.caltech.edu, 2/643765.hive.wag.caltech.edu, 3/641179.hive.wag.caltech.edu, 4/642000.hive.wag.caltech.edu, 5/644176.hive.wag.caltech.edu, 6/641180.hive.wag.caltech.edu, 7/643826.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-25.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=1987 22046 6304 6743 10084 21065 14398 16294 17343 24800 28923 28931 28935 28939 29143 29147 29151 29155 29316 29320 29324 29328 29475 29479 29483 29487 29847 29851 29855 29859 30055 30059 30063 30067 30476 30481 30485 30489 32325,nsessions=39,nusers=9,idletime=3741691,totmem=9186064kb,availmem=6373740kb,physmem=8165948kb,ncpus=8,loadave=9.05,netload=4285819933917,state=free,jobs=627799.hive.wag.caltech.edu 641434.hive.wag.caltech.edu 641179.hive.wag.caltech.edu 641180.hive.wag.caltech.edu 643573.hive.wag.caltech.edu 642000.hive.wag.caltech.edu 643765.hive.wag.caltech.edu 643826.hive.wag.caltech.edu 643964.hive.wag.caltech.edu 644176.hive.wag.caltech.edu,rectime=1258542852
+
+node-7-26.local
+     state = down,offline
+     np = 8
+     ntype = cluster
+
+node-7-27.local
+     state = offline
+     np = 8
+     ntype = cluster
+     status = opsys=linux,uname=Linux node-7-27.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=29631 30991,nsessions=2,nusers=2,idletime=4071886,totmem=9186064kb,availmem=8589800kb,physmem=8165948kb,ncpus=8,loadave=0.02,netload=3825520019166,state=free,jobs=625821.hive.wag.caltech.edu 639239.hive.wag.caltech.edu 640216.hive.wag.caltech.edu,rectime=1258542854
+
+node-7-28.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/641157.hive.wag.caltech.edu, 1/641158.hive.wag.caltech.edu, 2/643887.hive.wag.caltech.edu, 3/643534.hive.wag.caltech.edu, 4/644071.hive.wag.caltech.edu, 5/642791.hive.wag.caltech.edu, 6/643888.hive.wag.caltech.edu, 7/643997.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-28.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=425 472 862 1511 5313 5535 6065 7423 11909 11915 12115 12296 15947 16019 18274 18579 18585 26840 27651,nsessions=19,nusers=10,idletime=13965514,totmem=9186060kb,availmem=7440164kb,physmem=8165944kb,ncpus=8,loadave=8.00,netload=1280285537051,state=free,jobs=624919.hive.wag.caltech.edu 624920.hive.wag.caltech.edu 640215.hive.wag.caltech.edu 640869.hive.wag.caltech.edu 642102.hive.wag.caltech.edu 642103.hive.wag.caltech.edu 642105.hive.wag.caltech.edu 642311.hive.wag.caltech.edu 641157.hive.wag.caltech.edu 641158.hive.wag.caltech.edu 642791.hive.wag.caltech.edu 643534.hive.wag.caltech.edu 643887.hive.wag.caltech.edu 643888.hive.wag.caltech.edu 644071.hive.wag.caltech.edu 643997.hive.wag.caltech.edu,rectime=1258542852
+
+node-7-29.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644058.hive.wag.caltech.edu, 1/644096.hive.wag.caltech.edu, 2/644096.hive.wag.caltech.edu, 3/643885.hive.wag.caltech.edu, 4/643877.hive.wag.caltech.edu, 5/643671.hive.wag.caltech.edu, 6/644170.hive.wag.caltech.edu, 7/643886.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-29.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=1844 9373 15347 15580 17134 31999 19303 19309 31417 22348 22354 23429 24003 28092,nsessions=14,nusers=11,idletime=17110184,totmem=9186060kb,availmem=5140648kb,physmem=8165944kb,ncpus=8,loadave=7.29,netload=21649797777834,state=free,jobs=512609.hive.wag.caltech.edu 586370.hive.wag.caltech.edu 588898.hive.wag.caltech.edu 624937.hive.wag.caltech.edu 640480.hive.wag.caltech.edu 642107.hive.wag.caltech.edu 643104.hive.wag.caltech.edu 643476.hive.wag.caltech.edu 643562.hive.wag.caltech.edu 643671.hive.wag.caltech.edu 643877.hive.wag.caltech.edu 643885.hive.wag.caltech.edu 643886.hive.wag.caltech.edu 644058.hive.wag.caltech.edu 644096.hive.wag.caltech.edu 644170.hive.wag.caltech.edu,rectime=1258542853
+
+node-7-30.local
+     state = job-exclusive
+     np = 8
+     ntype = cluster
+     jobs = 0/644168.hive.wag.caltech.edu, 1/644083.hive.wag.caltech.edu, 2/641154.hive.wag.caltech.edu, 3/644130.hive.wag.caltech.edu, 4/644088.hive.wag.caltech.edu, 5/644110.hive.wag.caltech.edu, 6/641155.hive.wag.caltech.edu, 7/641156.hive.wag.caltech.edu
+     status = opsys=linux,uname=Linux node-7-30.local 2.6.9-55.0.2.ELsmp #1 SMP Tue Jun 26 14:14:47 EDT 2007 x86_64,sessions=960 13554 28952 29958 19154 26044 27288 27294 29515 29709 31283,nsessions=11,nusers=6,idletime=3713077,totmem=9186060kb,availmem=5273940kb,physmem=8165944kb,ncpus=8,loadave=8.03,netload=2024354285357,state=free,jobs=580352.hive.wag.caltech.edu 586366.hive.wag.caltech.edu 636201.hive.wag.caltech.edu 642101.hive.wag.caltech.edu 642104.hive.wag.caltech.edu 641154.hive.wag.caltech.edu 641155.hive.wag.caltech.edu 641156.hive.wag.caltech.edu 643093.hive.wag.caltech.edu 644083.hive.wag.caltech.edu 644088.hive.wag.caltech.edu 644110.hive.wag.caltech.edu 644130.hive.wag.caltech.edu 644168.hive.wag.caltech.edu,rectime=1258542852
+

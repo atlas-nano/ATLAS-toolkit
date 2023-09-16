@@ -1,0 +1,16 @@
+ReaxFF version 2.0
+Compiled on:        Thu Jul 17 11:45:22 PDT 2008
+Force field identifier: Reactive MD-force field: Glycine Rahaman
+ vdWaals type for element C : Shielding, no inner-wall
+ vdWaals type for element H : Shielding, no inner-wall
+ vdWaals type for element O : Shielding, no inner-wall
+ vdWaals type for element N : Shielding, no inner-wall
+ vdWaals type for element S : Shielding, no inner-wall
+ vdWaals type for element Mg: Shielding, no inner-wall
+ vdWaals type for element P : Shielding, no inner-wall
+ vdWaals type for element Na: Shielding, no inner-wall
+ vdWaals type for element Cu: Shielding, no inner-wall
+ vdWaals type for element Cl: Shielding, no inner-wall
+ vdWaals type for element X : Shielding, no inner-wall
+Geometry identifier:    Alanine                              
+ Normal end of MD-simulation

@@ -1,0 +1,68 @@
+# Version of the code
+#SHIRLEY_ROOT=/global/home/groups-sw/nano/software/sl-6.x86_64/shirley_QE4.3
+# pseudopotentials
+#PSEUDO_DIR=/global/home/groups-sw/nano/software/sl-6.x86_64/shirley_QE4.3/pseudo
+SHIRLEY_ROOT=$SCRATCH/codes/qe/4.3/shirley/
+PSEUDO_DIR=/global/home/groups-sw/nano/software/sl-6.x86_64/shirley_QE4.3/pseudo
+BIB_ROOT=/global/home/users/tpascal/scripts/arvid/
+
+# Parallelization variables
+# Number of atomic calculations that can run simultaneously
+NJOB=1
+# procs per pool - used for parallelization of diag within Shirley
+PPP=8  
+
+STRETCH=1.1
+
+PARA_PREFIX="mpirun -mca btl openib,tcp,self"
+PARA_POSTFIX=""
+PW_POSTFIX="-ntg $PPP"
+
+# where will output be dumped
+TMP_DIR=./
+
+# xc functional
+PSEUDO_FUNCTIONAL=pbe
+#pseudopotential postfix
+PSEUDO_POT_ES_POST_FIX=pbe-van-dgp-1s1.UPF
+
+# specific details for this calculation
+MOLNAME="NMA"
+
+#XAS info
+XAS_ARG=5
+CHAPPROX="XCH"
+
+#Defines the variables from the 'system' namespace
+IBRAV=14
+A=16.3316808
+B=15.9120956
+C=14.482677
+COSBC=0.0
+COSAC=0.0
+COSAB=0.0
+ECUT_WFC='25'
+ECUT_RHO='200'
+NBND_FAC=2
+OCCUPATIONS='smearing'
+SMEARING='fd'
+DEGAUSS=0.0019
+
+#Defines the variables from the 'electrons' namespace
+DIAG='david'
+DIAG_NSCF='david'
+ELEC_CONV_THR='1.0d-8'
+ELEC_MIXING_BETA='0.3'
+
+# SCF k-points
+K_POINTS="K_POINTS automatic
+ 1 1 1 0 0 0"
+
+# coordinates
+XYZFILES="*.xyz"
+XYZUNIT="angstrom"
+XASELEMENTS='S'
+
+#other options
+FORCESTRESS="tprnfor=.true.
+tstress=.true."

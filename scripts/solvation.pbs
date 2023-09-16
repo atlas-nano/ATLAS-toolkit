@@ -1,0 +1,116 @@
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=480:00:00
+#PBS -q workq
+#PBS -j oe
+#PBS -m abe
+#PBS -M tpascal@wag.caltech.edu
+#!/bin/tcsh
+#!/bin/csh
+
+echo "Nodes:"
+cat $PBS_NODEFILE
+echo "JOB: opls_solvation MD calculation"
+
+set nodes = 1
+set nprocs = `wc -l < $PBS_NODEFILE`
+set create2PT = "csh -f /ul/tpascal/scripts/createVacInp.csh"
+
+set curr_dir = /net/hulk/home3/tpascal/nano/2pt/sidechains/opls
+set temp_dir = /temp1/${USER}/opls_solvation
+set bgflist = (${curr_dir}/bgfs/*.bgf)
+set solvlist = (${curr_dir}/../water/*)
+set prefix = opls_solvation
+set embed = /ul/tpascal/scripts/embedMolecule.pl
+set countMols = /ul/tpascal/scripts/countAtoms.pl
+set removeMols = /ul/tpascal/scripts/removeAtoms.pl
+set create = "/ul/tpascal/scripts/createLammpsInput.pl -l 0"
+set results_dir = /ul/ch121ah/entropy/results
+set create2PT = "csh -f /ul/tpascal/scripts/createVacInp.csh"
+set createGrp = /ul/tpascal/scripts/getWATinShells.pl
+set createBGF = /ul/tpascal/scripts/convertLammpsTrj.pl
+setenv LD_LIBRARY_PATH /ul/tpascal/programs/lib:/ul/tpascal/programs/lib/ifcore/64:$LD_LIBRARY_PATH
+set match = /ul/tpascal/scripts/regExpMatch.pl
+if ($PBS_O_HOST == "hulk") then
+    set LAMMPS = /ul/tpascal/programs/bin/lmp_serial64
+    #set LAMMPS = "/ul/tpascal/openmpi/1.4.2/64/bin/mpirun -np 8 /ul/tpascal/programs/bin/lmp_openmpi64"
+    set do2PT = /ul/tpascal/programs/bin/md_driver
+else
+    set LAMMPS = /ul/tpascal/programs/bin/lmp_serial32
+    set do2PT = /ul/tpascal/programs/bin/md_driver32
+endif
+
+echo
+echo Running $LAMMPS on $nodes nodes $nprocs processors launched from $PBS_O_HOST
+echo "Nodes:"
+cat $PBS_NODEFILE
+
+mkdir -p $temp_dir/analysis $temp_dir/build
+cd $temp_dir
+
+set datalist = (${curr_dir}/build/data.*)
+
+foreach d ($datalist)
+  if ! (-e $d) continue
+  set mol = `basename $d`
+  set mol = $mol:e
+  set bgf_file = ${curr_dir}/build/${mol}.bgf
+  cp $d ${curr_dir}/build/in.${mol} ${curr_dir}/build/in.${mol}_2pt ./
+  mv ${curr_dir}/build/data.${mol} ${curr_dir}/running
+  set seed = `csh -f /ul/tpascal/scripts/getRandomSeed.csh`
+  echo "Step 1. Running LAMMPS equilibration for $mol"
+  set solv = `echo $mol |  sed 's/^.*[_]//'`
+  set solvlen = `expr length $solv`
+  set mollen = `expr length $mol`
+  @ solvlen = ($mollen - $solvlen) - 1
+  set solu = `echo $mol | cut -c1-${solvlen}`
+  set ffs = "${curr_dir}/ffs/${solu}.ff /ul/tpascal/ff/WAT/${solv}.ff"
+  $LAMMPS -screen none -var seed ${seed} -in in.${mol} -log ${mol}_equil_log.lammps || continue
+  foreach r (${mol}*.restart)
+    set sname = $r:r
+    echo "Step 2. Running 2PT NVT for $sname"
+    $LAMMPS -screen none -in in.${mol}_2pt -var restart $r -var sname ${sname} -var log ${sname}.eng || continue
+    $createBGF -b ${bgf_file} -l ${sname}_2pt.lammps -t 1 -m 1 -a "^NrWAT" -o bgf -s build/${sname}.bgf > /dev/null || continue
+    $createGrp -b build/${sname}.bgf -f "$ffs" -w "3.6 7.2 10.0" -s build/${sname}.grps > /dev/null || continue
+    echo "RotSymmetry" >> build/${sname}.grps
+    echo "1 2 2 2 2" >> build/${sname}.grps
+    set findStr = `$match $solv f3c`
+    set grp_file = ./build/${sname}.grps
+    set tstep = 0.002
+    set findStr = `$match $solv f3c`
+    if ($findStr) then
+      set solvbgf = "${curr_dir}/../water/f3c_box_1728mols.bgf"
+      set options = '-t solvation_f3c -o "shake solute"'
+      set twoPT_file = /ul/tpascal/scripts/dat/LAMMPS/in.lammps.2pt_f3c
+      set tstep = 0.001
+    endif
+    if($findStr) then
+      set cline = `grep -n Constraints $grp_file | sed -n 's/^\([0-9]*\)[:].*/\1/p'`
+      set tot = `cat ${grp_file} | wc | awk '{print $1}'`
+      @ offset = $tot - $cline
+      @ offset = $offset - 1
+      head -${cline} ${grp_file} > tmp1
+      tail -${offset} ${grp_file} > tmp2
+      @ oline = $cline + 1
+      set line = `head -${oline} $grp_file | tail -1`
+      set first = `echo $line | awk '{print $1}'`
+      echo "${first} 0 0 0 0" > tmp3
+      cat tmp1 tmp3 tmp2 > ${grp_file}
+    endif
+    set grp_file = ../build/${sname}.grps
+    cd analysis
+      $create2PT ../${sname}_2pt ../data.${mol} 3 ${tstep} ${grp_file}
+      $do2PT ${sname}_2pt_mol_grps.in >& ${sname}_2pt_mol_grps.screen.out
+      rm -fr ../${sname}_2pt*
+      cp ${sname}_2pt* ${results_dir}
+    cd ../
+    cp $r ${results_dir}
+  end
+  cp ${mol}_equil_log.lammps ${results_dir}
+  mv ${curr_dir}/running/data.${mol} ${curr_dir}/completed
+end
+
+echo " "
+echo "All tasks completed"
+echo " "
+exit(0)
+

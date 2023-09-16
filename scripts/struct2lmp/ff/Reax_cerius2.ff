@@ -1,0 +1,198 @@
+########################################################################
+#
+# $Header: /cx2/c2cap_c410/data/Cerius2-Resources/FORCE-FIELD/RCS/DREIDING2.21,v 1.2 1996/10/29 04:25:25 jan Exp $
+#
+# Author:S. Miller
+#
+# Purpose:
+#
+########################################################################
+#
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+
+ ********************************************************************
+                   DREIDING: A Generic Force Field
+
+                               by
+
+          S.L. Mayo, B.D. Olafson, W.A. Goddard III
+           J. Phys. Chem. 1990, 94, 8897-8909
+
+ ********************************************************************
+
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        T
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           F
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          0.40000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000
+ COU_INTER_CUT_OFF                       50.00000
+ COU_SPLINE_OFF                           8.50000
+ COU_SPLINE_ON                            8.00000
+ EWALD_SUM_COU_ACCURACY                   0.00010
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                SMART
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            SPLINE
+ COU_DIRECT_CUT-OFF                       8.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC
+ VDW_INTER_CUT_OFF                       50.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE
+ VDW_SPLINE_ON                            8.00000
+ VDW_SPLINE_OFF                           8.50000
+ EWALD_SUM_VDW_OPTIMIZE                SMART
+ EWALD_SUM_VDW_ACCURACY                   0.00010
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  T
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ H_         H       1.00800  0.0000   0   0   0
+ H___A      H       1.00800  0.0000   0   0   0
+ H___b      H       1.00800  0.0000   0   0   0
+ B_3        B      10.81000  0.0000   3   0   0
+ B_2        B      10.81000  0.0000   2   0   0
+ C_34       C      16.04300  0.0000   3   4   0
+ C_33       C      15.03500  0.0000   3   3   0
+ C_32       C      14.02700  0.0000   3   2   0
+ C_31       C      13.01900  0.0000   3   1   0
+ C_3        C      12.01100  0.0000   3   0   0
+ C_22       C      14.02700  0.0000   2   2   0
+ C_21       C      13.01900  0.0000   2   1   0
+ C_2        C      12.01100  0.0000   2   0   0
+ C_R2       C      14.02700  0.0000   2   2   0
+ C_R1       C      13.01900  0.0000   2   1   0
+ C_R        C      12.01100  0.0000   2   0   0
+ C_11       C      13.01900  0.0000   1   1   0
+ C_1        C      12.01100  0.0000   1   0   0
+ N_3        N      14.00670  0.0000   3   0   1
+ N_2        N      14.00670  0.0000   2   0   1
+ N_R        N      14.00670  0.0000   2   0   1
+ N_1        N      14.00670  0.0000   1   0   1
+ O_3        O      15.99940  0.0000   3   0   2
+ O_2        O      15.99940  0.0000   2   0   2
+ O_R        O      15.99940  0.0000   2   0   1
+ O_1        O      15.99940  0.0000   1   0   1
+ F_         F      18.99840 -1.0000   0   0   3
+ Al3        Al     26.98150  0.0000   3   0   0
+ Si3        Si     28.08600  0.0000   3   0   0
+ P_3        P      30.97380  0.0000   3   0   1
+ S_3        S      32.06000  0.0000   3   0   2
+ Cl         Cl     35.45300 -1.0000   0   0   3
+ Ga3        Ga     69.72000  0.0000   3   0   0
+ Ge3        Ge     72.59000  0.0000   3   0   0
+ As3        As     74.92160  0.0000   3   0   1
+ Se3        Se     78.96000  0.0000   3   0   2
+ Br         Br     79.90400 -1.0000   0   0   3
+ In3        In    114.82000  0.0000   3   0   0
+ Sn3        Sn    118.69000  0.0000   3   0   0
+ Sb3        Sb    121.75000  0.0000   3   0   1
+ Te3        Te    127.60000  0.0000   3   0   2
+ I_         I     126.90450 -1.0000   0   0   3
+ Na         Na     22.99000  1.0000   0   0   0
+ Ca         Ca     40.08000  2.0000   0   0   0
+ Ti         Ti     47.90000  3.0000   0   0   0
+ Fe         Fe     55.84700  3.0000   0   0   0
+ Zn         Zn     65.37700  2.0000   0   0   0
+ Tc         Tc     98.90620  2.0000   0   0   0
+ Ru         Ru    101.07000  3.0000   0   0   0
+ O_3F       O      15.99940  0.0000   2   0   2
+ H_F        H       1.00800  0.0000   0   0   0
+ OW         O      16.00000  0.0000   3   0   0
+ HW         H       1.00800  0.0000   3   0   0
+ Cu         Cu      0.00000  0.0000   1   0   0
+END
+#
+DIAGONAL_VDW
+END
+#
+ATOM_TYPING_RULES
+END
+#
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+END
+#
+ANGLE_BEND
+END
+#
+TORSIONS
+END
+#
+INVERSIONS
+END
+#
+UREY_BRADLEY
+END
+#
+HYDROGEN_BONDS
+#Donor     Hydrogen    Aceptor    DREIDING III
+END
+#
+GENERATOR
+END

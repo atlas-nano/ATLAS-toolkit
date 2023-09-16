@@ -1,0 +1,64 @@
+&FORCE_EVAL
+  METHOD FIST
+  &MM
+    &FORCEFIELD
+ff_here
+      &spline
+        EMAX_SPLINE 1.0
+      &end
+	  EI_SCALE14 1.0000
+	  VDW_SCALE14 1.000
+    &END FORCEFIELD
+    &POISSON
+      &EWALD
+        EWALD_TYPE spme
+        ALPHA .44
+        GMAX 30
+        O_SPLINE 6
+      &END EWALD
+    &END POISSON
+    &PRINT
+      &FF_INFO
+        &END FF_INFO
+    &END PRINT
+  &END MM
+  &SUBSYS
+    &CELL
+      ABC lx_here ly_here lz_here
+    &END CELL
+    &TOPOLOGY
+      COORD_FILE_NAME crd_file_here
+      COORDINATE CRD
+      CONNECTIVITY PSF
+      CONN_FILE_NAME psf_file_here
+    &END TOPOLOGY
+masses_here
+  &END SUBSYS
+&END FORCE_EVAL
+&GLOBAL
+  PROJECT savePrefix_here
+  RUN_TYPE MD
+  PRINT_LEVEL LOW
+&END GLOBAL
+&MOTION
+  &MD
+    ENSEMBLE NVE
+    STEPS 100000
+    TIMESTEP 1.0
+    TEMPERATURE 298
+  &END MD
+  &PRINT
+    &VELOCITIES
+     FORMAT XYZ
+     &EACH
+       MD 100
+     &END EACH
+    &END VELOCITIES
+    &TRAJECTORY
+     FORMAT XYZ
+     &EACH
+       MD 100
+     &END EACH
+    &END TRAJECTORY
+  &END PRINT
+&END MOTION

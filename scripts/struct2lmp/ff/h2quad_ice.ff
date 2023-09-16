@@ -1,0 +1,168 @@
+########################################################################
+#
+# $Header: /cx2/c2cap_c410/data/Cerius2-Resources/FORCE-FIELD/RCS/DREIDING2.21,v 1.2 1996/10/29 04:25:25 jan Exp $
+#
+# Author:S. Miller
+#
+# Purpose:
+#
+########################################################################
+#
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+
+ ********************************************************************
+                   DREIDING: A Generic Force Field
+
+                               by
+
+          S.L. Mayo, B.D. Olafson, W.A. Goddard III
+           J. Phys. Chem. 1990, 94, 8897-8909
+
+ ********************************************************************
+
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        T
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           F
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          0.40000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000
+ COU_INTER_CUT_OFF                       50.00000
+ COU_SPLINE_OFF                           8.50000
+ COU_SPLINE_ON                            8.00000
+ EWALD_SUM_COU_ACCURACY                   0.00010
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                SMART
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            EWALD
+ COU_DIRECT_CUT-OFF                       8.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC
+ VDW_INTER_CUT_OFF                       50.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            EWALD
+ VDW_SPLINE_ON                            8.00000
+ VDW_SPLINE_OFF                           8.50000
+ EWALD_SUM_VDW_OPTIMIZE                SMART
+ EWALD_SUM_VDW_ACCURACY                   0.00010
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         T
+ ASSIGN_HYBRIDIZATION                  T
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ H___A      H       1.00800  0.589700 1   0   0 #hydrogen on water
+ O_3        O      15.99940  0.000000 2   0   2 #oxygen on water
+ HW         H       1.00800  0.589700 1   0   0 #hydrogen on water
+ OW         O      15.99940 -1.179400 2   0   2 #oxygen on water
+ X_w        He      0.00100 -1.179400 1   0   0 #extra massless point on water
+ H_         H       1.00800  0.365350 1   0   0 #hydrogen on H2
+ X_h        He      0.00100 -0.730700 1   0   0 #extra massless mid-point on H2
+END
+#
+DIAGONAL_VDW
+ H_          EXPO_6        3.159630000000000E+00   0.2085373450000000E-01   11.439598775447200
+ H___A       LJ_6_12       0.000000000000000E+00   0.0000000000000000E+00
+ O_3         LJ_6_12       3.554600000000000E+00   0.2110000000000000E+00
+ X_w         LJ_6_12       0.000000000000000E+00   0.0000000000000000E+00
+ X_h         LJ_6_12       0.000000000000000E+00   0.0000000000000000E+00
+END
+#
+ATOM_TYPING_RULES
+END
+#
+OFF_DIAGONAL_VDW
+ H___A    H_          EXPO_6        3.406080000000000       0.1131586484000000E-02    14.88295397320190
+ O_3      H_          EXPO_6        3.193240000000000       0.1349475812000000E-00    11.43630887501280
+ HW       H_          EXPO_6        3.406080000000000       0.1131586484000000E-02    14.88295397320190
+ OW       H_          EXPO_6        3.193240000000000       0.1349475812000000E-00    11.43630887501280
+ X_h      H_          LJ_6_12       0.000000000000000E+00   0.0000000000000000E+00
+END
+#
+BOND_STRETCH
+ H_       X_h         HARMONIC    1106.0000    0.3710
+ O_3      H___A       HARMONIC     700.0000    0.9572
+ O_3      X_w         HARMONIC     700.0000    0.1500
+END
+#
+ANGLE_BEND
+ H___A    O_3      H___A       THETA_HARM   200.0000  104.5200
+ X        O_3      X_w         THETA_HARM   200.0000   52.2600
+ H_       X_h      H_          THETA_HARM   200.0000  180.0000
+END
+#
+TORSIONS
+END
+#
+INVERSIONS
+END
+#
+UREY_BRADLEY
+END
+#
+HYDROGEN_BONDS
+#Acceptor  Hydrogen    Donor      DREIDING III
+ O_3       H_          X_h        LJ_12_10     0.17461E-01    3.58272
+ OW        H_          X_h        LJ_12_10     0.17461E-01    3.58272
+END
+#
+GENERATOR
+END

@@ -1,0 +1,29 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Ge-Germanium.bgf modified FFTYPE:Ge
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     5.65700     5.65700     5.65700    90.00000    90.00000    90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 GE1   RES A   444   0.00000   0.00000   0.00000 Ge     4 0  0.00000
+HETATM     2 GE2   RES A   444   1.41400   1.41400   1.41400 Ge     4 0  0.00000
+HETATM     3 GE3   RES A   444   1.41400   4.24300   4.24300 Ge     4 0  0.00000
+HETATM     4 GE4   RES A   444   4.24300   1.41400   4.24300 Ge     4 0  0.00000
+HETATM     5 GE5   RES A   444   4.24300   4.24300   1.41400 Ge     4 0  0.00000
+HETATM     6 GE6   RES A   444   2.82900   2.82900   0.00000 Ge     4 0  0.00000
+HETATM     7 GE7   RES A   444   2.82900   0.00000   2.82900 Ge     4 0  0.00000
+HETATM     8 GE8   RES A   444   0.00000   2.82900   2.82900 Ge     4 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     2     3     4     5
+CONECT     2     1     6     7     8
+CONECT     3     1     6     7     8
+CONECT     4     1     6     7     8
+CONECT     5     1     6     7     8
+CONECT     6     2     3     4     5
+CONECT     7     2     3     4     5
+CONECT     8     2     3     4     5
+END

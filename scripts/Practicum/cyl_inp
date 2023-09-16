@@ -1,0 +1,34 @@
+SOLVENT
+ itypef       = 1
+ qf           = 0.00
+ rf           = 1.6
+ mf           = 18.0
+
+IONS          
+ itypefion    = 2
+ qfion        = 1.00
+ rfion        = 0.97
+ mfion        = 23.0
+
+COINS
+ incCoIon     = 0
+ itypecoion   = 4
+ qcoion       = -1.00
+ rcoion       = 1.81
+ mcoion       = 35.4527
+ ion_str      = 0.1
+
+SOLUTE       
+ incS        = 0
+ itypeSol    = 3
+ qSol        = 5.00
+ rSol        = 10.0
+ buffer      = 2.00
+ mSol        = 350.0
+
+CYLINDER     
+ rhof_targ   = 0.033456 
+ sigma       = 3.2
+ rc          = 20.00
+ xc          = 40.00
+ qw          = -0.1

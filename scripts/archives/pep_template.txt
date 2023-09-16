@@ -1,0 +1,36 @@
+beginmacro
+%
+% version      : 3.21
+% version date : 21:49:53 4/30/93
+% link date    : 11:43:25 8/14/96
+%
+% Macro created on  4/07/03   15:22:38
+%
+progstat = set(program,NMRGRAF)
+progstat = set(program,POLARIS)
+progstat = set(program,BIOGRAF)
+Top menu/build
+   Build/peptide
+        new file
+        "pepname"
+      Peptide/l_library
+filenms
+      Selections/return
+      Peptide/return
+   Build/modify H
+      Modify H/add all H
+        pepname
+      Modify H/return
+   Build/return
+Top menu/in-out
+   In-Out/write
+   File types/BioDesign
+     pepname
+     return
+     "outname"
+     " "
+   In-Out/return
+Top menu/exit
+  "OK"
+%
+endmacro

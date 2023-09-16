@@ -1,0 +1,81 @@
+#------------------------------------------#
+#         Default template settings        #
+#------------------------------------------#
+
+# Root directory of the shirley directory
+SHIRLEY_ROOT="/global/home/groups-sw/nano/webtools/shirley/vulcan"
+
+# Parallel processing environment settings
+PARA_COMMAND="mpirun"
+PARA_COMMAND_FULLPATH=""
+PARA_PREFIX_FORMAT="-host __PARA_HOST_LIST"
+PARA_NPROCS_PER_NODE="8"
+PARA_NPROCS_PER_POOL="8"
+PARA_POSTFIX=""
+
+# Ouput directory
+TMP_DIR=./
+
+# Pseudopotential settings
+PSEUDO_DIR="/global/home/groups-sw/nano/webtools/pseudos"
+PSEUDO_FUNCTIONAL=pbe
+PSEUDO_POT_ES_POST_FIX=pbe-van-dgp-1s1.UPF
+
+# XAS defaults
+XAS_ARG=5
+CHAPPROX="XCH"
+
+# Miscellaneous
+XYZFILES="*.xyz"
+XYZUNIT="angstrom"
+
+
+#------------------------------------------#
+#         System specific settings         #
+#------------------------------------------#
+
+ELOW="-5"
+COSBC="0"
+XAS_ARG="5"
+IBRAV="8"
+PARA_NPROCS_PER_POOL="8"
+ELEC_CONV_THR="1.0d-8"
+DEGAUSS="0.002"
+A="12.305267170679331"
+tot_charge="0"
+SIGMA="0.5"
+ESHIFT="1307.2"
+PARA_PW_POSTFIX_SCF=""
+electron_maxstep="100"
+OCCUPATIONS="smearing"
+ECUT_WFC="25"
+PARA_PW_POSTFIX_NSCF=""
+QVEC="1 1 1"
+QLIST="1.0"
+COSAC="0"
+COSAB="0"
+C="10.541545777217324"
+B="10.678868319616157"
+NBND_FAC="3.5"
+ETEMP="0.0"
+XASELEMENTS="Mg140"
+PARA_NJOB="1"
+DIAG_NSCF="david"
+SMEARING="fd"
+ELEC_MIXING_BETA="0.3"
+CHAPPROX="XCH"
+SPIN=""
+K_POINTS_NSCF="K_POINTS automatic
+1 1 1 0 0 0"
+DILATION="1"
+KVEC=""
+DIAG="david"
+K_POINTS="K_POINTS automatic
+3 3 3 0 0 0"
+EVEC=""
+LDAU=""
+NENER="1000"
+EHIGH="30"
+ECUT_RHO="200"
+DOWHAT="XAS"
+MOLNAME="MgB2.xyz"

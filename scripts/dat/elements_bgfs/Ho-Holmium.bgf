@@ -1,0 +1,17 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Ho-Holmium.bgf modified FFTYPE:Ho
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     3.57700     3.57700     5.61600    90.00000    90.00000   120.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 HO1   RES A   444  -0.00000   2.06500   1.40400 Ho     9 0  0.00000
+HETATM     2 HO2   RES A   444   1.78900   1.03300   4.21200 Ho     9 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     1     1     1     1     1     1     1     1     2     2     2     2
+CONECT     2     1     1     1     1     2     2     2     2     2     2     2     2
+END

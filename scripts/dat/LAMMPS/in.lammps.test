@@ -1,0 +1,48 @@
+variable		latx equal lx
+variable		laty equal ly
+variable		latz equal lz
+fix				lxavg all ave/time 1 500000 500000 v_latx
+fix				lyavg all ave/time 1 500000 500000 v_laty
+fix				lzavg all ave/time 1 500000 500000 v_latz
+${shakeStr}
+run             500000 # run for 15 ns
+${unshake}
+variable		xavg equal f_lxavg
+variable		yavg equal f_lyavg
+variable		zavg equal f_lzavg
+undump          1
+unfix           2
+print "current cell: ${latx} ${laty} ${latz} cell avgs: ${xavg} ${yavg} ${zavg}"
+print "deforming cell"
+fix             2 all nvt temp ${rtemp} ${rtemp} 100.0 nreset 10000
+fix             1 all deform 100 x final 0 ${xavg} y final 0 ${yavg} z final 0 ${zavg} units box
+unfix			lxavg
+unfix			lyavg
+unfix			lzavg
+${shakeStr}
+run				100000
+${unshake}
+unfix           1
+unfix           2
+fix             2 all nvt temp ${rtemp} ${rtemp} 100.0 nreset 10000
+${shakeStr}
+run             1000000
+${unshake}
+unfix           2
+reset_timestep  2000000
+
+print                          .
+print ================================================
+print "NVT production dynamics "
+print ================================================
+print                       .
+
+fix             2 all nvt temp ${rtemp} ${rtemp} 100.0 tloop 10 ploop 10
+thermo          100
+restart         50000 ${sname}.${rtemp}K.*.restart
+dump            1 all custom 1000 ${sname}.${rtemp}K.prod.lammpstrj id type xu yu zu vx vy vz
+${shakeStr}
+run             5000000 # run for 15 ns
+${unshake}
+unfix           2
+undump          1

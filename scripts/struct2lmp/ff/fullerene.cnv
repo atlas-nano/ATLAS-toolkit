@@ -1,0 +1,41 @@
+C***********************************************************************
+C***  This force field implementation was made by BioDesign, Inc.
+C***  This file may not be redistributed (whether or not it has been
+C***  modified) without the written permission of BioDesign.
+C***  This notice must appear in all copies of this file.
+C***********************************************************************
+C
+C  Conversion table for fullerenes                                      
+C
+C  Record format is 1X,A3, 1X,A7, 1X,A7, 1X,I2, 1X,I2, 1X,F8.4 and
+C  corresponds to:
+C
+C  RES OLDTYP NEWTYP MB NL CHARGE
+C
+C  where RES    = residue name
+C        OLDTYP = old atom type (type on input data file)
+C        NEWTYP = new atom type (type used in calculations)
+C        MB     = maximum number of covalent connections (for building)
+C        NL     = number of lone pairs at MB (for H-bond acceptors)
+C        CHARGE = charge on atom (used in electrostatic calculation)
+C
+C***********************************************************************
+*
+*  ms   -9/9/87
+*     *  Wild card has been added to all the amino acid residues
+*        to allow the possibilities of various number of hydorgens
+*        (deuteriums) being attached to carbon or nitrogen.  
+*     
+*     *  Hydrogens (& deuteriums) with different format ( for Kollman's)
+*        have also been added.
+*
+*  srl  -4/21/88  
+*     *  add implicit hydrogens to some carbons and nitrogens of the
+*     *  nucleic acid bases and make the carbonyl carbons O_2 instead of
+*     *  O_R
+**********************************************************************
+*
+*
+ *** C**     C_2G     4  0   0.0000    
+*
+*

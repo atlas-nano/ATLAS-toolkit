@@ -1,0 +1,265 @@
+if [ -n "$SLURM_SUBMIT_DIR" ]; then
+    PARA_JOB_DIR=$SLURM_SUBMIT_DIR
+elif [ -n "$PBS_O_WORKDIR" ]; then
+    PARA_JOB_DIR=$PBS_O_WORKDIR
+else
+    PARA_JOB_DIR=$(pwd)
+fi
+
+cd "$PARA_JOB_DIR"
+source "$PARA_JOB_DIR/Input_Block.in"
+
+DIR=$(pwd)
+SHIRLEY_BIB="$SHIRLEY_ROOT/scripts/arvid/Bibliothek"
+
+export SHIRLEY_BIB
+
+source "$SHIRLEY_BIB/Util.sh"
+source "$SHIRLEY_BIB/Parallel.sh"
+
+print "____________________________________________________________________________________________________"
+print "          ____ _  _ _ ____ _    ____ _   _    ____ ____ ____ ____ ____ ____ _  _ ____ ____          "
+print "          [__  |__| | |__/ |    |___  \_/     |__/ |___ |___ |___ |__/ |___ |\ | |    |___          "
+print "          ___] |  | | |  \ |___ |___   |      |  \ |___ |    |___ |  \ |___ | \| |___ |___          " 
+print "____________________________________________________________________________________________________"
+print
+
+# Reset the number of simultaneous calculations
+PARA_NJOB=1
+
+setup_parallel_environment
+
+# Chop up the total number of processors into chunks defined by PPN
+$SHIRLEY_BIB/Chop.sh $PARA_NODEFILE $PARA_NPROCS_PER_ATOM
+
+# Get timestamp
+DATE_START=$(date)
+TIMESTAMP_START=$(date +"%s")
+
+print_line
+print " Starting execution at: $DATE_START"
+print " Running on $PARA_NPROCS_PER_ATOM processors"
+print_line
+print
+print "Running directory $DIR"
+
+for xyzfile in $XYZFILES; do
+
+    if [ -f "$xyzfile" ]; then
+        print "Working on xyz-file $xyzfile"
+    else
+        print "Error: unable to find xz-file $xyzfile - skipping"
+        continue
+    fi
+
+    # This defines the name of the directory where calculation results are stored
+    CALC=$(echo "$xyzfile" | sed 's/\.xyz$//')
+
+    if [ ! -d "$DIR/XAS/$CALC" ]; then
+        mkdir -p "$DIR/XAS/$CALC"
+    fi
+
+    # Do a GS calculation
+    dir_scf="$DIR/XAS/$CALC/GS"
+    out_scf="$dir_scf/$MOLNAME.scf.out"
+    if [ ! -d "$dir_scf" ]; then
+        mkdir -p "$dir_scf"
+    fi
+
+    if [ ! -f "$out_scf" ] || ! grep -q 'convergence has been achieved' "$out_scf"; then
+
+        # Make a copy of Input_Block.in in the working directory
+        input="$DIR/XAS/$CALC/Input_Block.in${PARA_JOB_ID}"
+        cp "$DIR/Input_Block.in" "$input"
+
+        print "Converting $xyzfile to input"
+        $SHIRLEY_BIB/../xyz2inp.sh "$xyzfile" $XYZUNIT $XASELEMENTS >> "$input"
+
+        source "$input"
+
+        cp "$input" "$dir_scf/Input_Block.in"
+
+        input_tmp="$dir_scf/TMP_INPUT.in${PARA_JOB_ID}"
+
+        $SHIRLEY_BIB/ResetVariables.sh "$dir_scf"
+        $SHIRLEY_BIB/VarPen.sh  "$input_tmp" TMP_BIN_DIR="$SHIRLEY_ROOT/bin" TMP_wf_collect=.TRUE. TMP_disk_io='low' TMP_CHAPPROX=''
+
+        $SHIRLEY_BIB/GetNode.sh "$dir_scf" $PARA_NODEPOOL || continue
+
+        # Refresh file system
+        ls $dir_scf/Node-${PARA_JOB_ID}-* > /dev/null
+
+        # Run the calc
+        print
+        print_header "Running ground state for $xyzfile"
+        print_time "Running directory $dir_scf"
+        $SHIRLEY_BIB/SCF.sh "$dir_scf" 1 
+
+        sleep 1
+        ls $PARA_NODEPOOL > /dev/null
+
+    else
+        print "Ground state appears to be completed already"
+    fi
+done
+
+# Now do atomic calculations - assuming that volume is the same for all xyz files
+SUBDIR_ATOM=atom
+DIR_ATOM="$DIR/XAS/$SUBDIR_ATOM"
+
+if [ ! -d "$DIR_ATOM" ]; then
+    mkdir -p "$DIR_ATOM"
+fi
+
+TYPES=''
+for xyzfile in $XYZFILES; do
+    TYPES=$( (echo "$TYPES"; cat $xyzfile | awk '{if(NR>2){print $1}}') | sort | uniq)
+done
+NTYP=$(echo $TYPES | wc -w | awk '{print $1}')
+
+TYPES_STRING=$(echo "$TYPES" | tr '\n' ' ')
+print
+print_header "Running atomic calculations"
+print "Running directory:   $DIR_ATOM"
+print "Atomic types:        ${TYPES_STRING## }"
+print "Number of types:     $NTYP"
+
+# Get periodic table info
+source "$PSEUDO_DIR/periodic.table" $PSEUDO_FUNCTIONAL
+
+for TYP_SYMBOL in $TYPES; do
+
+    DO_TYP=0
+    for E in $(echo $XASELEMENTS); do
+        E=$(echo $E | sed 's/[0-9]*$//')
+        if [ $E == $TYP_SYMBOL ]; then
+            DO_TYP=1
+        fi
+    done
+
+    # Do an atomic calculation if this element is part of the excited atoms
+    if [ $DO_TYP -eq 1 ] ; then
+
+        AN=$(get_atomicnumber $TYP_SYMBOL)
+        TYP_Z=${PSEUDO[$AN]}
+        if [ ! -f $PSEUDO_DIR/$TYP_Z ] ; then
+            print "Error: Pseudopotential $PSEUDO_DIR/$TYP_Z not found"
+            exit
+        fi
+
+        NELEC=$(grep 'Z valence' $PSEUDO_DIR/$TYP_Z | awk '{print $1}')
+        NBND=$(echo "($NELEC*0.5*1.2)/1" | bc)
+        NBND_MIN=$(echo "($NELEC*0.5)/1+4" | bc)
+        if [ $NBND_MIN -gt $NBND ]; then
+            NBND=$NBND_MIN
+        fi
+        NBND_POOL=$(echo "$NBND * $PARA_NPROCS_PER_POOL" | bc)
+        if [ $NBND_POOL -lt $PARA_NPROCS_PER_ATOM ]; then
+            PARA_NPROCS_PER_ATOM=$PARA_NPROCS_PER_POOL
+            $SHIRLEY_BIB/Chop.sh $PARA_NODEFILE $PARA_NPROCS_PER_ATOM
+        fi
+
+        TMP_ATOMIC_SPECIES="ATOMIC_SPECIES
+        $TYP_SYMBOL ${MASS[$AN]} ${PSEUDO[$AN]}"
+        TMP_ATOMIC_POSITIONS="ATOMIC_POSITIONS (angstrom)
+        $TYP_SYMBOL 0.0 0.0 0.0"
+
+        if [ -n "$SPIN" ]; then
+            sedstr="/starting_magnetization($ityp)/s/.*starting_magnetization($ityp) *= *\([+-]*[0-9]*\.*[0-9]*\).*/starting_magnetization(1)=\1/p"
+            TMP_SPIN=$(echo $SPIN | sed -n "$sedstr")
+            if [ -n "$TMP_SPIN" ]; then
+                TMP_SPIN=$(echo $SPIN | sed -n '/nspin/s/.*\(nspin *= *[0-9]*\).*/\1/p')
+            fi
+        fi
+
+        if [ -n "$LDAU" ]; then
+            sedstr="/Hubbard_U($ityp)/s/.*Hubbard_U($ityp) *= *\([+-]*[0-9]*\.*[0-9]*\).*/Hubbard_U(1)=\1/p"
+            TMP_LDAU=$(echo $LDAU | sed -n "$sedstr")
+            if [ -n "$TMP_LDAU" ]; then
+                TMP_LDAU=$(echo $LDAU | sed -n '/lda_plus_u/s/.*\(lda_plus_u *= *\.[a-zA-Z]*\.\).*/\1/p')
+            fi
+        fi
+
+        print
+        print "Running atomic calculation for element $TYP_SYMBOL"
+        print_line '-'
+        print "Pseudopotential:     $PSEUDO_DIR/$TYP_Z"
+        print "Number of electrons: $NELEC"
+        print "Number of bands:     $NBND"
+        print "Spin:                $TMP_SPIN"
+        print "LDAU:                $TMP_LDAU"
+
+        DIR_ELEMENT="$DIR_ATOM/$TYP_SYMBOL"
+        if [ ! -d "$DIR_ELEMENT" ]; then
+            mkdir -p "$DIR_ELEMENT"
+        fi
+        
+        TMP_ELEC_MIXING_BETA=0.1
+		TMP_total_charge=0
+
+        print; print "Single atom calculation in ground state"; print_line '-'
+        FILE_OUT="$DIR_ELEMENT/atom.${TYP_SYMBOL}-GS.scf.out"
+        if [ ! -f "$FILE_OUT" ] || ! grep -q 'convergence has been achieved' $FILE_OUT; then
+
+            cp "$DIR/Input_Block.in" "$DIR_ELEMENT/Input_Block.in"
+
+            input_tmp="$DIR_ELEMENT/TMP_INPUT.in${PARA_JOB_ID}"
+
+            $SHIRLEY_BIB/ResetVariables.sh "$DIR_ELEMENT"
+            $SHIRLEY_BIB/VarPen.sh "$input_tmp" TMP_BIN_DIR="$SHIRLEY_ROOT/bin" TMP_MOLNAME=atom.${TYP_SYMBOL}-GS TMP_wf_collect=.TRUE. TMP_disk_io='low' TMP_NAT=1 TMP_NELEC=$NELEC TMP_NBND=$NBND TMP_ATOMIC_SPECIES="$TMP_ATOMIC_SPECIES" TMP_ATOMIC_POSITIONS="$TMP_ATOMIC_POSITIONS" TMP_CHAPPROX='' TMP_ELEC_MIXING_BETA=$TMP_ELEC_MIXING_BETA TMP_SPIN=$TMP_SPIN TMP_LDAU=$TMP_LDAU TMP_PARA_PW_POSTFIX='' TMP_total_charge=$TMP_total_charge
+            $SHIRLEY_BIB/GetNode.sh "$DIR_ELEMENT" $PARA_NODEPOOL || continue
+            ls $DIR_ELEMENT/Node-${PARA_JOB_ID}-* > /dev/null
+
+            $SHIRLEY_BIB/SCF.sh "$DIR_ELEMENT" 1
+
+            sleep 1
+            ls $PARA_NODEPOOL > /dev/null
+        else
+            print "Atomic calculation in the ground state appears to be converged already"
+        fi
+
+        print; print "Single atom calculation with core-hole approximated by ${CHAPPROX}"; print_line '-'
+        FILE_OUT="$DIR_ELEMENT/atom.${TYP_SYMBOL}-${CHAPPROX}.scf.out"
+        if [ ! -f "$FILE_OUT" ] || ! grep -q 'convergence has been achieved' $FILE_OUT; then
+
+            cp "$DIR/Input_Block.in" "$DIR_ELEMENT/Input_Block.in"
+
+            input_tmp="$DIR_ELEMENT/TMP_INPUT.in${PARA_JOB_ID}"
+
+            $SHIRLEY_BIB/ResetVariables.sh "$DIR_ELEMENT"
+            $SHIRLEY_BIB/VarPen.sh "$input_tmp" TMP_BIN_DIR="$SHIRLEY_ROOT/bin" TMP_MOLNAME=atom.${TYP_SYMBOL}-${CHAPPROX} TMP_wf_collect=.TRUE. TMP_disk_io='low' TMP_NAT=1 TMP_NELEC=$NELEC TMP_NBND=$NBND TMP_ATOMIC_SPECIES="$TMP_ATOMIC_SPECIES" TMP_ATOMIC_POSITIONS="$TMP_ATOMIC_POSITIONS" TMP_CHAPPROX=${CHAPPROX} TMP_ELEC_MIXING_BETA=$TMP_ELEC_MIXING_BETA TMP_SPIN=$TMP_SPIN TMP_LDAU=$TMP_LDAU TMP_PARA_PW_POSTFIX='' TMP_total_charge=$TMP_total_charge
+            $SHIRLEY_BIB/Labeler.sh 1 "$input_tmp"
+            $SHIRLEY_BIB/GetNode.sh "$DIR_ELEMENT" $PARA_NODEPOOL || continue
+            ls $DIR_ELEMENT/Node-${PARA_JOB_ID}-* > /dev/null
+
+            $SHIRLEY_BIB/SCF.sh "$DIR_ELEMENT" 1
+
+            sleep 1
+            ls $PARA_NODEPOOL > /dev/null
+        else
+            print "Atomic calculation with the core-hole appears to be converged already"
+        fi
+    fi
+done
+
+# Get timestamp
+DATE_STOP=$(date)
+TIMESTAMP_STOP=$(date +"%s")
+
+# Compute time elapsed
+diff=$(($TIMESTAMP_STOP - $TIMESTAMP_START))
+days=$(($diff / 86400))
+rem=$(($diff % 86400))
+hours=$(($rem / 3600))
+rem=$(($rem % 3600))
+mins=$(($rem / 60))
+secs=$(($rem % 60))
+
+print
+print_line
+print " Stopping execution at: $DATE_STOP"
+print " Wall time: ${days}d ${hours}h ${mins}m ${secs}s"
+print_line
+
+wait
+exit

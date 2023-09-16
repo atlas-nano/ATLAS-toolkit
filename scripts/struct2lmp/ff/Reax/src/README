@@ -1,0 +1,11 @@
+ReaxFF source code
+
+To compile the program, type 'make'. That should be it !
+
+cbka.blk contains the system parameters.
+
+
+See http://www.wag.caltech.edu/home/duin for a user manual and
+simulation examples.
+
+

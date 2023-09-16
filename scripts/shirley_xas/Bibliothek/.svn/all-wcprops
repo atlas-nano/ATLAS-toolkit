@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/317/branches/shirley_QE4.3/scripts/arvid/Bibliothek
+END
+Labeler.sh
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/310/branches/shirley_QE4.3/scripts/arvid/Bibliothek/Labeler.sh
+END
+Reverend.sh
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/251/branches/shirley_QE4.3/scripts/arvid/Bibliothek/Reverend.sh
+END
+periodic.table
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/299/branches/shirley_QE4.3/scripts/arvid/Bibliothek/periodic.table
+END
+SCF.sh
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/317/branches/shirley_QE4.3/scripts/arvid/Bibliothek/SCF.sh
+END
+ResetVariables.sh
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/311/branches/shirley_QE4.3/scripts/arvid/Bibliothek/ResetVariables.sh
+END
+DoXAS.sh
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/316/branches/shirley_QE4.3/scripts/arvid/Bibliothek/DoXAS.sh
+END
+GetPWSCF.md.sh
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/251/branches/shirley_QE4.3/scripts/arvid/Bibliothek/GetPWSCF.md.sh
+END
+System.sh
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/270/branches/shirley_QE4.3/scripts/arvid/Bibliothek/System.sh
+END
+GetNode.sh
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/302/branches/shirley_QE4.3/scripts/arvid/Bibliothek/GetNode.sh
+END
+ReleaseNode.sh
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/298/branches/shirley_QE4.3/scripts/arvid/Bibliothek/ReleaseNode.sh
+END
+Chop.sh
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/286/branches/shirley_QE4.3/scripts/arvid/Bibliothek/Chop.sh
+END
+VarPen.sh
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/310/branches/shirley_QE4.3/scripts/arvid/Bibliothek/VarPen.sh
+END
+MD.sh
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/286/branches/shirley_QE4.3/scripts/arvid/Bibliothek/MD.sh
+END
+MD-metal.sh
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/286/branches/shirley_QE4.3/scripts/arvid/Bibliothek/MD-metal.sh
+END
+WatchMan.sh
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MFTheory/projects/ESPRESSO/!svn/ver/270/branches/shirley_QE4.3/scripts/arvid/Bibliothek/WatchMan.sh
+END

@@ -1,0 +1,29 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Np-Neptunium-alpha.bgf modified FFTYPE:Np
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     4.72300     4.88700     6.66300    90.00000    90.00000    90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 NP1   RES A   444   1.18100   1.01600   0.24000 Np     9 0  0.00000
+HETATM     2 NP2   RES A   444   1.18100   4.11500   2.12500 Np     7 0  0.00000
+HETATM     3 NP3   RES A   444   1.18100   3.21600   5.45700 Np     7 0  0.00000
+HETATM     4 NP4   RES A   444   1.18100   1.42700   3.57100 Np     9 0  0.00000
+HETATM     5 NP5   RES A   444   3.54200   1.67100   1.20600 Np     7 0  0.00000
+HETATM     6 NP6   RES A   444   3.54200   3.46000   3.09200 Np     9 0  0.00000
+HETATM     7 NP7   RES A   444   3.54200   0.77200   4.53800 Np     7 0  0.00000
+HETATM     8 NP8   RES A   444   3.54200   3.87100   6.42300 Np     9 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     2     3     3     4     4     5     5     7     7     8     8
+CONECT     2     1     4     4     6     6     8     8
+CONECT     3     1     1     4     6     6     8     8
+CONECT     4     1     1     2     2     3     5     5     6     6     7     7
+CONECT     5     1     1     4     4     6     8     8
+CONECT     6     2     2     3     3     4     4     5     7     7     8     8
+CONECT     7     1     1     4     4     6     6     8
+CONECT     8     1     1     2     2     3     3     5     5     6     6     7
+END

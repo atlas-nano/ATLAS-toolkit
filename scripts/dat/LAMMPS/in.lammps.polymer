@@ -1,0 +1,142 @@
+variable         c loop 5 #number of annealing cycles
+
+print            .
+print            ==========================================
+print            "500 steps CG Minimization"
+print            ==========================================
+print            .
+                
+dump             1 all atom 25 ${sname}.min.lammpstrj
+dump_modify      1 image yes scale yes
+thermo           10
+min_style        sd
+minimize         1.0e-4 1.0e-4 500 5000
+min_style        cg
+minimize         1.0e-4 1.0e-4 500 5000
+#now             minimize the entire system
+minimize         1.0e-4 1.0e-4 500 5000
+undump           1
+                
+print            .
+print            =====================================
+print            "NVT dynamics to heat system"
+print            =====================================
+print            .
+                
+reset_timestep   0
+                
+velocity         all create 0.0 12345678 dist uniform
+thermo           100
+dump             1 all custom 1000 ${sname}.heat.lammpstrj id type xu yu zu vx vy vz
+fix              3 all nvt temp 1.0 ${rtemp} 100.0
+run              10000
+unfix            3
+undump           1
+                
+variable         tempStart index ${rtemp} # starting temp for annealing cycle
+variable         tempStop equal v_tempStart*2 # stopping temp for annealing cycle
+restart          100000 ${sname}.anneal.*.restart
+dump             1 all custom 1000 ${sname}.anneal.lammpstrj id type xu yu zu vx vy vz
+                
+reset_timestep   0
+                
+variable         c loop 5 #number of annealing cycles
+variable         tIncrement equal "(v_tempStop-v_tempStart)/10"
+                
+label            cycle
+print            .
+print            ===========================================================
+print            "ANNEALING: Heating ${tempStart}K -> ${tempStop}K CYCLE ${c}"
+print            ===========================================================
+print            .
+                
+variable         l loop 10
+label            annealHeat
+variable         t equal "v_tempStart+v_l*v_tIncrement"
+print            "temperature: ${t}"
+fix              3 all nvt temp $t $t 10.0
+run              20000
+unfix            3
+next             l
+jump             SELF annealHeat
+                
+fix              3 all nvt temp ${tempStart} ${tempStart} 100.0
+run              50000
+unfix            3
+                
+print            .
+print            ==========================================================
+print            "ANNEALING: Cooling ${tempStop}K -> ${tempStart}K CYCLE ${c}"
+print            ==========================================================
+print            .
+                
+variable         m loop 10
+label            annealCool
+variable         n equal ${tempStop}-v_m*${tIncrement}
+print            "temperature: $n"
+fix              3 all nvt temp $n $n 10.0
+run              20000
+unfix            3
+next             m
+jump             SELF annealCool
+                
+fix              3 all npt temp ${tempStart} ${tempStart} 100.0 aniso 1.0 1.0 2000
+run              50000
+unfix            3
+                
+next             c
+jump             SELF cycle
+undump           1
+                
+print            .
+print            ================================================
+print            "NPT dynamics with an isotropic pressure of 1atm."
+print            ================================================
+print            .
+                
+fix              2 all npt temp ${rtemp} ${rtemp} 100.0 aniso 1.0 1.0 2000.0
+dump             1 all custom 5000 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
+run              500000 # run for 15 ns
+                
+variable         latx equal lx
+variable         laty equal ly
+variable         latz equal lz
+fix              lxavg all ave/time 1 250000 250000 v_latx
+fix              lyavg all ave/time 1 250000 250000 v_laty
+fix              lzavg all ave/time 1 250000 250000 v_latz
+run              510000 # run for 15 ns
+variable         xavg equal f_lxavg
+variable         yavg equal f_lyavg
+variable         zavg equal f_lzavg
+undump           1
+unfix            2
+print            "current cell: ${latx} ${laty} ${latz} cell avgs: ${xavg} ${yavg} ${zavg}"
+print            "deforming cell"
+fix              2 all nvt temp ${rtemp} ${rtemp} 100.0 nreset 10000
+dump             1 all custom 5000 ${sname}.${rtemp}K.deform.lammpstrj id type xu yu zu vx vy vz
+fix              1 all deform 100 x final 0 ${xavg} y final 0 ${yavg} z final 0 ${zavg} units box
+undump           1
+unfix            lxavg
+unfix            lyavg
+unfix            lzavg
+run              100000
+unfix            1
+unfix            2
+fix              2 all nvt temp ${rtemp} ${rtemp} 100.0 nreset 10000
+dump             1 all custom 5000 ${sname}.${rtemp}K.nvt.lammpstrj id type xu yu zu vx vy vz
+run              500000
+undump           1
+unfix            2
+                
+print            .
+print            ================================================
+print            "NVT production dynamics "
+print            ================================================
+print            .
+                
+fix              2 all nvt temp ${rtemp} ${rtemp} 100.0 tloop 10 ploop 10
+restart          50000 ${sname}.${rtemp}K.*.restart
+dump             1 all custom 1000 ${sname}.${rtemp}K.prod.lammpstrj id type xu yu zu vx vy vz
+run              5000000 # run for 15 ns
+unfix            2
+undump           1

@@ -1,0 +1,11 @@
+beginmacro
+%
+% version      : 3.23
+% compile date    : Dec 15 2006 16:26
+%
+% Macro created on  8/01/11    9:52:50
+%
+Top menu/exit
+  "OK"
+%
+endmacro

@@ -1,0 +1,42 @@
+XTLGRF 200
+DESCRP graphite_hex
+REMARK BGF file created by Cerius2
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     4.27500    4.93670    6.67298   90.00000   90.00000   90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5, i3,i2,1x,f8.5)
+HETATM     1 C1    GRA A    1    0.00000   0.00000   3.33649 C_2G   3 0  0.00000
+HETATM     2 C2    GRA A    1    0.00000   2.46835   3.33649 C_2G   3 0  0.00000
+HETATM     3 C3    GRA A    1    2.13765   3.70253   3.33649 C_2G   4 0  0.00000
+HETATM     4 C4    GRA A    1    2.13765   1.23418   3.33649 C_2G   3 0  0.00000
+HETATM     5 C5    GRA A    1    0.71255   1.23417   3.33649 C_2G   3 0  0.00000
+HETATM     6 C6    GRA A    1    0.71255   3.70252   3.33649 C_2G   4 0  0.00000
+HETATM     7 C7    GRA A    1    2.85020   0.00000   3.33649 C_2G   3 0  0.00000
+HETATM     8 C8    GRA A    1    2.85020   2.46835   3.33649 C_2G   3 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     5     6     7
+ORDER      1     1     1     2
+DISPX      1     0     0    -1
+DISPY      1     0    -1     0
+CONECT     2     5     6     8
+ORDER      2     1     1     2
+DISPX      2     0     0    -1
+CONECT     3     6     7     8
+DISPY      3     0     1     0
+CONECT     4     5     7     8
+ORDER      4     2     1     1
+CONECT     5     1     2     4
+ORDER      5     1     1     2
+CONECT     6     1     2     3
+DISPY      6     1     0     0
+CONECT     7     1     3     4
+ORDER      7     2     1     1
+DISPX      7     1     0     0
+DISPY      7     0    -1     0
+CONECT     8     2     3     4
+ORDER      8     2     1     1
+DISPX      8     1     0     0
+END

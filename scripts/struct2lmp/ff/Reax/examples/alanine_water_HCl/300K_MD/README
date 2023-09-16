@@ -1,0 +1,23 @@
+Example simulation: alanine/water/HCl MD-simulation at T=300K
+
+10000 iterations (0.25 fs/iteration) using Berendsen
+thermostat 
+
+Input files:
+
+exe: UNIX-script; call this to start the program
+control: ReaxFF-keywords
+geo: input geometry (in .bgf-format)
+ffield: force field parameters
+
+Key output files:
+
+fort.71: energy, temperature, pressure during MD-simulation
+fort.73: partial energies
+fort.7: connnection table
+xmolout: trajectory files (in .xyz-format)
+molfra.out:  molecular composition
+summary.txt: summary key system properties
+molsav.####: restart-files
+moldyn.vel: latest restart-file
+

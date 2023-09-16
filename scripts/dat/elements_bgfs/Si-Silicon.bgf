@@ -1,0 +1,29 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK Si-Silicon.bgf modified FFTYPE:Si
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     5.43100     5.43100     5.43100    90.00000    90.00000    90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 SI1   RES A   444   0.00000   0.00000   0.00000 Si     4 0  0.00000
+HETATM     2 SI2   RES A   444   1.35800   1.35800   1.35800 Si     4 0  0.00000
+HETATM     3 SI3   RES A   444   1.35800   4.07300   4.07300 Si     4 0  0.00000
+HETATM     4 SI4   RES A   444   4.07300   1.35800   4.07300 Si     4 0  0.00000
+HETATM     5 SI5   RES A   444   4.07300   4.07300   1.35800 Si     4 0  0.00000
+HETATM     6 SI6   RES A   444   2.71500   2.71500   0.00000 Si     4 0  0.00000
+HETATM     7 SI7   RES A   444   2.71500   0.00000   2.71500 Si     4 0  0.00000
+HETATM     8 SI8   RES A   444   0.00000   2.71500   2.71500 Si     4 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     2     3     4     5
+CONECT     2     1     6     7     8
+CONECT     3     1     6     7     8
+CONECT     4     1     6     7     8
+CONECT     5     1     6     7     8
+CONECT     6     2     3     4     5
+CONECT     7     2     3     4     5
+CONECT     8     2     3     4     5
+END

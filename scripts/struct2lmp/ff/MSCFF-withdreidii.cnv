@@ -1,0 +1,350 @@
+C***********************************************************************
+C  MSCFF
+C  Conversion table for DNA.
+C  12/10/97
+C
+C  Record format is 1X,A3, 1X,A7, 1X,A7, 1X,I2, 1X,I2, 1X,F8.4 and
+C  corresponds to:
+C
+C  RES OLDTYP NEWTYP MB NL CHARGE
+C
+C  where RES    = residue name
+C        OLDTYP = old atom type (type on input data file)
+C        NEWTYP = new atom type (type used in calculations)
+C        MB     = maximum number of covalent connections (for building)
+C        NL     = number of lone pairs at MB (for H-bond acceptors)
+C        CHARGE = charge on atom (used in electrostatic calculation)
+C
+C***********************************************************************
+*  BASES                                                     
+   A  N9     N_R      3  0  -0.2260
+   A N9      N_R      3  0  -0.2260
+   A  C8     C_B      3  0   0.1570
+   A C8      C_B      3  0   0.1570
+   A HC8     H_       1  0   0.1710
+   A  N7     N_RL     2  1  -0.5540
+   A N7      N_RL     2  1  -0.5540
+   A  C5     C_R      3  0  -0.0950
+   A C5      C_R      3  0  -0.0950
+   A  C6     C_R      3  0   0.8370
+   A C6      C_R      3  0   0.8370
+   A  N6     N_2      3  0  -0.9850
+   A N6      N_2      3  0  -0.9850
+   A HN6     H___A    1  0   0.4360
+   A  N1     N_RL     2  1  -0.8450
+   A N1      N_RL     2  1  -0.8450
+   A  C2     C_R      3  0   0.6700
+   A C2      C_R      3  0   0.6700
+   A HC2     H_       1  0   0.0290
+   A  N3     N_RL     2  1  -0.8000
+   A N3      N_RL     2  1  -0.8000
+   A  C4     C_R      3  0   0.4290
+   A C4      C_R      3  0   0.4290
+C  Sugar and Phosphate conversions for deoxy!
+   A P       P_3+3    3  1   1.3250
+   A  P      P_3+3    3  1   1.3250
+   A O1P     O_P      1  2  -0.7770
+   A  O1P    O_P      1  2  -0.7770
+   A O2P     O_P      1  2  -0.7770
+   A  O2P    O_P      1  2  -0.7770
+   A O5*     O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   A  O5*    O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   A C5*     C_3      4  0   0.0800
+   A  C5*    C_3      4  0   0.0800
+   A HC5*    H_       1  0   0.1000
+   A C4*     C_3      4  0   0.3900
+   A  C4*    C_3      4  0   0.3900
+   A HC4*    H_       1  0   0.0200
+   A O4*     O_S      2  2  -0.4900
+   A  O4*    O_S      2  2  -0.4900
+   A C3*     C_S      4  0   0.3500
+   A  C3*    C_S      4  0   0.3500
+   A HC3*    H_       1  0  -0.0100
+   A O3*     O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   A  O3*    O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   A C2*     C_3      4  0  -0.2600
+   A  C2*    C_3      4  0  -0.2600
+   A HC2*    H_       1  0   0.1000
+   A  C1*    C_3      4  0   0.1300
+   A C1*     C_3      4  0   0.1300
+   A HC1*    H_       1  0   0.1100
+   A HO3*    H_       1  0   0.4200 
+   A HO5*    H_       1  0   0.3600
+*
+   C N1      N_R      3  0  -0.4500
+   C  N1     N_R      3  0  -0.4500
+   C C2      C_R      3  0   0.8440
+   C  C2     C_R      3  0   0.8440
+   C O2      O_2      1  2  -0.6070
+   C  O2     O_2      1  2  -0.6070
+   C N3      N_RL     2  1  -0.8480
+   C  N3     N_RL     2  1  -0.8480
+   C C4      C_R      3  0   1.0630
+   C  C4     C_R      3  0   1.0630
+   C N4      N_2      3  0  -1.0810
+   C  N4     N_2      3  0  -1.0810
+   C HN4     H___A    1  0   0.4540
+   C C5      C_R      3  0  -0.7950
+   C  C5     C_R      3  0  -0.7950
+   C HC5     H_       1  0   0.2310
+   C C6      C_B      3  0   0.2360
+   C  C6     C_B      3  0   0.2360
+   C HC6     H_       1  0   0.1590
+C  Sugar and Phosphate conversions for deoxy!
+   C P       P_3+3    3  1   1.3250
+   C  P      P_3+3    3  1   1.3250
+   C O1P     O_P      1  2  -0.7770
+   C  O1P    O_P      1  2  -0.7770
+   C O2P     O_P      1  2  -0.7770
+   C  O2P    O_P      1  2  -0.7770
+   C O5*     O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   C  O5*    O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   C C5*     C_3      4  0   0.0800
+   C  C5*    C_3      4  0   0.0800
+   C HC5*    H_       1  0   0.1000
+   C C4*     C_3      4  0   0.3900
+   C  C4*    C_3      4  0   0.3900
+   C HC4*    H_       1  0   0.0200
+   C O4*     O_S      2  2  -0.4900
+   C  O4*    O_S      2  2  -0.4900
+   C C3*     C_S      4  0   0.3500
+   C  C3*    C_S      4  0   0.3500
+   C HC3*    H_       1  0  -0.0100
+   C O3*     O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   C  O3*    O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   C C2*     C_3      4  0  -0.2600
+   C  C2*    C_3      4  0  -0.2600
+   C HC2*    H_       1  0   0.1000
+   C  C1*    C_3      4  0   0.1300
+   C C1*     C_3      4  0   0.1300
+   C HC1*    H_       1  0   0.1100
+   C HO3*    H_       1  0   0.4200 
+   C HO5*    H_       1  0   0.3600
+*
+   G N9      N_R      3  0  -0.1460
+   G  N9     N_R      3  0  -0.1460
+   G C8      C_B      3  0   0.0500
+   G  C8     C_B      3  0   0.0500
+   G HC8     H_       1  0   0.1940
+   G N7      N_RL     2  1  -0.5010
+   G  N7     N_RL     2  1  -0.5010
+   G C5      C_R      3  0   0.0130              
+   G  C5     C_R      3  0   0.0130              
+   G C6      C_R      3  0   0.6420
+   G  C6     C_R      3  0   0.6420
+   G O6      O_2      1  2  -0.5260
+   G  O6     O_2      1  2  -0.5260
+   G N1      N_R      3  0  -0.7720
+   G  N1     N_R      3  0  -0.7720
+   G HN1     H___A    1  0   0.3930
+   G C2      C_R      3  0   1.0450
+   G  C2     C_R      3  0   1.0450
+   G N2      N_2      3  0  -1.0540
+   G  N2     N_2      3  0  -1.0540
+   G HN2     H___A    1  0   0.4330
+   G N3      N_RL     2  1  -0.7660
+   G  N3     N_RL     2  1  -0.7660
+   G C4      C_R      3  0   0.2220
+   G  C4     C_R      3  0   0.2220
+C  Sugar and Phosphate conversions for deoxy!
+   G P       P_3+3    3  1   1.3250
+   G  P      P_3+3    3  1   1.3250
+   G O1P     O_P      1  2  -0.7770
+   G  O1P    O_P      1  2  -0.7770
+   G O2P     O_P      1  2  -0.7770
+   G  O2P    O_P      1  2  -0.7770
+   G O5*     O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   G  O5*    O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   G C5*     C_3      4  0   0.0800
+   G  C5*    C_3      4  0   0.0800
+   G HC5*    H_       1  0   0.1000
+   G C4*     C_3      4  0   0.3900
+   G  C4*    C_3      4  0   0.3900
+   G HC4*    H_       1  0   0.0200
+   G O4*     O_S      2  2  -0.4900
+   G  O4*    O_S      2  2  -0.4900
+   G C3*     C_S      4  0   0.3500
+   G  C3*    C_S      4  0   0.3500
+   G HC3*    H_       1  0  -0.0100
+   G O3*     O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   G  O3*    O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   G C2*     C_3      4  0  -0.2600
+   G  C2*    C_3      4  0  -0.2600
+   G HC2*    H_       1  0   0.1000
+   G  C1*    C_3      4  0   0.1300
+   G C1*     C_3      4  0   0.1300
+   G HC1*    H_       1  0   0.1100
+   G HO3*    H_       1  0   0.4200 
+   G HO5*    H_       1  0   0.3600
+*
+   T N1      N_R      3  0  -0.2670
+   T  N1     N_R      3  0  -0.2670
+   T C2      C_R      3  0   0.6560
+   T  C2     C_R      3  0   0.6560
+   T O2      O_2      1  2  -0.5900
+   T  O2     O_2      1  2  -0.5900
+   T N3      N_R      3  0  -0.6430
+   T  N3     N_R      3  0  -0.6430
+   T HN3     H___A    1  0   0.3970
+   T C4      C_R      3  0   0.6640
+   T  C4     C_R      3  0   0.6640
+   T O4      O_2      1  2  -0.5400
+   T  O4     O_2      1  2  -0.5400
+   T C5      C_R      3  0  -0.0320
+   T  C5     C_R      3  0  -0.0320
+   T C5A     C_3      4  0  -0.4240
+   T  C5A    C_3      4  0  -0.4240
+   T HC5A    H_       1  0   0.1320
+   T  C6     C_B      3  0  -0.2070
+   T C6      C_B      3  0  -0.2070
+   T HC6     H_       1  0   0.2500
+C  Sugar and Phosphate conversions for deoxy!
+   T P       P_3+3    3  1   1.3250
+   T  P      P_3+3    3  1   1.3250
+   T O1P     O_P      1  2  -0.7770
+   T  O1P    O_P      1  2  -0.7770
+   T O2P     O_P      1  2  -0.7770
+   T  O2P    O_P      1  2  -0.7770
+   T O5*     O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   T  O5*    O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+   T C5*     C_3      4  0   0.0800
+   T C5M     C_3      4  0   0.0800
+   T  C5*    C_3      4  0   0.0800
+   T HC5*    H_       1  0   0.1000
+   T HC5M    H_       1  0   0.1000
+   T C4*     C_3      4  0   0.3900
+   T  C4*    C_3      4  0   0.3900
+   T HC4*    H_       1  0   0.0200
+   T O4*     O_S      2  2  -0.4900
+   T  O4*    O_S      2  2  -0.4900
+   T C3*     C_S      4  0   0.3500
+   T  C3*    C_S      4  0   0.3500
+   T HC3*    H_       1  0  -0.0100
+   T O3*     O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   T  O3*    O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   T C2*     C_3      4  0  -0.2600
+   T  C2*    C_3      4  0  -0.2600
+   T HC2*    H_       1  0   0.1000
+   T  C1*    C_3      4  0   0.1300
+   T C1*     C_3      4  0   0.1300
+   T C1      C_3      4  0   0.1300
+   T HC1*    H_       1  0   0.1100
+   T HC1     H_       1  0   0.1100
+   T HO3*    H_       1  0   0.4200 
+   T HO5*    H_       1  0   0.3600
+*
+ 5MU N1      N_R      3  0  -0.2670
+ 5MU  N1     N_R      3  0  -0.2670
+ 5MU C2      C_R      3  0   0.6560
+ 5MU  C2     C_R      3  0   0.6560
+ 5MU O2      O_2      1  2  -0.5900
+ 5MU  O2     O_2      1  2  -0.5900
+ 5MU N3      N_R      3  0  -0.6430
+ 5MU  N3     N_R      3  0  -0.6430
+ 5MU HN3     H___A    1  0   0.3970
+ 5MU C4      C_R      3  0   0.6640
+ 5MU  C4     C_R      3  0   0.6640
+ 5MU O4      O_2      1  2  -0.5400
+ 5MU  O4     O_2      1  2  -0.5400
+ 5MU C5      C_R      3  0  -0.0320
+ 5MU  C5     C_R      3  0  -0.0320
+ 5MU C5A     C_3      4  0  -0.4240
+ 5MU  C5A    C_3      4  0  -0.4240
+ 5MU HC5A    H_       1  0   0.1320
+ 5MU  C6     C_B      3  0  -0.2070
+ 5MU C6      C_B      3  0  -0.2070
+ 5MU HC6     H_       1  0   0.2500
+C  Sugar and Phosphate conversions for deoxy!
+ 5MU P       P_3+3    3  1   1.3250
+ 5MU  P      P_3+3    3  1   1.3250
+ 5MU O1P     O_P      1  2  -0.7770
+ 5MU  O1P    O_P      1  2  -0.7770
+ 5MU O2P     O_P      1  2  -0.7770
+ 5MU  O2P    O_P      1  2  -0.7770
+ 5MU O5*     O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+ 5MU  O5*    O_3      2  2  -0.4850  !change to OH (-0.4600) 5' terminal
+ 5MU C5*     C_3      4  0   0.0800
+ 5MU  C5*    C_3      4  0   0.0800
+ 5MU HC5*    H_       1  0   0.1000
+ 5MU C4*     C_3      4  0   0.3900
+ 5MU  C4*    C_3      4  0   0.3900
+ 5MU HC4*    H_       1  0   0.0200
+ 5MU O4*     O_S      2  2  -0.4900
+ 5MU  O4*    O_S      2  2  -0.4900
+ 5MU C3*     C_S      4  0   0.3500
+ 5MU  C3*    C_S      4  0   0.3500
+ 5MU HC3*    H_       1  0  -0.0100
+ 5MU O3*     O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+ 5MU  O3*    O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+ 5MU C2*     C_3      4  0  -0.2600
+ 5MU  C2*    C_3      4  0  -0.2600
+ 5MU HC2*    H_       1  0   0.1000
+ 5MU  C1*    C_3      4  0   0.1300
+ 5MU C1*     C_3      4  0   0.1300
+ 5MU HC1*    H_       1  0   0.1100
+ 5MU HO3*    H_       1  0   0.4200 
+ 5MU HO5*    H_       1  0   0.3600
+*
+   U N1      N_R      3  0  -0.2830
+   U  N1     N_R      3  0  -0.2830
+   U C2      C_R      3  0   0.6670
+   U  C2     C_R      3  0   0.6670
+   U O2      O_2      1  2  -0.5880
+   U  O2     O_2      1  2  -0.5880
+   U N3      N_R      3  0  -0.6350
+   U  N3     N_R      3  0  -0.6350
+   U HN3     H___A    1  0   0.3860
+   U C4      C_R      3  0   0.7920
+   U  C4     C_R      3  0   0.7920
+   U O4      O_2      1  2  -0.5650
+   U  O4     O_2      1  2  -0.5650
+   U C5      C_R      3  0  -0.5400
+   U  C5     C_R      3  0  -0.5400
+   U HC5     H_       1  0   0.2180
+   U C6      C_B      3  0   0.0160
+   U  C6     C_B      3  0   0.0160
+   U HC6     H_       1  0   0.1920
+C  Sugar and Phosphate conversions for deoxy!
+   U P       P_3+3    3  1   1.3250
+   U  P      P_3+3    3  1   1.3250
+   U O1P     O_P      1  2  -0.7770
+   U  O1P    O_P      1  2  -0.7770
+   U O2P     O_P      1  2  -0.7770
+   U  O2P    O_P      1  2  -0.7770
+   U O5*     O_3      2  2  -0.4850  !change to OH (-0.6500) 5' terminal
+   U  O5*    O_3      2  2  -0.4850  !change to OH (-0.6500cerius) 5' terminal
+   U C5*     C_3      4  0   0.0800
+   U  C5*    C_3      4  0   0.0800
+   U HC5*    H_       1  0   0.1000
+   U C4*     C_3      4  0   0.3900
+   U  C4*    C_3      4  0   0.3900
+   U HC4*    H_       1  0   0.0200
+   U O4*     O_S      2  2  -0.4900
+   U  O4*    O_S      2  2  -0.4900
+   U C3*     C_S      4  0   0.3500
+   U  C3*    C_S      4  0   0.3500
+   U HC3*    H_       1  0  -0.0100
+   U O3*     O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   U  O3*    O_3      2  2  -0.6660  !change to OH (-0.7000) 3' terminal
+   U C2*     C_3      4  0  -0.2600
+   U  C2*    C_3      4  0  -0.2600
+   U HC2*    H_       1  0   0.1000
+   U  C1*    C_3      4  0   0.1300
+   U C1*     C_3      4  0   0.1300
+   U HC1*    H_       1  0   0.1100
+   U HO3*    H_       1  0   0.4200 
+   U HO5*    H_       1  0   0.3600
+*
+ HOH OH      O_3_J    2  2  -0.8340
+ HOH OW      O_3_J    2  2  -0.8340
+ HOH O       O_3_J    2  2  -0.8340
+ HOH  OH     O_3_J    2  2  -0.8340
+ HOH  OW     O_3_J    2  2  -0.8340
+ HOH  O      O_3_J    2  2  -0.8340
+ HOH HO      H__OJ    1  0   0.4170
+ HOH HOW     H__OJ    1  0   0.4170
+ HOH H       H__OJ    1  0   0.4170
+ HOH  HO     H__OJ    1  0   0.4170
+ HOH  HOW    H__OJ    1  0   0.4170
+ HOH  H      H__OJ    1  0   0.4170
+*

@@ -1,0 +1,295 @@
+%SHASH = (
+#VDW
+		'vdw_born' => {
+			'name' => 'born/coul/long',
+			'opts' => '6.0',
+			'pmix' => 1,
+		},
+		'vdw_buckingham'	 => {
+			'name' => 'buck/coul/long',
+			'opts' => '10.0',
+			'pmix' => 1,
+			'fep'  => {
+				'pair'    => 'buck/coul/long',
+				'pair_opts' => '',
+				'addsoft' => 1,
+				'parms'   => ['a','c'],
+				'idx'     => [0, 2],
+			},
+		},
+		'vdw_eam' => {
+			'name' => 'eam',
+			'opts' => '',
+			'pmix' => 0,
+			'scc'  => 1, #skip coul check
+		},
+		'vdw_eam/fs' => {
+			'name' => 'eam/fs',
+			'opts' => '',
+			'pmix' => 0,
+			'scc'  => 1,
+		},
+		'vdw_expo_6'	 => {
+			'name' => 'buck/coul/long',
+			'opts' => ' 10.0',
+			'pmix' => 1,
+			'fep'  => {
+				'pair'    => 'buck/coul/long',
+				'pair_opts' => '',
+				'addsoft' => 1,
+				'parms'   => ['a','c'],
+				'idx'     => [0, 2],
+			},
+		},
+		'vdw_lj_6_12'	=> {
+			'name'   => 'lj/charmm/coul/long/opt',
+			'opts' => '9.0 10.0',
+			'pmix' => 1,
+			'fep'  => {
+				'pair'    => 'lj/cut/coul/long/soft',
+				'addsoft' => 0,
+				'pair_opts' => '1 0.5 10 10',
+				'parms'   => ['lambda'],
+			},
+		},
+		'vdw_lj_6_12_tip4p'	=> {
+			'name'   => 'lj/cut/tip4p/long/opt',
+			'opts' => '',
+			'pmix' => 1,
+			'fep'  => {
+				'pair'    => 'lj/cut/tip4p/long/soft',
+				'pair_opts' => '1 0.5 10 10',
+				'addsoft' => 0,
+				'parms'   => ['lambda'],
+			},
+		},
+		'vdw_lj_6_9'	=> {
+			'name'   => 'lj96/cut',
+			'opts' => '10.0',
+			'pmix' => 1,
+		},
+		'vdw_lj_m_n'	=> {
+			'name'   => 'nm/cut/coul/long',
+			'opts' => ' 10.0',
+			'pmix' => 1,
+		},
+		'vdw_rexpon' => {
+		    'name' => 'rexpon',
+			'opts' => 'NULL lgvdw yes coulomb_off yes checkqeq no safezone 2.0 mincap 200',
+			'pmix' => 0,
+			'scc'  => 1,
+		},
+		'vdw_rexpon_unb' => {
+			'name' => 'rexpon/unb',
+			'opts' => '0 10',
+			'pmix' => 1,
+			'scc'  => 1,
+			'fep'  => {
+				'pair'    => 'rexpon/unb',
+				'pair_opts' => '',
+				'addsoft' => 1,
+				'parms'   => ['d0'],
+				'idx'     => [1],
+			},
+		},
+		'vdw_stretch_morse' => {
+			'name' => 'morse/stretch',
+			'opts' => '10.0',
+			'pmix' => 1,
+			'scc'  => 1,
+		},
+		'vdw_sw' => {
+			'name' => 'sw',
+			'opts' => '',
+			'pmix' => 0,
+			'scc'  => 1,
+		},	 
+		'vdw_vdw_morse' => {
+			'name' => 'morse/opt',
+			'opts' => '10.0',
+			'pmix' => 1,
+			'scc'  => 1,
+			'fep'  => {
+				'pair'    => 'morse/coul/long/soft',
+				'pair_opts' => '1 0.5 10 10',
+				'addsoft' => 0,
+				'parms'   => ['lambda'],
+			},
+		},
+		'vdw_yukawa'	 => {
+			'name' => 'yukawa',
+			'opts' => ' 1 10.0',
+			'pmix' => 1,
+			'scc'  => 1,
+		},
+		'vdw_dreidhb'	=> {
+			'name' => 'hbond/dreiding/lj',
+			'opts' => '2 4.5 5.0 90.0',
+			'pmix' => 0,
+			'scc'  => 1,
+		},
+		'vdw_thole'	 => {
+			'name' => 'thole',
+			'opts' => ' 2.6 10.0',
+			'pmix' => 1,
+			'scc'  => 1,
+		},
+		'vdw_amoeba' => {
+			'name' => 'amoeba',
+			'opts' => '',
+			'pmix' => 0,
+			'scc'  => 1,
+		},
+		'vdw_soft' => {
+			'name' => 'soft',
+			'opts' => '2.0',
+			'pmix' => 0,
+			'scc'  => 1,
+		},
+#hbonds
+		'hbond_lj_12_10'   => {
+			'name' => 'hbond/dreiding/lj',
+			'opts' => '2 4.5 5.0 90',
+			'scc'  => 1,
+			'pmix' => 0,
+		},
+		'hbond_lj_cosp'	=> {
+			'name' => 'hbond/dreiding/lj',
+			'opts' => '2 4.5 5.0 90',
+			'scc'  => 1,
+			'pmix' => 0,
+		},
+		'hbond_morse_cosp'	=> {
+			'name' => 'hbond/dreiding/morse',
+			'opts' => '2 4.5 5.0 90',
+			'scc'  => 1,
+			'pmix' => 0,
+		},
+#BONDS
+		'bond_class2'	=> {
+			'name' => 'class2',
+			'opts' => '',
+		},
+		'bond_morse'	=> {
+			'name' => 'morse',
+			'opts' => '',
+		},
+#ANGLES
+		'angle_charmm' => {
+			'name' => 'charmm',
+			'opts' => '',
+		},
+		'angle_cos_delta' => {
+			'name' => 'cosine/delta',
+			'opts' => '',
+		},
+		'angle_cos_harmon' => {
+			'name' => 'cosine/squared',
+			'opts' => '',
+		},
+		'angle_cos_period' => {
+			'name' => 'cosine/periodic',
+			'opts' => '',
+		},
+		'angle_quartic' => {
+			'name' => 'quartic',
+			'opts' => '',
+		},
+		'angle_theta_harm' => {
+			'name' => 'harmonic',
+			'opts' => '',
+		},
+		'angle_sw' => {
+			'name' => 'sw',
+			'opts' => '',
+		},
+		'angle_r-r' => {
+			'name' => 'cross/bb',
+			'opts' => '',
+		},
+		'angle_r-theta' => {
+			'name' => 'cross/ba',
+			'opts' => '',
+		},
+		'angle_r-cosine' => {
+			'name' => 'cross/ba/cosine',
+			'opts' => '',
+		},
+		'angle_amoeba' => {
+			'name' => 'amoeba',
+			'opts' => '',
+		},
+		'angle_class2/p6' => {
+			'name' => 'class2/p6',
+			'opts' => '',
+		},
+		'angle_urey_bradley' => {
+			'name' => 'urey_bradley',
+			'opts' => '',
+		},
+#DIHEDRALS
+		'dihedral_dihedral'   => { 
+			'name' => 'charmm',
+			'opts' => '', 
+		},
+		'dihedral_fourier'   => { 
+			'name' => 'fourier',
+			'opts' => '', 
+		},
+		'dihedral_multihar' => {
+			'name' => 'multi/harmonic',
+			'opts' => '',
+		},
+		'dihedral_opls' => {
+			'name' => 'opls',
+			'opts' => '',
+		},
+		'dihedral_r-r' => {
+			'name' => 'cross/13bb',
+			'opts' => '',
+		}, 
+		'dihedral_shft_dihdr' => {
+			'name' => 'charmm',
+			'opts' => '',
+		},
+		'dihedral_theta2-cos' => {
+			'name' => 'cross/aa',
+			'opts' => '',
+		}, 
+#INERSIONS
+		'inversion_cosine2' => {
+			'name' => 'cross/aa/cosine',
+			'opts' => '',
+		},
+		'inversion_distance' => {
+			'name' => 'distance',
+			'opts' => '',
+		},
+		'inversion_it_ijkl'	 => {
+			'name' => 'harmonic',
+			'opts' => '',
+		},
+		'inversion_it_jikl'	=> {
+			'name'  => 'cvff',
+			'opts'  => '',
+		},
+		'inversion_theta2' => {
+			'name' => 'cross/aa',
+			'opts' => '',
+		},
+		'inversion_amoeba' => {
+			'name' => 'amoeba',
+			'opts' => '',
+		},
+#FIXES
+		'fix_pitorsions' => {
+			'name' => 'amoeba/pitortion',
+			'opts' => '',
+		},
+		'fix_bitorsions' => {
+			'name' => 'amoeba/bitorsion',
+			'opts' => '',
+		},
+#TOR TORS		
+	);
+

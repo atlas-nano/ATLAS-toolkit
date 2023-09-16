@@ -1,0 +1,15 @@
+Atom_Types   jag-radius epsilon  format(a5,6x,f9.5,3x,f6.4,3x,f9.6)
+10
+H_           1.1500    0.667930    2.317524
+C_           1.9000    1.760000    1.769791
+O_           1.6000    0.802000    1.587402
+N_           1.6000    1.100000    1.805664
+F_           1.6820    0.557000    1.351154
+S_           1.9000    2.900000    2.268406
+P_           2.0735    3.630000    2.221562
+Cl           1.9735    2.180000    1.850876
+Br           2.0945    3.050000    1.995818
+I_           2.2500    4.700000    2.237860
+
+epsilon based on atomic polarizabilities according to epsilon= 1 + 4pi n alpha
+where n=1/V V=atomic volume

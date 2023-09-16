@@ -1,0 +1,29 @@
+BIOGRF 200
+REMARK selected atoms according to index>0
+REMARK N-Nitrogen.bgf modified FFTYPE:N
+DESCRP __tmp.pdb
+FORCEFIELD DREIDING  
+PERIOD 111
+AXES   ZYX
+SGNAME P 1                  1    1
+CRYSTX     5.64400     5.64400     5.64400    90.00000    90.00000    90.00000
+CELLS    -1    1   -1    1   -1    1
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5,f10.5)
+HETATM     1 N1    RES A   444   0.30500   0.30500   0.30500 N      1 0  0.00000
+HETATM     2 N2    RES A   444  -0.30500   3.12700   2.51700 N      1 0  0.00000
+HETATM     3 N3    RES A   444   2.51700  -0.30500   3.12700 N      1 0  0.00000
+HETATM     4 N4    RES A   444   3.12700   2.51700  -0.30500 N      1 0  0.00000
+HETATM     5 N5    RES A   444  -0.30500  -0.30500  -0.30500 N      1 0  0.00000
+HETATM     6 N6    RES A   444   2.51700   3.12700   0.30500 N      1 0  0.00000
+HETATM     7 N7    RES A   444   0.30500   2.51700   3.12700 N      1 0  0.00000
+HETATM     8 N8    RES A   444   3.12700   0.30500   2.51700 N      1 0  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     5
+CONECT     2     7
+CONECT     3     8
+CONECT     4     6
+CONECT     5     1
+CONECT     6     4
+CONECT     7     2
+CONECT     8     3
+END

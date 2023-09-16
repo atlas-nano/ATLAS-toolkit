@@ -1,0 +1,24 @@
+#PBS -S /bin/bash
+#PBS -q regular
+#PBS -l mppwidth=nprocs_here
+#PBS -l walltime=6:00:00
+#PBS -j oe
+
+fprefix=fprefix_herecell_p_here
+nprocs=nprocs_here
+rtemp=rtemp_here
+#PBS -N ${fprefix}.cp2k.geopt
+
+cd $PBS_O_WORKDIR
+
+results_dir=$PBS_O_WORKDIR/results
+mkdir -p $SCRATCH/md/cp2k/${fprefix} ${results_dir}/
+
+cd $SCRATCH/md/cp2k/${fprefix}
+cp $PBS_O_WORKDIR/${fprefix}.${rtemp}K.cp2k.in ./
+cp $PBS_O_WORKDIR/${fprefix}.cp2k.xyz ./
+cp ~tpascal/codes/cp2k/cp2k/tests/QS/dftd3.dat ./
+module load cp2k/2.5.1
+
+aprun -n $nprocs -N 24 cp2k.popt -in ${fprefix}.${rtemp}K.cp2k.in > ${fprefix}.${rtemp}K.out 
+cp ${fprefix}.* $results_dir/

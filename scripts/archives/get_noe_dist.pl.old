@@ -1,0 +1,494 @@
+#!/usr/bin/perl -w
+use strict;
+use File::Basename;
+
+sub ValidateInput();
+sub GetNOEList();
+sub ProcessFile(@);
+sub CalcNOEDist(@);
+sub ResetData();
+sub STDev(@);
+sub Swap(@);
+sub WriteOutput();
+sub DoViolations();
+sub GetAvgs();
+
+if (!@ARGV or $#ARGV < 3) {
+    die "usage: $0 noelistfile templatefile startnum endnum [avg_file] [violation_limit]\n";
+}
+
+my ($noelistfile, $templatefile, $startnum, $endnum, $avg_file, $vio) = @ARGV;
+my (@validfiles, $i, %NOEList,  $valid_data, %filedata, $has_avgs, %avgs, @headings);
+
+system "clear";
+
+$has_avgs = 0;
+
+open OUTFILE, "> scan_results" or die "Cannot write file scan_results: $!\n";
+
+print "\n-==Starting Program==-\n";
+print "Validating Input..";
+ValidateInput();
+print "Sucess\nGetting NOE Distance Information...";
+GetNOEList();
+print "Sucess\nResetting Data..."; 
+ResetData();
+print "Sucess\nProcessing Files...";
+$valid_data = 0;
+
+system "mkdir -p tmpfldr";
+
+for $i (@validfiles) {
+    system ("/ul/tpascal/scripts/pdbfixforxleap.pl $i tmpfldr/" . basename($i) . " > junk");
+    if (ProcessFile("tmpfldr/" . basename($i))) {
+	$valid_data++;
+    }
+}
+close OUTFILE;
+
+system ("rm -fr tmpfldr/$templatefile" . "*");
+
+if ($valid_data > 0) {
+    print "Sucess\nCreating Tables...";
+    WriteOutput();
+    if ($has_avgs) {
+	DoViolations();
+    }
+    print "\n-==End Program==-\n";
+} else {
+    die "ERROR: No PDB files were found with the NOE information\n\nAborting...\n";
+}
+
+system "rm -fr leap.log leaprc junk tmpfldr";
+
+sub DoViolations() {
+    my ($hkey, $outdata, $curr_avg, $i, @violation_list, $framekey, @largest_v);
+    my ($vio_data, $avg, $stdev, $max_vio, $junk, $max_index, $max_vio_name);
+
+    print "Obtaining Violations List using infomation in $avg_file....";
+    my ($result, $head_len, $vio_len, $num_data) = GetAvgs();
+
+    $head_len += 5;
+    $vio_len += 5;
+
+    $max_vio = 0;
+    $max_index = 0;
+    if ($result) {
+	$outdata = sprintf("%-" . $head_len . "s", "NOE Couple");
+	for $i (0 .. $num_data) {
+	    $outdata .= sprintf("%" . $vio_len . "s", $headings[$i]);
+	}
+	$outdata .= "\n";
+	for $hkey (sort keys %avgs) {
+	    if ($#{ $avgs{$hkey} } > -1) {
+		if ($#{ $avgs{$hkey} } > $max_index) {
+		    $max_index = $#{ $avgs{$hkey} };
+		}
+		for $i (0 .. $#{ $avgs{$hkey} }) {
+		    $violation_list[$i] = 0;
+		    $curr_avg = $avgs{$hkey}->[$i];
+		    for $framekey (sort keys %{ $NOEList{"DATA"} }) {
+			$result = abs($NOEList{"DATA"}->{$framekey}->{$hkey} - $curr_avg);
+			if ($result > $vio) {
+			    $violation_list[$i]++;
+			    $NOEList{"VIOLATIONS"}->{$framekey}->[$i]++;
+			}
+			if ($#largest_v >= $i) {
+			    if ($result > $largest_v[$i]) {
+				$largest_v[$i] = $result;
+			    }
+			}else {
+			    $largest_v[$i] = $result;
+			}
+		    }
+		}
+	    }
+	    $outdata .= sprintf("%-" . $head_len . "s", $hkey);
+	    for $i (@violation_list) {
+		$outdata .= sprintf("%" . $vio_len . "d", $i);
+	    }
+	    $outdata .= "\n";
+	}
+
+
+	$outdata .= sprintf("%-" . $head_len . "s", "Violation Max"); 
+	for $i (@largest_v) {
+	    $outdata .= sprintf("%" . $vio_len . ".3f", $i);
+	}
+	$outdata .= "\n";
+
+	$outdata .= sprintf("%-" . $head_len . "s", "Violation/Model");
+	for $i (0 .. $max_index) {
+	    $vio_data = "";
+	    for $framekey (sort keys %{ $NOEList{"VIOLATIONS"} }) {
+		if ($NOEList{"VIOLATIONS"}->{$framekey}->[$i]) {
+		    $vio_data .= $NOEList{"VIOLATIONS"}->{$framekey}->[$i] . " ";
+		    if ($NOEList{"VIOLATIONS"}->{$framekey}->[$i] > $max_vio) {
+			$max_vio = $NOEList{"VIOLATIONS"}->{$framekey}->[$i];
+			$max_vio_name = $framekey;
+		    }
+		} else {
+		    $vio_data .= "0 ";
+		}
+	    }
+	    if ($vio_data) {
+		chop($vio_data);
+#		print "DATA: $vio_data\n";
+		($avg, $stdev, $junk) = STDev($vio_data);
+	    } else {
+		$avg = $stdev = 0;
+	    }
+	    $outdata .= sprintf("%" . $vio_len . ".3f%" . $vio_len . ".3f", $avg, $stdev);
+	}
+	$outdata .= "\n";
+	$outdata .= sprintf("%-" . $head_len . "s", "Worst Model");
+	$outdata .= sprintf("%" . $vio_len . "s%" . $vio_len . "d\n", $max_vio_name, $max_vio);
+	open OUTFILE, "> Violation_List.txt" or die "Cannot create Violation_List.txt: $!\n";
+	print OUTFILE "$outdata";
+	close OUTFILE;
+	print "Sucess\nCreate file Violation_List.txt\n";
+    } else {
+	die "Invalid data in $avg_file\n";
+    }
+}
+
+
+sub GetAvgs() {
+
+    my (@f_avg, $i, $valid_data, $valid_heading); 
+    my ($largest_head_len, $max_head_len, @tmp, $hkey);
+
+    $valid_data = 0;
+    $valid_heading = 0;
+    $largest_head_len = 0;
+    $max_head_len = 0;
+
+    open AVGFILE, $avg_file or die "Cannot open $avg_file: $!\n";
+    while (<AVGFILE>) {
+	chomp;
+	if ($_ =~ /^(\w+\s+\w+\*?\s+\-\s+\w+\s+\w+\*?)\s+(.+)$/) {
+	    $hkey = $1;
+	    if ($NOEList{$hkey} ne "") {
+#		print "Data: $_\n";
+		@f_avg = (split /\s+/, $2);
+		if ($#f_avg > -1) {
+		    @tmp = ();
+		    for $i (@f_avg) {
+			if ($i =~ /^\d+\.\d+$/) {
+			    push @{ $avgs{$hkey} }, $i;
+			    $valid_data = 1;
+			}
+		    }
+		}
+	    }
+
+	    if (length($1) > $largest_head_len) {
+		$largest_head_len  = length($1);
+	    }
+
+	}elsif ($_ =~ /^NOE Pair\s+(.+)$/) {
+	    @headings = (split /\s+/, $1);
+#	    print "HEAD: $_ \nlen:$#headings\n";
+#	    push  @{ $avgs{"HEADINGS"} }, @headings;
+	    for $i (@headings) {
+		if (length($i) > $max_head_len) {
+		    $max_head_len = length($i);
+		}
+	    }
+	    $valid_heading = 1;
+	}
+    }
+    close AVGFILE;
+#    print "DATA: $valid_data, $largest_head_len, $max_head_len, $#headings\n";
+    if (! $valid_heading) {
+	$valid_data = 0;
+    }
+
+    return ($valid_data, $largest_head_len, $max_head_len, $#headings);
+}
+
+sub WriteOutput() {
+    my ($counter, $duplicate) = (0, 0);
+    my ($i, $avg, $stdev, $outdata);
+    my ($rec1, $rec2, $total);
+
+    $outdata = "";
+
+    for $i (sort keys %NOEList) {
+	($rec1, $rec2)  = split /\s\-\s/, $i;
+	if ($rec1 && $rec2) {
+	    if ($rec1 gt $rec2) {
+		if ($NOEList{$i}) {
+		    chop $NOEList{$i};
+		    if ($NOEList{$i} =~ /\s/) {
+			($avg, $stdev, $total) = STDev($NOEList{$i});
+		    } else {
+			($avg, $stdev, $total) = ($NOEList{$i}, 0.00, 1);
+		    }
+		    $outdata .= sprintf("%5d%8.3f%8.3f%25s%8d",($counter +1), $avg, $stdev, $i, $total);
+		    $outdata .= "\n";
+		    $counter++;
+		}
+	    } else {
+		$duplicate++;
+	    }
+	}
+    }
+    open OUTFILE, "> NOE_data_Table.txt" or die "Cannot create  NOE_data_Table.txt: $!\n";
+    print OUTFILE $outdata;
+    close OUTFILE;
+    print "Sucess\nWrote $counter NOE distance(s) to NOE_data_Table.txt.\n";
+    print "Ignored $duplicate duplicate distance(s)\n";
+    
+	
+    
+}
+sub CalcNOEDist(@) {
+
+    my (@fkeys) = (keys %NOEList);
+    
+    my ($res1, $res2, $i, $distance, $hkey, $found, $notfound, @scratch);
+    my ($fdata, $f_info) = @_;
+
+    $found = $notfound = 0;
+    for $i (@fkeys) {
+	($res1, $res2) = split /\s\-\s/, $i;
+	if ($res1 && $res2) {
+#	print "IN: $res1, $res2\n";
+#	if ($res2 gt $res1) {
+#	    ($res1, $res2) = Swap($res1, $res2);
+#	}
+#	print "OUT: $res1, $res2\n";
+	    
+	    if ($fdata->{$res1} && $fdata->{$res2}) {
+		$distance = ($fdata->{$res1}->{"XPOS"} - $fdata->{$res2}->{"XPOS"}) ** 2;
+		$distance += ($fdata->{$res1}->{"YPOS"} - $fdata->{$res2}->{"YPOS"}) ** 2;
+		$distance += ($fdata->{$res1}->{"ZPOS"} - $fdata->{$res2}->{"ZPOS"}) ** 2;
+		$distance = sqrt($distance);
+		$hkey = $res1 . " - " . $res2;
+		$NOEList{$hkey} .= "$distance ";
+		$NOEList{"DATA"}->{$f_info}->{$hkey} = $distance;
+#	    print "distance for $res1 - $res2: $distance\n";
+		$found++;
+	    } else {
+		print OUTFILE "Could not find key for $res1 or $res2\n";
+		$notfound++;
+	    }
+	}
+    }
+#    print "Found $found NOE distances... $notfound not found\n";
+}
+
+sub ProcessFile(@) {
+
+    my (@fkeys) = (keys %NOEList);
+    my ($i, $hkey, $mcounter, $is_noe_point, $rec, %tmp);
+    my ($curr_file) = $_[0];
+    my (@NOE_info, $indata, $fkey);
+
+    for $i (@fkeys) {
+	push @NOE_info, (split /\s\-\s/, $i);
+    }
+
+    $mcounter = 0;
+    open PDBFILE, $curr_file or die "Cannot open $curr_file: $!\n";
+    while (<PDBFILE>) {
+	chomp;
+	$indata = $_;
+	$indata =~ s/\'/\*/;
+	if ($indata =~ /^ATOM\s+\d+\s+(\w+\*?)\s+\D(\w)\d*\s+(\d+)\s+(\-?\d+\.\d+)\s*(\-?\d+\.\d+)\s*(\-?\d+\.\d+)/) {
+	    $hkey = $2 . $3 . " " . $1;
+	    $is_noe_point = 0;
+	    for $i (@NOE_info) {
+		if ($i eq $hkey) {
+		    $is_noe_point = 1;
+		    last;
+		}
+#   		print OUTFILE "i: $i hkey: $hkey\n";
+	    }
+
+	    if ($is_noe_point) {
+		$rec =   (
+			  {
+			      "XPOS" => $4,
+			      "YPOS" => $5,
+			      "ZPOS" => $6,
+			  }
+			  );
+		push @{$filedata{$hkey}}, $rec;
+		if (! $tmp{$hkey}) {
+		    $tmp{$hkey} = $rec;
+		    $mcounter++;
+		}else {
+#		    print "Already in there! $hkey\n";
+		}
+#		print "Found it! $hkey\n";
+	    } else {
+#		print "Didn't find it: $hkey\n";
+	    }
+	}
+    }
+    close PDBFILE;
+
+    if ($mcounter == 0) {
+	print OUTFILE "WARNING: $_[0] is not a valid Xleap PDB file\n";
+#	print "$mcounter\n";
+	return 0;
+    } else {
+#	print "" . $hkey . ", $mcounter\n";
+	$fkey = basename($curr_file);
+	$fkey =~ s/\.pdb//;
+	CalcNOEDist(\%tmp, $fkey);
+	return 1;
+    }
+       
+}
+
+sub GetNOEList() {
+
+    my ($curr_res, $hash_key, $counter, $myflag);
+
+    $curr_res = "";
+    $counter = 0;
+    $myflag = 0;
+
+    open NOEFILE, $noelistfile or die "Cannot open $noelistfile: $!\n";
+    while (<NOEFILE>) {
+	chomp;
+	if ($_ =~ /^RES: (\w+\d+)/) {
+	    $curr_res = $1;
+	}elsif ($_ =~ /^(\w+\*?)\s+\-\s+(\w+\*?)\s+(\w+\d+)/) {
+	    if ($curr_res) {
+		$hash_key = "$3 $2 - $curr_res $1";
+
+		$NOEList{$hash_key} = 1;
+		$counter++;
+
+	    } else {
+		print OUTFILE "ERROR: Found valid data but no residue: $_ $curr_res...";
+	    }
+	} else {
+#	    print "ERROR: Invalid data: $_";
+	}
+    }
+    close NOEFILE;
+
+    print "$counter valid NOE distances found...";
+    if ($counter == 0) {
+	die "Error reading $noelistfile: No valid data found\n";
+    }
+}
+sub ValidateInput() {
+    my ($i, $currfile);
+
+    -e $noelistfile or die "Cannot locate $noelistfile: $!\n";
+    
+    if ($avg_file && -e $avg_file) {
+	if ($vio) {
+	    if ($vio  =~ /^\d+\.?\d?$/) {
+		$has_avgs = 1;
+	    }
+	}
+    }
+
+    if ($startnum !~ /(\d+)/) {
+	die "Invalid startnum: Expected integer got $startnum\n";
+    } else {
+	$startnum = $1;
+    }
+
+    if ($endnum !~ /(\d+)/) {
+	die "Invalid endnum: Expected integer got $startnum\n";
+    } else {
+	$endnum = $1;
+    }
+
+    if ($startnum > $endnum) {
+	($endnum, $startnum) = Swap($endnum, $startnum);
+    }
+
+    for $i ($startnum .. $endnum) {
+	$currfile = $templatefile . $i . ".pdb";
+	if (! -e $currfile) {
+	    $currfile = $templatefile; 
+	    $currfile .= sprintf("%0" . length("$endnum") . "d", $i);
+	    $currfile .= ".pdb";
+	}
+	if (! -e $currfile) {
+	    print OUTFILE "WARNING: Cannot locate $currfile: $!\n";
+	} else {
+	    push @validfiles, $currfile;
+	}
+    }
+
+    if ($#validfiles == -1) {
+	die "ERROR: No valid PDB file found. Aborting Execution\n";
+    }
+}
+
+sub ResetData() {
+
+    my ($res1, $res2, $hkey1, $keylist, $counter);
+
+    for $i (keys %NOEList) {
+	$keylist .= " $i ";
+    }
+
+    $counter  = 0;
+    print OUTFILE "\nNOE List:\n";
+    for $i (keys %NOEList) {
+	($res1, $res2) = split /\s\-\s/, $i;
+	$hkey1 = $res2 . " - " . $res1;
+	if (! $keylist =~ /$hkey1/) {
+	    print OUTFILE "WARNING: Duplicate NOE spec not found for $hkey1\n";
+	    $counter++;
+#	    delete $NOEList{$i};
+	} else {
+	    $NOEList{$i} = "";
+	    print OUTFILE "$i\n";
+	}
+    }
+
+    if ($counter > 0) {
+	print "" . ($counter + 1) . " NOE specs were not duplicated..";
+    }
+}
+
+sub STDev(@) {
+    my (@datavalues, $n_total, $avg, $result, $i);
+
+    @datavalues = split / /, $_[0];
+    $n_total = $#datavalues;
+    $avg = 0.0;
+    $result = 0.0;
+
+    foreach $i (@datavalues) {
+        $avg += $i;
+    }
+
+    $avg = $avg/($n_total + 1);
+
+    foreach (@datavalues) {
+        $result += ($_ - $avg) **2;
+    }
+
+    if ($n_total ==0) {
+        $n_total = 1;
+    }
+
+
+    $result = sqrt($result/$n_total);
+    return ($avg, $result, ($n_total + 1));
+}
+
+sub Swap(@) {
+
+    my (@vals) = @_;
+    my ($temp);
+
+    $temp = $vals[0];
+    $vals[0] = $vals[1];
+    $vals[1] = $temp;
+
+    return ($vals[0], $vals[1]);
+}

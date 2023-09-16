@@ -1,0 +1,13 @@
+fix             shakeH all shake 0.0001 20 500 shakeOpts
+velocity        all create ${rtemp} 12345678 dist gaussian
+
+print                          .
+print ================================================
+print "NVE dynamics"
+print ================================================
+print                       .
+
+thermo          100
+fix             2 all nve
+run             100
+unfix           2

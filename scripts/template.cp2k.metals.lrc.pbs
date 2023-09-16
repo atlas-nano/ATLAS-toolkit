@@ -1,0 +1,43 @@
+#!/bin/bash
+#PBS -q nano2
+#PBS -l nodes=nodes_here:ppn=ppn_here
+#PBS -l walltime=12:00:00
+#PBS -j oe
+
+prefix=fprefix_here
+
+#PBS -N ${prefix}.geopt
+#!/bin/bash
+#Job name:
+#SBATCH --job-name=fprefix_here
+#
+#Partition:
+#SBATCH --partition=vulcan
+#
+#Account
+#SBATCH --account=vulcan
+#
+#QOS
+#SBATCH --qos=normal
+#
+#Nodes
+#SBATCH --nodes=nodes_here
+#
+#Processors:
+#SBATCH --ntasks=nprocs_here
+#
+#QUEUE
+#SBATCH --constraint=vulcan
+#
+#Wall clock limit:
+#SBATCH --time=48:0:0
+#
+
+
+cd $PBS_O_WORKDIR
+
+mkdir /global/scratch/${USER}/${prefix}/ ./results
+cp ${prefix}.* /global/scratch/${USER}/${prefix}/
+cd /global/scratch/${USER}/${prefix}/
+mpirun -mca btl self,sm,openib ~tpascal/codes/bin/cp2k.popt -in ${prefix}.geopt.cp2k.in > ${prefix}.geopt.out 
+cp ${prefix}.*xyz ${prefix}.*.restart ${prefix}.*.mulliken ${prefix}.*.screen.out ${PBS_O_WORKDIR}/results/

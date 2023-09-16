@@ -1,0 +1,452 @@
+#!/usr/bin/perl -w
+BEGIN {
+    unshift @INC, "/ul/tpascal/scripts";
+}
+
+use strict;
+use Packages::FileFormats qw(GetBGFFileInfo createBGF addHeader DeleteAtoms 
+			     AddAtom PrintCoord UpdateBGF GetSystemCharge);
+use Packages::General qw(FileTester IsInteger IsDecimal CoM LoadFFs GetBondLength);
+use Packages::BOX qw(GetBox GetRadii CreateGrid GetSurface GetNeighbours);
+use Getopt::Std qw(getopt);
+use Packages::ManipAtoms qw(GetSolvent CenterSystem MapOrigin GetAtmData);
+use constant TOLERANCE => 0.0001;
+
+sub usage;
+sub init;
+sub getSurface;
+sub addAtomRadii;
+sub getIonOpts;
+sub determineIonPlacement;
+sub placeIons;
+sub getIonParms;
+sub numerically { ($a<=>$b); }
+sub createIon;
+sub placeRandom;
+sub checkAtoms;
+sub getNumWat;
+
+my ($bgfFile, $ionType, $ionConc, $saveName, $numWat, $SOLVENT);
+my ($GRID, $BOX, $atm_counter, $PARMS, $BBOX, %PLACED, $FFILES);
+my ($IONS, $SURFACE, $tmp, $ATOMS, $BONDS, $HEADERS, $molCharge);
+
+my($start) = time();
+$|++;
+($IONS, $FFILES) = &init;
+$PARMS = LoadFFs($FFILES);
+print "Getting atom data from $bgfFile...";
+($ATOMS, $BONDS, $HEADERS) = GetBGFFileInfo($bgfFile, 1);
+$SOLVENT = GetSolvent($ATOMS, "WATER");
+&checkAtoms($ATOMS, $PARMS, $SOLVENT);
+$numWat = getNumWat($ATOMS);
+&getIonParms($IONS, $PARMS);
+print "Done\nGetting System dimensions...";
+$BOX = GetBox($ATOMS, $PARMS, $HEADERS);
+&MapOrigin($BOX, CoM($ATOMS));
+print "Done\n";
+
+print "Creating grid...\n";
+($GRID, $BBOX, $atm_counter) = CreateGrid($ATOMS, 0, $BOX, 2, 1);
+print "\nGetting Grid Electrostatic Potential...\n";
+$SURFACE = GetSurface($GRID);
+$molCharge = GetSystemCharge($ATOMS);
+getIonOpts($IONS, $BOX, $ionConc, $molCharge, $numWat);
+print "Determining Ion Placement...";
+determineIonPlacement($GRID, $SURFACE, $IONS);
+print "Done\n";
+
+placeIons($ATOMS, $BONDS, $GRID, \%{ $IONS->{1} });
+if (exists($IONS->{2}{"ATMNAME"})) {
+    placeIons($ATOMS, $BONDS, $GRID, \%{ $IONS->{2} });
+}
+($ATOMS, $BONDS) = UpdateBGF($ATOMS, $BONDS);
+print "Creating BGF file $saveName...";
+addHeader($ATOMS, $HEADERS);
+createBGF($ATOMS, $BONDS, $saveName);
+print "Done\n";
+
+$molCharge = GetSystemCharge($ATOMS);
+printf "Total System Charge: %.3f\n", $molCharge;
+
+my ($end) = time();
+
+print "Elapsed: " . ($end - $start) . " seconds\n";
+
+sub checkAtoms {
+    my ($atoms, $parms, $solvent) = @_;
+    my ($i, $ffType, @tmp);
+
+    for $i (keys %{ $atoms }) {
+        $ffType = $atoms->{$i}{FFTYPE};
+        die "ERROR: Force field type $ffType not found in forcefield(s). Aborting\n"
+            if (! exists($parms->{ATOMTYPES}{$ffType}));
+        $atoms->{$i}{MASS} = $parms->{ATOMTYPES}{$ffType}{MASS};
+	@tmp = keys %{ $parms->{VDW}{$ffType}{$ffType} };
+        $atoms->{$i}{RADII} = $parms->{VDW}{$ffType}{$ffType}{$tmp[0]}{VALS}[1];
+        die "ERROR: No VDW parameters found for atom type $ffType. Aborting\n"
+            if (! defined($atoms->{$i}{RADII}));	
+	$atoms->{$i}{RESNAME} = "WAT" if (exists($solvent->{$i}));
+    }
+}
+
+sub placeIons {
+    my ($atoms, $bonds, $grid, $ions) = @_;
+    my ($atmList, $currAtom, $solvAtoms, $atomC, @tmp);
+    my ($CoM, $currIon, $resId, $overlap, $total, $resname);
+    
+    $total = $ions->{"total"};
+    if ($#{ $ions->{"ATOMS"} } <= $#tmp) {
+        pop @{ $ions->{"ATOMS"} };
+    }
+    for $currAtom (@{ $ions->{"ATOMS"} }) {
+        $solvAtoms = ();
+        %{ $atmList } = %{ $currAtom->{MOLECULE} };
+        for $atomC (keys %{ $atmList }) {
+    	    %{ $solvAtoms->{$atomC} } = %{ $atoms->{$atomC} };
+        }
+        $resId = $currAtom->{"RESNUM"};
+        $resname = $currAtom->{"RESNAME"};
+        
+        $CoM = CoM($solvAtoms);
+        $currIon = createIon($currAtom, $ions, $CoM, $resId);
+        %{ $overlap } = %{ $atmList }; #getAllOverlaps($grid, $currIon, $bonds, \%{ $PLACED{$resId} });
+        DeleteAtoms($overlap, $atoms, $bonds);
+        AddAtom($currIon, $currAtom->{INDEX}, $atoms, $bonds);
+        print "Replacing $resname (residue# $resId) centered at " . PrintCoord($CoM) . " with " . $ions->{"ATMNAME"} . "\n";
+    }
+}
+
+sub createIon {
+    my ($atom, $ionParms, $ionPos, $ionResID) = @_;
+    my (%ION, $ionIndex);
+    
+    $ionIndex = $atom->{INDEX};
+    %ION = %{ $ionPos };
+    $ION{"INDEX"} = $ionIndex;
+    $ION{"ATMNAME"} = $ionParms->{"ATMNAME"};
+    $ION{"RESNAME"} = $ionParms->{"ATMNAME"};
+    $ION{"RESNUM"} = $ionResID;
+    $ION{"FFTYPE"} = $ionParms->{"FFTYPE"};
+    $ION{"NUMBONDS"} = 0;
+    $ION{"LONEPAIRS"} = 0;
+    $ION{"CHARGE"} = $ionParms->{"Charge"};
+    $ION{"RADII"} = $ionParms->{"RADII"};
+    $ION{"LABEL"} = "HETATM";
+    return \%ION;
+}
+
+sub determineIonPlacement {
+    my ($grid, $surface, $ions) = @_;
+    my ($counter, %CHARGE, $ionC, $i, @tmp, $placed, $cellCharge);
+    my ($x, $y, $z, $CELLS, $currCell, $isValid, $j, $atom, $k);
+
+    for $counter (keys %{ $surface }) {
+	($x, $y, $z) = ($surface->{$counter}{X}, $surface->{$counter}{Y}, $surface->{$counter}{Z});
+	$currCell = $grid->{$x}{$y}{$z};
+	$CELLS = GetNeighbours($grid, $currCell);
+	$isValid = 1;
+	for $i (@{ $CELLS }) {
+	    if (exists($i->{CHECKED})) {
+		$isValid = 0;
+		last;
+	    }
+	}
+	next if (! $isValid);
+	$currCell->{CHECKED} = 1;
+        $cellCharge = $surface->{$counter}{"CHARGE"};
+        while (exists($CHARGE{$cellCharge})) {
+            $cellCharge += 0.000001;
+        }
+
+	MAIN: for $i (@{ $CELLS }) {
+	    next if (exists($i->{CHECKED}) or ! exists($i->{WATERS}) or ! @{ $i->{WATERS} });
+	    for $j (@{ $i->{WATERS} }) {
+		$isValid = 1;
+		for $atom (keys %{ $j->{MOLECULE} }) {
+		    if (exists($ATOMS->{$atom}{USED})) {
+			$isValid = 0;
+			last;
+		    }
+		}
+		next if (! $isValid);
+		for $atom (@{ $currCell->{ATOMS} }) {
+	    	    next if (GetBondLength($atom, $j) < 1.8);
+		    $CHARGE{ $cellCharge } = $j;
+		    $i->{CHECKED} = 1;
+		    for $k (keys %{ $j->{MOLECULE} }) {
+			$ATOMS->{$k}{USED} = 1;
+		    }
+		    last MAIN;
+		}
+	    }
+	}
+    }
+
+    $ions->{1}{"placed"} = 0;
+    $ions->{2}{"placed"} = 0;
+    if ($ions->{1}{"Charge"} > 0) {
+	@tmp = sort numerically keys %CHARGE;
+    } else {
+	@tmp = reverse sort numerically keys %CHARGE;
+    }
+
+    for $i (@tmp) {
+	last if ($ions->{1}{placed} >= $ions->{1}{total});
+	push @{ $ions->{1}{ATOMS} }, $CHARGE{$i};
+	$ions->{1}{placed}++;
+    }
+    if (exists($ions->{2}{"ATMNAME"})) {
+	@tmp = reverse sort @tmp;
+	for $i (@tmp) {
+	    last if ($ions->{2}{placed} >= $ions->{2}{total});
+	    push @{ $ions->{2}{ATOMS} }, $CHARGE{$i};
+	}
+    }
+
+    if ($ions->{1}{"total"} > $ions->{1}{"placed"}) {
+        placeRandom($grid, $ions->{1});
+    }
+    
+    if ($ions->{2}{"total"} > $ions->{2}{"placed"}) {
+        placeRandom($grid, $ions->{2});
+    }        
+}
+
+sub placeRandom {
+    my ($grid, $ion) = @_;
+    my ($counter, $x, $y, $z, $amount, $isValid);
+    my ($xT, $yT, $zT, $currCell, $CELLS, $i);
+    my ($j, $atom, $k);
+    
+    $amount = $ion->{total} - $ion->{placed};
+    $xT = $grid->{X}{tot};
+    $yT = $grid->{Y}{tot};
+    $zT = $grid->{Z}{tot};
+
+    $counter = 0;
+    for (;;) {
+	last unless ($amount > $counter);
+        $x = sprintf("%.0f", rand($xT) + 1);
+	$y = sprintf("%.0f", rand($yT) + 1);
+	$z = sprintf("%.0f", rand($zT) + 1);
+
+        $currCell = $grid->{$x}{$y}{$z};
+        $CELLS = GetNeighbours($grid, $currCell);
+        $isValid = 1;
+        for $i (@{ $CELLS }) {
+            if (exists($i->{CHECKED})) {
+                $isValid = 0;
+                last;
+            }
+        }
+        next if (! $isValid);
+        MAIN: for $i (@{ $CELLS }) {
+            next if ($i->{CHECKED} or ! exists($i->{WATERS}) or ! @{ $i->{WATERS} });
+            for $j (@{ $i->{WATERS} }) {
+		$isValid  = 1;
+		for $k (keys %{ $j->{MOLECULE} }) {
+		    if (exists($ATOMS->{$k}{USED})) {
+			$isValid = 0;
+			last;
+		    }
+		}
+		next if (! $isValid);
+		push @{ $ion->{ATOMS} }, $j;
+                $i->{CHECKED} = 1;
+		$counter++;
+		last MAIN;
+	   }
+	}
+	last if ($counter == $amount);
+    }
+}
+    
+sub getIonParms {
+    my ($ionInfo, $parms) = @_;
+    my ($counter, $element, $radii);
+    
+    for $counter (keys %{ $parms->{"ATOMTYPES"} }) {
+	$element = $parms->{"ATOMTYPES"}{$counter}{"ATOM"};
+	if ($element eq $ionInfo->{1}{"ATMNAME"}) {
+	    $ionInfo->{1}{"FFTYPE"} = $counter;
+	    $ionInfo->{1}{"RADII"} = GetRadii(\%{ $ionInfo->{1} }, $parms);
+	}
+	if (exists($ionInfo->{2}) and $element eq $ionInfo->{2}{"ATMNAME"}) {
+	    $ionInfo->{2}{"FFTYPE"} = $counter;
+	    $ionInfo->{2}{"RADII"} = GetRadii(\%{ $ionInfo->{2} }, $parms);
+	}
+    }
+    
+    if (! exists($ionInfo->{1}{"FFTYPE"})) {
+	die "ERROR: The " . $ionInfo->{1}{"ATMNAME"} .
+	" ion does not have any parameters in the provided forcefield\n";
+    } elsif (exists($ionInfo->{2}) and ! exists($ionInfo->{2}{"FFTYPE"})) {
+	die "ERROR: The " . $ionInfo->{2}{"ATMNAME"} .
+	" ion does not have any parameters in the provided forcefield\n";
+    }
+}
+
+
+sub getIonOpts {
+    my ($ionInfo, $BOX, $num_ions, $charge, $watCount) = @_;
+    my ($mol_vol, $dim, $molar);
+    
+    $mol_vol = 1;
+    for $dim ("X", "Y", "Z") {
+	$mol_vol = $mol_vol * ($BOX->{$dim}{"hi"} - $BOX->{$dim}{"lo"});
+    }
+    printf "CELL VOLUME %.3G A^3", $mol_vol;
+    if ($watCount) {
+	$mol_vol = 18 * $watCount/.6023; # vol in cm^3
+	printf "\nADJUSTED VOLUME BASED on 1g/cm3 WATER density %.3G cm^3", $mol_vol;
+    }
+    $mol_vol *= 6.0221415E-7;  #Angstroms^3 to meter^3 
+    $mol_vol *= 1000; #meter^3 to liter
+    printf "(%.3G liter)\n", $mol_vol;
+    $ionInfo->{1}{"Charge"} = $ionInfo->{1}{"total"} = 0;
+    $ionInfo->{2}{"Charge"} = $ionInfo->{2}{"total"} = 0;
+
+    if ((abs($charge - sprintf("%.0f", $charge))) > TOLERANCE) {
+	print "WARNING: System has non-integer net charge of $charge!\n";
+    }
+    $charge = sprintf("%.0f", $charge);
+
+    if ($ionInfo->{1}{"ATMNAME"} =~ /Na|K/i) { # +1 charge
+	$ionInfo->{1}{"Charge"} = "+1";
+    } elsif ($ionInfo->{1}{"ATMNAME"} =~ /cl/i) {
+	$ionInfo->{1}{"Charge"} = -1;
+    } else {
+	$ionInfo->{1}{"Charge"} = "+2";
+    }
+
+    if (IsDecimal($num_ions) and $num_ions > 0) { #placing a concentration
+	$ionInfo->{1}{"total"} = sprintf("%.0f",($mol_vol * $num_ions));
+	$molar = $num_ions;
+    } elsif ($num_ions > 0 and ! IsDecimal($num_ions)) {
+	$ionInfo->{1}{"total"} = $num_ions;
+	$molar = $ionInfo->{1}{"total"} / ($mol_vol);
+    } elsif ($num_ions == 0 and ! IsDecimal($num_ions)) { # neutralize
+	if ($ionInfo->{1}{"ATMNAME"} !~ /Na|K|Cl/) {
+	    if (($charge % 2) == 1) {
+		print "WARNING: Charge is not even but divalent cation chosen! System will have net charge\n";
+	    }
+	    $ionInfo->{1}{"total"} = abs(int($charge/2));
+	} else {
+	    $ionInfo->{1}{"total"} = abs($charge);
+	}
+	$molar = $ionInfo->{1}{"total"} / ($mol_vol);
+    } else {
+	die "ERROR: Invalid option for ion/salt type and concentration\n";
+    }
+
+    if (exists($ionInfo->{2}{"ATMNAME"})) {
+	$ionInfo->{2}{"Charge"} = -1;
+	$ionInfo->{2}{"total"} = $ionInfo->{1}{"total"} * $ionInfo->{1}{"Charge"} + $charge + 1;
+	if ($ionInfo->{2}{"total"} < 0) {
+	    $ionInfo->{2}{"total"} = 0;
+	}
+    }
+    
+    if (! exists($ionInfo->{2}{"ATMNAME"})) {
+	printf "Placing " . $ionInfo->{1}{"total"} . " molecule(s) of " . $ionInfo->{1}{"ATMNAME"} . 
+	    $ionInfo->{1}{"Charge"} . " ion (%.3G molar)\n", $molar;
+    } else {
+	printf "Placing " . $ionInfo->{1}{"total"} . " molecule(s) of " . $ionInfo->{1}{"ATMNAME"} . 
+	    $ionInfo->{2}{"ATMNAME"} . " salt (%.3G molar)\n", $molar;
+	print "Placing " . $ionInfo->{2}{"total"} . " " . $ionInfo->{2}{"ATMNAME"} . "\n";
+    }
+}
+
+sub getNumWat {
+    my ($atoms) = $_[0];
+    my ($totWat, $i, %WATS);
+
+    $totWat = 0;
+    for $i (keys %{ $atoms }) {
+	if (($atoms->{$i}{RESNAME} =~ /WAT/i) or 
+	    ($atoms->{$i}{ATMNAME} =~ /O|H/ and $atoms->{$i}{MOLSIZE} == 3)) {
+	    $WATS{ $atoms->{$i}{RESNUM} } = 1;
+	}
+    }
+
+    $totWat = scalar keys %WATS if (%WATS);
+
+    return $totWat;
+}
+
+sub init {
+    my ($ION, %OPTS, $FF, @FFILES, @tmp, $i);
+
+    getopt('bfins',\%OPTS);
+    ($bgfFile, $FF, $ionType, $ionConc, $saveName) = 
+	($OPTS{b}, $OPTS{f}, $OPTS{i}, $OPTS{n}, $OPTS{s});
+
+    if (! defined($bgfFile) || ! defined($ionType)) {
+	&usage;
+	die "\n";
+    }
+    print "Initializing...";
+    FileTester($bgfFile);
+
+    die "ERROR: Available ion types are - Na, Cl, Mg, K, Ca " .
+	"and the corresponding salts (e.g. KCl)\n"
+	if ($ionType !~ /Na|Cl|Mg|K|Ca/i);
+    if (! $saveName) {
+	$saveName = $bgfFile;
+	$saveName =~ s/\.w+$/_mod\.bgf/;
+    }
+
+    if (! defined($ionConc)) {
+	$ionConc = 0;
+    }
+
+    if ($ionType !~ /^(Na|Mg|K|Ca|Cl)(Cl)?$/i) {
+	print "ERROR: Invalid ion/salt type $ionType\n";
+	usage;
+	die "\n";
+    } else {
+	$ION->{1}{"ATMNAME"} = $1;
+	if ($2 and $1 ne $2) {
+	    $ION->{2}{"ATMNAME"} = $2;
+	}
+    }
+
+    if ($ionConc eq "0" and length($ionType) > 2) {
+	die "ERROR: Cannot use a salt to neutralize the system\n";
+    }
+
+    die "ERROR: ionConc has to be integer of decimal\n"
+	if (! IsInteger($ionConc) and ! IsDecimal($ionConc));
+
+   if ($FF =~ /\s+/) {
+        @tmp = split /\s+/, $FF;
+    } else {
+        @tmp = ($FF);
+    }
+
+    for $i (@tmp) {
+        if (-e $i &&  -r $i && -T $i) {
+            push @FFILES, $i;
+        }
+    }
+
+    die "ERROR: No valid CERIUS2 forcefield found!\n" if (! @FFILES);
+
+    print "Done\n";
+    return ($ION, \@FFILES);
+}
+
+sub usage {
+    print <<USAGE
+usage: $0 -b bgf file -f force field(s) -i ion type -n [\# ions] -s [save_name]
+options:
+    bgf_file: the name of the BGF formatted file
+    force field: 1 (or more if in quotes) cerius2/mpsim/cmdf formatted forcefile for the bgf file
+    ion_type: Na, Cl, Mg, K, Ca and the combination salts (e.g. NaCl)
+    [num_ions] : number of ions
+                 0 - neutralize the system (default) - ions only
+                 X - X number of ions/salt
+                 X.x - X.x molar ion/salt
+    [save_name]: name of output BGF file (optional)
+USAGE
+}

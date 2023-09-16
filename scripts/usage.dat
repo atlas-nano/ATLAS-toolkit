@@ -1,0 +1,26 @@
+sub usage {
+	print STDOUT <<DATA;
+usage: $0 -b bgf file -c "x y z (alpha beta gamma)"
+		  -a (atom selection) -s (save name) -o (origin) 
+		  -m (molopt)
+options:
+    -b bgf file: location of input bgf file
+	-c "x y z": new cell parameters. Must be smaller than current cell
+	-a atom selection: (optional)
+		any valid bgf field expression. E.g. resname eq 'WAT' will select
+		all the "WAT" residues while index > 10 will select all indices > 10.
+		combine multiple expressions to make complicated selections: e.g.
+		(xcoord > 20.4 and moleculeid < 4) or sqrt((xcoord-23)**2+ycoord**2)>43.2
+		Default: 'all'
+	-s save name: (Optional) name of new bgf file
+	-m molopt: (Optional) Flag to keep molecules together. Expected 1|yes|0|no. Default 1
+	-o origin: 
+		1: (0, 0, 0) 
+		2: box min 
+		3: box max 
+		0 (default): box center
+		or specify an atom selection in quotes
+DATA
+
+die "\n";
+}

@@ -1,0 +1,617 @@
+node1-01.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-01.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=30422 30648 30689 4713,nsessions=3,nusers=1,idletime=22805656,totmem=4160876kb,availmem=2171832kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604971
+
+node1-02.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-02.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=31185,nsessions=0,nusers=1,idletime=22805610,totmem=4160876kb,availmem=3568104kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604989
+
+node1-03.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-03.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=5396 32049 17358,nsessions=2,nusers=3,idletime=22809260,totmem=4160876kb,availmem=2888856kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604992
+
+node1-04.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-04.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=2,nsessions=0,nusers=0,idletime=22805576,totmem=4160876kb,availmem=3574568kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604974
+
+node1-05.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-05.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=25645 9037 9075,nsessions=2,nusers=2,idletime=22805667,totmem=4160876kb,availmem=2299140kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604984
+
+node1-06.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-06.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=2,nsessions=0,nusers=0,idletime=22803667,totmem=4160876kb,availmem=2261196kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604993
+
+node1-07.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-07.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=31242 6188 6227 324 364,nsessions=4,nusers=2,idletime=22803633,totmem=4160876kb,availmem=2415592kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604969
+
+node1-08.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-08.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=19333 3662 3702 25669 25709 14045,nsessions=5,nusers=4,idletime=22803750,totmem=4160876kb,availmem=2274944kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604997
+
+node1-09.wag.caltech.edu
+     state = offline
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-09.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=2,nsessions=0,nusers=0,idletime=22803689,totmem=4160876kb,availmem=2480640kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604975
+
+node1-10.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-10.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=31601 19188,nsessions=1,nusers=2,idletime=22803746,totmem=4160876kb,availmem=2903408kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604992
+
+node1-11.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-11.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=16034,nsessions=0,nusers=1,idletime=22803154,totmem=4160876kb,availmem=2514752kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604981
+
+node1-12.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-12.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=2,nsessions=0,nusers=0,idletime=22803132,totmem=4160876kb,availmem=2849880kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604979
+
+node1-13.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node1-13.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=571,nsessions=0,nusers=1,idletime=22803517,totmem=4160876kb,availmem=2898284kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604980
+
+node1-14.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84661.borg, 1/84662.borg
+     status = arch=linux,uname=Linux node1-14.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=30216 30812,nsessions=1,nusers=2,idletime=22803115,totmem=4160876kb,availmem=2374160kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node1-15.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84660.borg, 1/84712.borg
+     status = arch=linux,uname=Linux node1-15.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=19288 19784 20288 3012 30194,nsessions=4,nusers=2,idletime=22802513,totmem=4160876kb,availmem=2236912kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604969
+
+node1-16.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/78089.borg, 1/78089.borg
+     status = arch=linux,uname=Linux node1-16.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=25515 25686 25689 25727,nsessions=3,nusers=1,idletime=22803151,totmem=4160876kb,availmem=2156200kb,physmem=2064404kb,ncpus=2,loadave=2.01,message=,rectime=1132604998
+
+node1-17.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84658.borg, 1/84659.borg
+     status = arch=linux,uname=Linux node1-17.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=27756 21367 21462,nsessions=2,nusers=1,idletime=22803347,totmem=4160876kb,availmem=2143668kb,physmem=2064404kb,ncpus=2,loadave=2.06,message=,rectime=1132604979
+
+node1-18.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84656.borg, 1/84657.borg
+     status = arch=linux,uname=Linux node1-18.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=14296 14336 17410 17537,nsessions=3,nusers=2,idletime=22803331,totmem=4160876kb,availmem=2453744kb,physmem=2064404kb,ncpus=2,loadave=2.01,message=,rectime=1132604979
+
+node2-01.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84655.borg, 1/84711.borg
+     status = arch=linux,uname=Linux node2-01.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=26555 25408 19257,nsessions=2,nusers=3,idletime=22743129,totmem=4160876kb,availmem=2372708kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604969
+
+node2-02.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84674.borg, 1/84674.borg
+     status = arch=linux,uname=Linux node2-02.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=8604 13306,nsessions=1,nusers=2,idletime=22743299,totmem=4160876kb,availmem=2536968kb,physmem=2064404kb,ncpus=2,loadave=1.82,message=,rectime=1132604969
+
+node2-03.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84709.borg, 1/84710.borg
+     status = arch=linux,uname=Linux node2-03.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=24807 31213 1083 9834 10639 23072 2825 29384 6437 6446,nsessions=9,nusers=2,idletime=22743235,totmem=4160876kb,availmem=2298304kb,physmem=2064404kb,ncpus=2,loadave=2.02,message=,rectime=1132604969
+
+node2-04.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/77697.borg, 1/77697.borg
+     status = arch=linux,uname=Linux node2-04.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=403 594 3241 3412 3415 3453,nsessions=5,nusers=2,idletime=22743262,totmem=4160876kb,availmem=2687528kb,physmem=2064404kb,ncpus=2,loadave=1.87,message=,rectime=1132604988
+
+node2-05.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84654.borg, 1/79089.borg
+     status = arch=linux,uname=Linux node2-05.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=7921 17412 31400,nsessions=2,nusers=3,idletime=22743313,totmem=4160876kb,availmem=2182588kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node2-06.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84599.borg, 1/84599.borg
+     status = arch=linux,uname=Linux node2-06.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=1696 11233 16177 16348 16351 16389,nsessions=5,nusers=3,idletime=22743179,totmem=4160876kb,availmem=2695948kb,physmem=2064404kb,ncpus=2,loadave=1.99,message=,rectime=1132604999
+
+node2-07.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84758.borg, 1/84758.borg
+     status = arch=linux,uname=Linux node2-07.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=9618 12380 14304 12424 24421 19038 10564 6056 16282 420 20130 20307,nsessions=11,nusers=4,idletime=22743115,totmem=4160876kb,availmem=2710712kb,physmem=2064404kb,ncpus=2,loadave=1.96,message=,rectime=1132604979
+
+node2-08.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84652.borg, 1/84653.borg
+     status = arch=linux,uname=Linux node2-08.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=4668 17551 17739 23314 25971 14769 14982,nsessions=6,nusers=3,idletime=22743065,totmem=4160876kb,availmem=2144448kb,physmem=2064404kb,ncpus=2,loadave=2.01,message=,rectime=1132604979
+
+node2-09.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83523.borg, 1/80014.borg
+     status = arch=linux,uname=Linux node2-09.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=16024 29645 25292 21100,nsessions=3,nusers=4,idletime=22743104,totmem=4160876kb,availmem=2707280kb,physmem=2064404kb,ncpus=2,loadave=2.02,message=,rectime=1132604979
+
+node2-10.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84717.borg, 1/84717.borg
+     status = arch=linux,uname=Linux node2-10.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=4482 25203 13270 8553 17072 7654,nsessions=5,nusers=5,idletime=22743057,totmem=4160876kb,availmem=2247548kb,physmem=2064404kb,ncpus=2,loadave=1.85,message=,rectime=1132604989
+
+node2-11.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84707.borg, 1/84708.borg
+     status = arch=linux,uname=Linux node2-11.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=7894 7882 7892,nsessions=2,nusers=2,idletime=22743144,totmem=4160876kb,availmem=2278204kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node2-12.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84688.borg, 1/84688.borg
+     status = arch=linux,uname=Linux node2-12.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=21004 16381 13489,nsessions=2,nusers=3,idletime=22743117,totmem=4160876kb,availmem=2460244kb,physmem=2064404kb,ncpus=2,loadave=1.75,message=,rectime=1132604969
+
+node2-13.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/81785.borg, 1/81786.borg
+     status = arch=linux,uname=Linux node2-13.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=25685 28468 28596,nsessions=2,nusers=2,idletime=22743053,totmem=4160876kb,availmem=1747076kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node2-14.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/81783.borg, 1/84651.borg
+     status = arch=linux,uname=Linux node2-14.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=10764 14207,nsessions=1,nusers=2,idletime=22743040,totmem=4160876kb,availmem=2032172kb,physmem=2064404kb,ncpus=2,loadave=2.07,message=,rectime=1132604989
+
+node2-15.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84717.borg, 1/84717.borg
+     status = arch=linux,uname=Linux node2-15.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=21384 21444,nsessions=1,nusers=1,idletime=22743040,totmem=4160876kb,availmem=1482552kb,physmem=2064404kb,ncpus=2,loadave=2.05,message=,rectime=1132604969
+
+node2-16.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84688.borg, 1/84688.borg
+     status = arch=linux,uname=Linux node2-16.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=8900 7193 26371 29004 12399 12458,nsessions=5,nusers=4,idletime=22742928,totmem=4160876kb,availmem=2172384kb,physmem=2064404kb,ncpus=2,loadave=2.05,message=,rectime=1132604979
+
+node2-17.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/81781.borg, 1/81782.borg
+     status = arch=linux,uname=Linux node2-17.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=31050 31136,nsessions=1,nusers=1,idletime=22744903,totmem=4160876kb,availmem=1872388kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node2-18.wag.caltech.edu
+     state = offline
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node2-18.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=2,nsessions=0,nusers=0,idletime=22742926,totmem=4160876kb,availmem=2398568kb,physmem=2064404kb,ncpus=2,loadave=0.00,message=,rectime=1132604993
+
+node2-19.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84686.borg, 1/84686.borg
+     status = arch=linux,uname=Linux node2-19.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=8780 10163 10204 4627 5177 11819 32345 30071 16384,nsessions=8,nusers=5,idletime=22742988,totmem=4160876kb,availmem=2269648kb,physmem=2064404kb,ncpus=2,loadave=1.81,message=,rectime=1132604979
+
+node2-20.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 1/81780.borg
+     status = arch=linux,uname=Linux node2-20.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=2255 9446,nsessions=1,nusers=2,idletime=22743586,totmem=4160876kb,availmem=2131300kb,physmem=2064404kb,ncpus=2,loadave=1.00,message=,rectime=1132604989
+
+node2-21.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node2-21.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=29473 24998 25014,nsessions=2,nusers=2,idletime=22742930,totmem=4160876kb,availmem=2287808kb,physmem=2064404kb,ncpus=2,loadave=2.40,message=,rectime=1132604999
+
+node3-01.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node3-01.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=18200 23470 23482,nsessions=2,nusers=2,idletime=656323,totmem=4160876kb,availmem=2428292kb,physmem=2064404kb,ncpus=2,loadave=2.53,message=,rectime=1132604979
+
+node3-02.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node3-02.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=14934 7137 7131,nsessions=2,nusers=2,idletime=22737986,totmem=4160876kb,availmem=2756044kb,physmem=2064404kb,ncpus=2,loadave=2.80,message=,rectime=1132604989
+
+node3-03.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 1/84647.borg
+     status = arch=linux,uname=Linux node3-03.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=8673 30347 13387,nsessions=2,nusers=3,idletime=22738035,totmem=4160876kb,availmem=2427208kb,physmem=2064404kb,ncpus=2,loadave=1.02,message=,rectime=1132604999
+
+node3-04.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node3-04.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=26158 28771 2098 31247 31240,nsessions=4,nusers=3,idletime=22738223,totmem=4160876kb,availmem=2541244kb,physmem=2064404kb,ncpus=2,loadave=2.29,message=,rectime=1132604989
+
+node3-05.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 1/84706.borg
+     status = arch=linux,uname=Linux node3-05.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=24886 23340 28114,nsessions=2,nusers=3,idletime=22735860,totmem=4160876kb,availmem=2669540kb,physmem=2064404kb,ncpus=2,loadave=1.00,message=,rectime=1132604989
+
+node3-06.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84705.borg, 1/82494.borg
+     status = arch=linux,uname=Linux node3-06.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=4881 8615,nsessions=1,nusers=2,idletime=22735791,totmem=4160876kb,availmem=2130932kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node3-07.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node3-07.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=27935 2122 2163 17495 17502,nsessions=4,nusers=2,idletime=22735817,totmem=4160876kb,availmem=2781760kb,physmem=2064404kb,ncpus=2,loadave=2.66,message=,rectime=1132604979
+
+node3-08.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node3-08.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=24796 24810,nsessions=1,nusers=1,idletime=22738490,totmem=4160876kb,availmem=3070572kb,physmem=2064404kb,ncpus=2,loadave=2.54,message=,rectime=1132604989
+
+node3-09.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/79839.borg, 1/79839.borg
+     status = arch=linux,uname=Linux node3-09.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=18027 18642 24766 25306 25477 25480 25518,nsessions=6,nusers=3,idletime=22735833,totmem=4160876kb,availmem=2834248kb,physmem=2064404kb,ncpus=2,loadave=1.99,message=,rectime=1132604989
+
+node3-10.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node3-10.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=11123 13181 13221 440 18858 18870,nsessions=5,nusers=4,idletime=22735823,totmem=4160876kb,availmem=2256436kb,physmem=2064404kb,ncpus=2,loadave=2.47,message=,rectime=1132604989
+
+node3-11.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 1/83842.borg
+     status = arch=linux,uname=Linux node3-11.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=13750 15481 15522 11323 4394 31335 31777 2807 19270,nsessions=8,nusers=5,idletime=22736195,totmem=4160876kb,availmem=2399276kb,physmem=2064404kb,ncpus=2,loadave=1.00,message=,rectime=1132604999
+
+node3-12.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83835.borg, 1/83841.borg
+     status = arch=linux,uname=Linux node3-12.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=8703 30764 31261,nsessions=2,nusers=3,idletime=22736073,totmem=4160876kb,availmem=2650756kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node3-13.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83520.borg, 1/84704.borg
+     status = arch=linux,uname=Linux node3-13.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=6520 18563,nsessions=1,nusers=2,idletime=16707983,totmem=4160812kb,availmem=2667004kb,physmem=2064340kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node3-14.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/81380.borg, 1/81380.borg
+     status = arch=linux,uname=Linux node3-14.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=20313 13392 25784,nsessions=2,nusers=3,idletime=22736117,totmem=4160876kb,availmem=1511872kb,physmem=2064404kb,ncpus=2,loadave=1.00,message=,rectime=1132604999
+
+node3-15.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83834.borg, 1/83519.borg
+     status = arch=linux,uname=Linux node3-15.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=10972 11198 1594 14592,nsessions=3,nusers=3,idletime=18683246,totmem=4160812kb,availmem=2615016kb,physmem=2064340kb,ncpus=2,loadave=2.00,message=,rectime=1132604999
+
+node3-16.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83832.borg, 1/83833.borg
+     status = arch=linux,uname=Linux node3-16.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=28326 23712 28161 18276 18453,nsessions=4,nusers=3,idletime=22736094,totmem=4160876kb,availmem=2226580kb,physmem=2064404kb,ncpus=2,loadave=2.06,message=,rectime=1132604999
+
+node3-17.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83840.borg, 1/82962.borg
+     status = arch=linux,uname=Linux node3-17.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=10146 1203 22717,nsessions=2,nusers=2,idletime=22736091,totmem=4160876kb,availmem=2601928kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604999
+
+node3-18.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84686.borg, 1/84686.borg
+     status = arch=linux,uname=Linux node3-18.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=16110 7042 12692 23364 24407 26054 15802 15861,nsessions=7,nusers=4,idletime=22736125,totmem=4160876kb,availmem=2211516kb,physmem=2064404kb,ncpus=2,loadave=2.06,message=,rectime=1132604969
+
+node3-19.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84703.borg, 1/83977.borg
+     status = arch=linux,uname=Linux node3-19.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=7764 22660 15496 23498 20317 22788,nsessions=5,nusers=4,idletime=22736062,totmem=4160876kb,availmem=2208160kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node4-01.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84702.borg
+     status = arch=linux,uname=Linux node4-01.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=20399 16798 12532,nsessions=2,nusers=3,idletime=22731240,totmem=4160876kb,availmem=3375384kb,physmem=2064404kb,ncpus=2,loadave=1.00,message=,rectime=1132604979
+
+node4-02.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83927.borg, 1/83831.borg
+     status = arch=linux,uname=Linux node4-02.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=12240 19613 12106 31045 31837,nsessions=4,nusers=4,idletime=22731400,totmem=4160876kb,availmem=2474068kb,physmem=2064404kb,ncpus=2,loadave=3.12,message=,rectime=1132604999
+
+node4-03.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/83263.borg, 1/84691.borg
+     status = arch=linux,uname=Linux node4-03.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=4574 32704 30833 18385,nsessions=3,nusers=3,idletime=22731277,totmem=4160876kb,availmem=2531776kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604999
+
+node4-04.wag.caltech.edu
+     state = free
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84297.borg
+     status = arch=linux,uname=Linux node4-04.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=11852 14427,nsessions=1,nusers=1,idletime=37525,totmem=4160876kb,availmem=2736764kb,physmem=2064404kb,ncpus=2,loadave=1.00,message=,rectime=1132604989
+
+node4-05.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84096.borg, 1/84096.borg
+     status = arch=linux,uname=Linux node4-05.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=10988 4806 4911 4920,nsessions=3,nusers=2,idletime=22731290,totmem=4160876kb,availmem=2094764kb,physmem=2064404kb,ncpus=2,loadave=2.61,message=,rectime=1132604989
+
+node4-06.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84674.borg, 1/84674.borg
+     status = arch=linux,uname=Linux node4-06.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=540 23835 22936 6495 2072 27383 11838 11897,nsessions=7,nusers=6,idletime=22731253,totmem=4160876kb,availmem=2098956kb,physmem=2064404kb,ncpus=2,loadave=2.11,message=,rectime=1132604979
+
+node4-07.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84718.borg, 1/84296.borg
+     status = arch=linux,uname=Linux node4-07.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=4069 13882 8967 10712,nsessions=3,nusers=4,idletime=37112,totmem=4160876kb,availmem=2547648kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node4-08.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84690.borg, 1/84757.borg
+     status = arch=linux,uname=Linux node4-08.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=14411 4549 20699 23284,nsessions=3,nusers=4,idletime=22731373,totmem=4160876kb,availmem=2151196kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node4-09.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84756.borg, 1/83547.borg
+     status = arch=linux,uname=Linux node4-09.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=22988 23029 11770 9873,nsessions=3,nusers=3,idletime=22731255,totmem=4160876kb,availmem=2364364kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node4-10.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84685.borg, 1/84685.borg
+     status = arch=linux,uname=Linux node4-10.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=12471 14338 13053 25241 9067 15833,nsessions=5,nusers=5,idletime=22731199,totmem=4160876kb,availmem=2895640kb,physmem=2064404kb,ncpus=2,loadave=2.86,message=,rectime=1132604969
+
+node4-11.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84754.borg, 1/84755.borg
+     status = arch=linux,uname=Linux node4-11.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=21273 21538,nsessions=1,nusers=1,idletime=17370091,totmem=4160876kb,availmem=2178460kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604969
+
+node4-12.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84700.borg, 1/84701.borg
+     status = arch=linux,uname=Linux node4-12.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=19937 30241 30252,nsessions=2,nusers=2,idletime=22733170,totmem=4160876kb,availmem=2283356kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node4-13.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84698.borg, 1/84699.borg
+     status = arch=linux,uname=Linux node4-13.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=3807 19898 32616 10419 10430,nsessions=4,nusers=3,idletime=22730753,totmem=4160876kb,availmem=2658072kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node4-14.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84697.borg, 1/84689.borg
+     status = arch=linux,uname=Linux node4-14.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=5893 22053,nsessions=1,nusers=2,idletime=22730456,totmem=4160876kb,availmem=2537040kb,physmem=2064404kb,ncpus=2,loadave=2.01,message=,rectime=1132604989
+
+node4-15.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84650.borg, 1/84731.borg
+     status = arch=linux,uname=Linux node4-15.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=14948 17983 27449 22607 7381,nsessions=4,nusers=3,idletime=22730777,totmem=4160876kb,availmem=2400080kb,physmem=2064404kb,ncpus=2,loadave=2.02,message=,rectime=1132604989
+
+node4-16.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84730.borg, 1/84759.borg
+     status = arch=linux,uname=Linux node4-16.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=886 1861,nsessions=1,nusers=2,idletime=22730821,totmem=4160876kb,availmem=2615000kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604979
+
+node4-17.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84685.borg, 1/84685.borg
+     status = arch=linux,uname=Linux node4-17.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=25886 25945,nsessions=1,nusers=1,idletime=22733113,totmem=4160876kb,availmem=2127888kb,physmem=2064404kb,ncpus=2,loadave=2.02,message=,rectime=1132604979
+
+node4-18.wag.caltech.edu
+     state = offline
+     np = 2
+     properties = all
+     ntype = cluster
+     status = arch=linux,uname=Linux node4-18.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=15347 16774 11612 19538,nsessions=3,nusers=4,idletime=22730730,totmem=4160876kb,availmem=2717792kb,physmem=2064404kb,ncpus=2,loadave=0.01,message=,rectime=1132604976
+
+node4-19.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84645.borg, 1/84424.borg
+     status = arch=linux,uname=Linux node4-19.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=29792 29283 29064 29450,nsessions=3,nusers=4,idletime=37349,totmem=4160876kb,availmem=2665212kb,physmem=2064404kb,ncpus=2,loadave=2.07,message=,rectime=1132604979
+
+node4-20.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84432.borg, 1/84425.borg
+     status = arch=linux,uname=Linux node4-20.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=26007 2431,nsessions=1,nusers=2,idletime=22730708,totmem=4160876kb,availmem=1715488kb,physmem=2064404kb,ncpus=2,loadave=2.00,message=,rectime=1132604989
+
+node4-21.wag.caltech.edu
+     state = job-exclusive
+     np = 2
+     properties = all
+     ntype = cluster
+     jobs = 0/84431.borg, 1/81613.borg
+     status = arch=linux,uname=Linux node4-21.wag.caltech.edu 2.4.20-31.9smp #1 SMP Tue Apr 13 17:40:10 EDT 2004 i686,sessions=23806 21667 5438,nsessions=2,nusers=3,idletime=22730844,totmem=4160876kb,availmem=1612452kb,physmem=2064404kb,ncpus=2,loadave=2.13,message=,rectime=1132604979
+

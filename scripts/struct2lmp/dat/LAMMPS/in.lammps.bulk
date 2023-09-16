@@ -1,0 +1,29 @@
+timestep	1.0
+thermo		100
+log		${sname}.nvt.lammps.log
+
+print                            .
+print ===================================================
+print "1000000 STEPS NVT dynamics for bulk properties at $temp K"
+print ==================================================
+print                             .
+  
+fix             1 all nvt temp ${temp} ${temp} 100.0
+dump            1 all custom 100 ${sname}.nvt.lammps id type xu yu zu vx vy vz
+run             1000000
+unfix           1
+undump          1
+
+log		${sname}.msd.lammps.log
+print                            .
+print ===================================================
+print "100000 STEPS NVE dynamics for Self Diffusion Constant"
+print ==================================================
+print                             .
+                                                                                                            
+fix             1 all nve
+dump            1 all custom 100 ${sname}.msd.lammps id type xu yu zu vx vy vz
+run             100000
+undump          1
+unfix           1
+

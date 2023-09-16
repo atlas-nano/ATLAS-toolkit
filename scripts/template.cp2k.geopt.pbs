@@ -1,0 +1,43 @@
+#!/bin/bash
+#Job name:
+#SBATCH --job-name=fprefix_here
+#
+#Partition:
+#SBATCH --partition=vulcan
+#
+#Account
+#SBATCH --account=vulcan
+#
+#QOS
+#SBATCH --qos=normal
+#
+#Nodes
+#SBATCH --nodes=nodes_here
+#
+#Processors:
+#SBATCH --ntasks=nprocs_here
+#
+#QUEUE
+#SBATCH --constraint=vulcan
+#
+#Wall clock limit:
+#SBATCH --time=48:0:0
+#
+
+fprefix=fprefix_herecell_p_here
+
+cd $SLURM_SUBMIT_DIR
+if [ -e ${fprefix}.298K.cp2k.in ]; then
+	mv ${fprefix}.298K.cp2k.in ${fprefix}.geopt.cp2k.in
+fi
+
+results_dir=$SLURM_SUBMIT_DIR/results
+mkdir -p $VSCRATCH/geopt/cp2k/${fprefix} ${results_dir}/
+
+cd $VSCRATCH/geopt/cp2k/${fprefix}
+cp $SLURM_SUBMIT_DIR/${fprefix}.geopt.cp2k.in ./
+cp $SLURM_SUBMIT_DIR/${fprefix}.cp2k.xyz ./
+cp ~tpascal/codes/cp2k/v2.5/cp2k/tests/QS/dftd3.dat ./
+
+mpirun -mca btl self,sm,openib ~tpascal/codes/bin/cp2k.popt -in ${fprefix}.geopt.cp2k.in > ${fprefix}.geopt.out 
+cp ${fprefix}.* $results_dir/

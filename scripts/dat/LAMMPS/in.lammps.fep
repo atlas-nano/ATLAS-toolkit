@@ -1,0 +1,16 @@
+label                fep
+print                .
+print                ================================================
+print                "FEP calculation (anihilation) at ${rtemp} K"
+print                ================================================
+print                .
+fep_str
+fix                  FEP all ave/time 1 500000 1000000 c_FEP[1] c_FEP[2] file ${sname}.${rtemp}K.fep.dat
+
+fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 iso 1.0 1.0 2000.0
+dump                 1 all custom 20000 ${sname}.${rtemp}K.fep.lammpstrj id type xu yu zu vx vy vz
+run                  20000000
+unfix                FEP
+uncompute            FEP
+unfix                PRINT
+unfix                2

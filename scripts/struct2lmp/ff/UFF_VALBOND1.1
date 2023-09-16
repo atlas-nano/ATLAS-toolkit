@@ -1,0 +1,1782 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+
+ ********************************************************************
+                    UNIVERSAL FORCE FIELD (UFF)
+
+  A.K. Rappe, C.J. Casewit, K.S. Colwell, W.A. Goddard-III, W.M.Skiff
+           J. Am. Chem. Soc, 1992, 114,10024-10035
+
+                              and
+
+                            VALBOND
+
+                 D.M. Root, C.R. Landis, T. Cleveland
+               J. Am. Chem. Soc., 1993, 115, 4201-4209
+
+          With VALBOND constants optimized for use with UFF
+
+               *** For non-hypervalent systems only ***
+
+     This forcefield may not be edited with the force field editor
+ ********************************************************************
+ 
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ GENERATE_UNDEFINED_TERMS              T
+ IGNORE_UNDEFINED_TERMS                F
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          1.00000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NON_BOND_LIST                         T
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                       14.00000
+ COU_SPLINE_OFF                          14.00000
+ COU_SPLINE_ON                           11.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_AUTO_OPT                T
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            SPLINE    
+ COU_DIRECT_CUT-OFF                      11.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC 
+ VDW_INTER_CUT_OFF                       14.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE    
+ VDW_SPLINE_ON                           11.00000
+ VDW_SPLINE_OFF                          14.00000
+ EWALD_SUM_VDW_AUTO_OPT                T
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  T
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  T
+ ASSIGN_VALBOND_CENTER                 T
+ VALBOND_DATA_FILE                     Valbond1.1.data
+ FORCEFIELD_IS_READ_ONLY               T
+END
+#
+ATOMTYPES
+ VB         X       0.00000  0.0000   0   0   0
+ H_         H       1.00800  0.0000   0   0   0
+ H___b      H       1.00800  0.0000   0   0   0
+ He4+4      He      4.00260  0.0000   4   0   0
+ Li         Li      6.94100  0.0000   0   0   0
+ Be3+2      Be      9.01200  0.0000   3   0   0
+ B_3        B      10.81000  0.0000   3   0   0
+ B_2        B      10.81000  0.0000   2   0   0
+ C_3        C      12.01100  0.0000   3   0   0
+ C_R        C      12.01100  0.0000   2   0   0
+ C_2        C      12.01100  0.0000   2   0   0
+ C_1        C      12.01100  0.0000   1   0   0
+ N_3        N      14.00670  0.0000   3   0   0
+ N_R        N      14.00670  0.0000   2   0   0
+ N_2        N      14.00670  0.0000   2   0   0
+ N_1        N      14.00670  0.0000   1   0   0
+ O_3        O      15.99940  0.0000   3   0   0
+ O_3_z      O      15.99940  0.0000   3   0   0
+ O_R        O      15.99940  0.0000   2   0   0
+ O_2        O      15.99940  0.0000   2   0   0
+ O_1        O      15.99940  0.0000   1   0   0
+ F_         F      18.99840  0.0000   0   0   0
+ Ne4+4      Ne     20.17900  0.0000   4   0   0
+ Na         Na     22.99000  0.0000   0   0   0
+ Mg3+2      Mg     24.31000  0.0000   3   0   0
+ Al3        Al     26.98150  0.0000   3   0   0
+ Si3        Si     28.08600  0.0000   3   0   0
+ P_3+3      P      30.97380  0.0000   3   0   0
+ P_3+5      P      30.97380  0.0000   3   0   0
+ P_3+q      P      30.97380  0.0000   3   0   0
+ S_3+2      S      32.06000  0.0000   3   0   0
+ S_3+4      S      32.06000  0.0000   3   0   0
+ S_3+6      S      32.06000  0.0000   3   0   0
+ S_R        S      32.06000  0.0000   2   0   0
+ S_2        S      32.06000  0.0000   2   0   0
+ Cl         Cl     35.45300  0.0000   0   0   0
+ Ar4+4      Ar     39.94800  0.0000   4   0   0
+ K_         K      39.94800  0.0000   0   0   0
+ Ca6+2      Ca     40.08000  0.0000   6   0   0
+ Sc3+3      Sc     44.96000  0.0000   3   0   0
+ Ti3+4      Ti     47.96000  0.0000   3   0   0
+ Ti6+4      Ti     47.96000  0.0000   6   0   0
+ V_3+5      V      50.94000  0.0000   3   0   0
+ Cr6+3      Cr     52.00000  0.0000   6   0   0
+ Mn6+2      Mn     54.94700  0.0000   6   0   0
+ Fe3+2      Fe     55.84700  0.0000   3   0   0
+ Fe6+2      Fe     55.84700  0.0000   6   0   0
+ Co6+3      Co     58.93000  0.0000   6   0   0
+ Ni4+2      Ni     58.71000  0.0000   4   0   0
+ Cu3+1      Cu     63.55000  0.0000   3   0   0
+ Zn3+2      Zn     65.37700  0.0000   3   0   0
+ Ga3+3      Ga     69.72000  0.0000   3   0   0
+ Ge3        Ge     72.59000  0.0000   3   0   0
+ As3+3      As     74.92160  0.0000   3   0   0
+ Se3+2      Se     78.96000  0.0000   3   0   0
+ Br         Br     79.90400  0.0000   0   0   0
+ Kr4+4      Kr     83.80000  0.0000   4   0   0
+ Rb         Rb     85.47000  0.0000   0   0   0
+ Sr6+2      Sr     87.62000  0.0000   6   0   0
+ Y_3+3      Y      88.91000  0.0000   3   0   0
+ Zr3+4      Zr     91.22000  0.0000   3   0   0
+ Nb3+5      Nb     92.91000  0.0000   3   0   0
+ Mo6+6      Mo     95.94000  0.0000   6   0   0
+ Mo3+6      Mo     95.94000  0.0000   3   0   0
+ Tc6+5      Tc     99.00000  0.0000   6   0   0
+ Ru6+2      Ru    101.07000  0.0000   6   0   0
+ Rh6+3      Rh    102.91000  0.0000   6   0   0
+ Pd4+2      Pd    106.40000  0.0000   4   0   0
+ Ag1+1      Ag    107.87000  0.0000   1   0   0
+ Cd3+2      Cd    112.40000  0.0000   3   0   0
+ In3+3      In    114.82000  0.0000   3   0   0
+ Sn3        Sn    118.69000  0.0000   3   0   0
+ Sb3+3      Sb    121.75000  0.0000   3   0   0
+ Te3+2      Te    127.60000  0.0000   3   0   0
+ I_         I     126.90450  0.0000   0   0   0
+ Xe4+4      Xe    131.28999  0.0000   4   0   0
+ Cs         Cs    132.91000  0.0000   0   0   0
+ Ba6+2      Ba    137.34000  0.0000   6   0   0
+ La3+3      La    138.91000  0.0000   3   0   0
+ Ce6+3      Ce    140.12000  0.0000   6   0   0
+ Pr6+3      Pr    140.91000  0.0000   6   0   0
+ Nd6+3      Nd    144.24001  0.0000   6   0   0
+ Pm6+3      Pm    147.00000  0.0000   6   0   0
+ Sm6+3      Sm    150.39999  0.0000   6   0   0
+ Eu6+3      Eu    151.96001  0.0000   6   0   0
+ Gd6+3      Gd    157.25000  0.0000   6   0   0
+ Tb6+3      Tb    158.92999  0.0000   6   0   0
+ Dy6+3      Dy    162.50000  0.0000   6   0   0
+ Ho6+3      Ho    164.92999  0.0000   6   0   0
+ Er6+3      Er    167.25999  0.0000   6   0   0
+ Tm6+3      Tm    168.92999  0.0000   6   0   0
+ Yb6+3      Yb    173.03999  0.0000   6   0   0
+ Lu6+3      Lu    174.97000  0.0000   6   0   0
+ Hf3+4      Hf    178.49001  0.0000   3   0   0
+ Ta3+5      Ta    180.95000  0.0000   3   0   0
+ W_6+6      W     183.85001  0.0000   6   0   0
+ W_3+4      W     183.85001  0.0000   3   0   0
+ W_3+6      W     183.85001  0.0000   3   0   0
+ Re6+5      Re    186.20000  0.0000   6   0   0
+ Re3+7      Re    186.20000  0.0000   3   0   0
+ Os6+6      Os    190.20000  0.0000   6   0   0
+ Ir6+3      Ir    192.20000  0.0000   6   0   0
+ Pt4+2      Pt    195.09000  0.0000   4   0   0
+ Au4+3      Au    196.97000  0.0000   4   0   0
+ Hg1+2      Hg    200.59000  0.0000   1   0   0
+ Tl3+3      Tl    204.37000  0.0000   3   0   0
+ Pb3        Pb    207.20000  0.0000   3   0   0
+ Bi3+3      Bi    208.98000  0.0000   3   0   0
+ Po3+2      Po    210.00000  0.0000   3   0   0
+ At         At    210.00000  0.0000   0   0   0
+ Rn4+4      Rn    222.00000  0.0000   4   0   0
+ Fr         Fr    223.00000  0.0000   0   0   0
+ Ra6+2      Ra    226.00000  0.0000   6   0   0
+ Ac6+3      Ac    227.00000  0.0000   6   0   0
+ Th6+4      Th    232.03999  0.0000   6   0   0
+ Pa6+4      Pa    231.00000  0.0000   6   0   0
+ U_6+4      U     238.03000  0.0000   6   0   0
+ Np6+4      Np    237.00000  0.0000   6   0   0
+ Pu6+4      Pu    244.00000  0.0000   6   0   0
+ Am6+4      Am    243.00000  0.0000   6   0   0
+ Cm6+3      Cm    245.00000  0.0000   6   0   0
+ Bk6+3      Bk    247.00000  0.0000   6   0   0
+ Cf6+3      Cf    249.00000  0.0000   6   0   0
+ Es6+3      Es    254.00000  0.0000   6   0   0
+ Fm6+3      Fm    255.00000  0.0000   6   0   0
+ Md6+3      Md    256.00000  0.0000   6   0   0
+ No6+3      No    254.00000  0.0000   6   0   0
+ Lw6+3      Lr    257.00000  0.0000   6   0   0
+ CpR        Cp     12.01100  0.0000   0   0   0
+ CpR_B      Cp     12.01100  0.0000   0   0   0
+ CiR        Cp     12.01100  0.0000   0   0   0
+ PiR        Cp     12.01100  0.0000   0   0   0
+ D_         D       2.01400  0.0000   0   0   0
+END
+#
+DIAGONAL_VDW
+ H_          LJ_6_12        2.8860  0.4400E-01
+ H___b       LJ_6_12        2.8860  0.4400E-01
+ He4+4       LJ_6_12        2.3620  0.5600E-01
+ Li          LJ_6_12        2.4510  0.2500E-01
+ Be3+2       LJ_6_12        2.7450  0.8500E-01
+ B_3         LJ_6_12        4.0830  0.1800E+00
+ B_2         LJ_6_12        4.0830  0.1800E+00
+ C_3         LJ_6_12        3.8510  0.1050E+00
+ C_R         LJ_6_12        3.8510  0.1050E+00
+ C_2         LJ_6_12        3.8510  0.1050E+00
+ C_1         LJ_6_12        3.8510  0.1050E+00
+ N_3         LJ_6_12        3.6600  0.6900E-01
+ N_R         LJ_6_12        3.6600  0.6900E-01
+ N_2         LJ_6_12        3.6600  0.6900E-01
+ N_1         LJ_6_12        3.6600  0.6900E-01
+ O_3         LJ_6_12        3.5000  0.6000E-01
+ O_3_z       LJ_6_12        3.5000  0.6000E-01
+ O_R         LJ_6_12        3.5000  0.6000E-01
+ O_2         LJ_6_12        3.5000  0.6000E-01
+ O_1         LJ_6_12        3.5000  0.6000E-01
+ F_          LJ_6_12        3.3640  0.5000E-01
+ Ne4+4       LJ_6_12        3.2430  0.4200E-01
+ Na          LJ_6_12        2.9830  0.3000E-01
+ Mg3+2       LJ_6_12        3.0210  0.1110E+00
+ Al3         LJ_6_12        4.4990  0.5050E+00
+ Si3         LJ_6_12        4.2950  0.4020E+00
+ P_3+3       LJ_6_12        4.1470  0.3050E+00
+ P_3+5       LJ_6_12        4.1470  0.3050E+00
+ P_3+q       LJ_6_12        4.1470  0.3050E+00
+ S_3+2       LJ_6_12        4.0350  0.2740E+00
+ S_3+4       LJ_6_12        4.0350  0.2740E+00
+ S_3+6       LJ_6_12        4.0350  0.2740E+00
+ S_R         LJ_6_12        4.0350  0.2740E+00
+ S_2         LJ_6_12        4.0350  0.2740E+00
+ Cl          LJ_6_12        3.9470  0.2270E+00
+ Ar4+4       LJ_6_12        3.8680  0.1850E+00
+ K_          LJ_6_12        3.8120  0.3500E-01
+ Ca6+2       LJ_6_12        3.3990  0.2380E+00
+ Sc3+3       LJ_6_12        3.2950  0.1900E-01
+ Ti3+4       LJ_6_12        3.1750  0.1700E-01
+ Ti6+4       LJ_6_12        3.1750  0.1700E-01
+ V_3+5       LJ_6_12        3.1440  0.1600E-01
+ Cr6+3       LJ_6_12        3.0230  0.1500E-01
+ Mn6+2       LJ_6_12        2.9610  0.1300E-01
+ Fe3+2       LJ_6_12        2.9120  0.1300E-01
+ Fe6+2       LJ_6_12        2.9120  0.1300E-01
+ Co6+3       LJ_6_12        2.8720  0.1400E-01
+ Ni4+2       LJ_6_12        2.8340  0.1500E-01
+ Cu3+1       LJ_6_12        3.4950  0.5000E-02
+ Zn3+2       LJ_6_12        2.7630  0.1240E+00
+ Ga3+3       LJ_6_12        4.3830  0.4150E+00
+ Ge3         LJ_6_12        4.2800  0.3790E+00
+ As3+3       LJ_6_12        4.2300  0.3090E+00
+ Se3+2       LJ_6_12        4.2050  0.2910E+00
+ Br          LJ_6_12        4.1890  0.2510E+00
+ Kr4+4       LJ_6_12        4.1410  0.2200E+00
+ Rb          LJ_6_12        4.1140  0.4000E-01
+ Sr6+2       LJ_6_12        3.6410  0.2350E+00
+ Y_3+3       LJ_6_12        3.3450  0.7200E-01
+ Zr3+4       LJ_6_12        3.1240  0.6900E-01
+ Nb3+5       LJ_6_12        3.1650  0.5900E-01
+ Mo6+6       LJ_6_12        3.0520  0.5600E-01
+ Mo3+6       LJ_6_12        3.0520  0.5600E-01
+ Tc6+5       LJ_6_12        2.9980  0.4800E-01
+ Ru6+2       LJ_6_12        2.9630  0.5600E-01
+ Rh6+3       LJ_6_12        2.9290  0.5300E-01
+ Pd4+2       LJ_6_12        2.8990  0.4800E-01
+ Ag1+1       LJ_6_12        3.1480  0.3600E-01
+ Cd3+2       LJ_6_12        2.8480  0.2280E+00
+ In3+3       LJ_6_12        4.4630  0.5990E+00
+ Sn3         LJ_6_12        4.3920  0.5670E+00
+ Sb3+3       LJ_6_12        4.4200  0.4490E+00
+ Te3+2       LJ_6_12        4.4700  0.3980E+00
+ I_          LJ_6_12        4.5000  0.3390E+00
+ Xe4+4       LJ_6_12        4.4040  0.3320E+00
+ Cs          LJ_6_12        4.5170  0.4500E-01
+ Ba6+2       LJ_6_12        3.7030  0.3640E+00
+ La3+3       LJ_6_12        3.5220  0.1700E-01
+ Ce6+3       LJ_6_12        3.5560  0.1300E-01
+ Pr6+3       LJ_6_12        3.6060  0.1000E-01
+ Nd6+3       LJ_6_12        3.5750  0.1000E-01
+ Pm6+3       LJ_6_12        3.5470  0.9000E-02
+ Sm6+3       LJ_6_12        3.5200  0.8000E-02
+ Eu6+3       LJ_6_12        3.4930  0.8000E-02
+ Gd6+3       LJ_6_12        3.3680  0.9000E-02
+ Tb6+3       LJ_6_12        3.4510  0.7000E-02
+ Dy6+3       LJ_6_12        3.4280  0.7000E-02
+ Ho6+3       LJ_6_12        3.4090  0.7000E-02
+ Er6+3       LJ_6_12        3.3910  0.7000E-02
+ Tm6+3       LJ_6_12        3.3740  0.6000E-02
+ Yb6+3       LJ_6_12        3.3550  0.2280E+00
+ Lu6+3       LJ_6_12        3.6400  0.4100E-01
+ Hf3+4       LJ_6_12        3.1410  0.7200E-01
+ Ta3+5       LJ_6_12        3.1700  0.8100E-01
+ W_6+6       LJ_6_12        3.0690  0.6700E-01
+ W_3+4       LJ_6_12        3.0690  0.6700E-01
+ W_3+6       LJ_6_12        3.0690  0.6700E-01
+ Re6+5       LJ_6_12        2.9540  0.6600E-01
+ Re3+7       LJ_6_12        2.9540  0.6600E-01
+ Os6+6       LJ_6_12        3.1200  0.3700E-01
+ Ir6+3       LJ_6_12        2.8400  0.7300E-01
+ Pt4+2       LJ_6_12        2.7540  0.8000E-01
+ Au4+3       LJ_6_12        3.2930  0.3900E-01
+ Hg1+2       LJ_6_12        2.7050  0.3850E+00
+ Tl3+3       LJ_6_12        4.3470  0.6800E+00
+ Pb3         LJ_6_12        4.2970  0.6630E+00
+ Bi3+3       LJ_6_12        4.3700  0.5180E+00
+ Po3+2       LJ_6_12        4.7090  0.3250E+00
+ At          LJ_6_12        4.7500  0.2840E+00
+ Rn4+4       LJ_6_12        4.7650  0.2480E+00
+ Fr          LJ_6_12        4.9000  0.5000E-01
+ Ra6+2       LJ_6_12        3.6770  0.4040E+00
+ Ac6+3       LJ_6_12        3.4780  0.3300E-01
+ Th6+4       LJ_6_12        3.3960  0.2600E-01
+ Pa6+4       LJ_6_12        3.4240  0.2200E-01
+ U_6+4       LJ_6_12        3.3950  0.2200E-01
+ Np6+4       LJ_6_12        3.4240  0.1900E-01
+ Pu6+4       LJ_6_12        3.4240  0.1600E-01
+ Am6+4       LJ_6_12        3.3810  0.1400E-01
+ Cm6+3       LJ_6_12        3.3260  0.1300E-01
+ Bk6+3       LJ_6_12        3.3390  0.1300E-01
+ Cf6+3       LJ_6_12        3.3130  0.1300E-01
+ Es6+3       LJ_6_12        3.2990  0.1200E-01
+ Fm6+3       LJ_6_12        3.2860  0.1200E-01
+ Md6+3       LJ_6_12        3.2740  0.1100E-01
+ No6+3       LJ_6_12        3.2480  0.1100E-01
+ Lw6+3       LJ_6_12        3.2360  0.1100E-01
+ CpR         LJ_6_12        3.8510  0.0000E+00
+ CpR_B       LJ_6_12        3.8510  0.0000E+00
+ CiR         LJ_6_12        3.8510  0.0000E+00
+ PiR         LJ_6_12        3.8510  0.0000E+00
+ D_          LJ_6_12        2.8860  0.4400E-01
+END
+#
+#
+ATOM_TYPING_RULES
+ H_              H            0           0           0           1
+ H___b           H            0           0           2           1
+                 **           0           0           0           1
+                 **           0           0           0           1
+ He4+4           He           0           0           0           1
+ Li              Li           0           0           0           1
+ Be3+2           Be           0           0           0           1
+ B_3             B            3           0           0           1
+ B_2             B            2           0           0           1
+ C_3             C            3           0           0           1
+ C_R             C            2           0           1           1
+                 **           2           0           2           1
+                 **           2           0           0           1
+                 **           2           0           0           1
+ C_R             C            2           0           1           1
+                 **           2           0           3           1
+                 **           2           0           0           1
+                 O            3           0           0           1
+                 **           0           0           0          -1
+ C_R             C            2           0           2           1
+                 **           2           0           0           1
+                 **           2           0           0           1
+ C_2             C            2           0           0           1
+ C_1             C            1           0           0           1
+ N_3             N            3           0           0           1
+ N_R             N            2           0           1           1
+                 **           2           0           2           1
+                 **           2           0           0           1
+                 **           2           0           0           1
+ N_R             N            2           0           2           1
+                 **           2           0           0           1
+                 **           2           0           0           1
+ N_2             N            2           0           0           1
+ N_1             N            1           0           0           1
+ O_3             O            3           0           0           1
+ O_R             O            2           0           2           1
+                 **           2           0           0           1
+                 **           2           0           0           1
+ O_R             O            3           0           3           1
+                 **           2           0           0           1
+                 **           0           0           0           1
+                 N            2           0           0          -1
+ O_R             O            2           0           1           1
+                 N            2           0           1           1
+                 O            2           0           0           1
+ O_2             O            2           0           0           1
+ O_1             O            1           0           1           1
+                 **           1           0           0           1
+ F_              F            0           0           0           1
+ Ne4+4           Ne           0           0           0           1
+ Na              Na           0           0           0           1
+ Mg3+2           Mg           0           0           0           1
+ Al3             Al           3           0           0           1
+ Si3             Si           3           0           0           1
+ P_3+3           P            3           0           0           1
+ P_3+5           P            3           0           0           1
+ S_2             S            2           0           1           1
+                 **           2           0           0           1
+ S_3+2           S            3           0           0           1
+ S_3+4           S            3           0           0           1
+ S_3+6           S            3           0           0           1
+ S_R             S            2           0           2           1
+                 **           2           0           0           1
+                 **           2           0           0           1
+ S_R             S            3           0           2           1
+                 **           2           0           0           1
+                 **           0           0           0           1
+ Cl              Cl           0           0           0           1
+ Ar4+4           Ar           0           0           0           1
+ K_              K            0           0           0           1
+ Ca6+2           Ca           0           0           0           1
+ Sc3+3           Sc           0           0           0           1
+ Ti3+4           Ti           3           0           0           1
+ V_3+5           V            0           0           0           1
+ Cr6+3           Cr           0           0           0           1
+ Fe6+2           Fe           0           0           0           1
+ Co6+3           Co           0           0           0           1
+ Ni4+2           Ni           0           0           0           1
+ Cu3+1           Cu           0           0           0           1
+ Zn3+2           Zn           3           0           0           1
+ Ga3+3           Ga           2           0           0           1
+ Ge3             Ge           3           0           0           1
+ As3+3           As           3           0           0           1
+ Se3+2           Se           3           0           0           1
+ Br              Br           0           0           0           1
+ Kr4+4           Kr           0           0           0           1
+ Rb              Rb           0           0           0           1
+ Sr6+2           Sr           0           0           0           1
+ Y_3+3           Y            0           0           0           1
+ Zr3+4           Zr           3           0           0           1
+ Nb3+5           Nb           0           0           0           1
+ Mo6+6           Mo           0           0           0           1
+ Mo3+6           Mo           0           0           0           1
+ Tc6+5           Tc           0           0           0           1
+ Ru6+2           Ru           0           0           0           1
+ Rh6+3           Rh           0           0           0           1
+ Pd4+2           Pd           0           0           0           1
+ Cd3+2           Cd           3           0           0           1
+ In3+3           In           2           0           0           1
+ Sn3             Sn           3           0           0           1
+ Sb3+3           Sb           3           0           0           1
+ Te3+2           Te           3           0           0           1
+ I_              I            0           0           0           1
+ Xe4+4           Xe           0           0           0           1
+ Cs              Cs           0           0           0           1
+ Ba6+2           Ba           0           0           0           1
+ La3+3           La           0           0           0           1
+ Ce6+3           Ce           0           0           0           1
+ Pr6+3           Pr           0           0           0           1
+ Nd6+3           Nd           0           0           0           1
+ Pm6+3           Pm           0           0           0           1
+ Sm6+3           Sm           0           0           0           1
+ Eu6+3           Eu           0           0           0           1
+ Gd6+3           Gd           0           0           0           1
+ Tb6+3           Tb           0           0           0           1
+ Dy6+3           Dy           0           0           0           1
+ Ho6+3           Ho           0           0           0           1
+ Er6+3           Er           0           0           0           1
+ Tm6+3           Tm           0           0           0           1
+ Yb6+3           Yb           0           0           0           1
+ Lu6+3           Lu           0           0           0           1
+ Hf3+4           Hf           3           0           0           1
+ Ta3+5           Ta           0           0           0           1
+ W_6+6           W            0           0           0           1
+ W_3+4           W            0           0           0           1
+ W_3+6           W            0           0           0           1
+ Re6+5           Re           0           0           0           1
+ Os6+6           Os           0           0           0           1
+ Ir6+3           Ir           0           0           0           1
+ Pt4+2           Pt           0           0           0           1
+ Au4+3           Au           1           0           0           1
+ Hg1+2           Hg           1           0           0           1
+ Tl3+3           Tl           2           0           0           1
+ Pb3             Pb           3           0           0           1
+ Bi3+3           Bi           3           0           0           1
+ Po3+2           Po           3           0           0           1
+ At              At           0           0           0           1
+ Rn4+4           Rn           0           0           0           1
+ Fr              Fr           0           0           0           1
+ Ra6+2           Ra           0           0           0           1
+ Ac6+3           Ac           0           0           0           1
+ Th6+4           Th           0           0           0           1
+ Pa6+4           Pa           0           0           0           1
+ U_6+4           U            0           0           0           1
+ Np6+4           Np           0           0           0           1
+ Pu6+4           Pu           0           0           0           1
+ Am6+4           Am           0           0           0           1
+ Cm6+3           Cm           0           0           0           1
+ Bk6+3           Bk           0           0           0           1
+ Cf6+3           Cf           0           0           0           1
+ Es6+3           Es           0           0           0           1
+ Fm6+3           Fm           0           0           0           1
+ Md6+3           Md           0           0           0           1
+ No6+3           No           0           0           0           1
+ Lw6+3           Lr           0           0           0           1
+ CpR             Cp           0           0           5           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+ PiR             Cp           0           0           3           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+ CiR             Cp           0           0           2           1
+                 C            0           0           0           1
+                 C            0           0           0           1
+ CpR             Cp           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Si           0           0           0           1
+                 Si           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Al           0           0           0           1
+                 Al           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 P            0           0           0           1
+                 P            0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Ga           0           0           0           1
+                 Ga           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Ge           0           0           0           1
+                 Ge           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Si           0           0           0           1
+                 Al           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Si           0           0           0           1
+                 P            0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Si           0           0           0           1
+                 Ga           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Si           0           0           0           1
+                 Ge           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Al           0           0           0           1
+                 P            0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Al           0           0           0           1
+                 Ga           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Al           0           0           0           1
+                 Ge           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 P            0           0           0           1
+                 Ga           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 P            0           0           0           1
+                 Ge           0           0           0           1
+ O_3_z           O            3           0           2           1
+                 Ga           0           0           0           1
+                 Ge           0           0           0           1
+END
+#
+#
+OFF_DIAGONAL_VDW
+END
+#
+EQUIVALENCE_BOND
+ VB         ALL         X     X
+ H_         ALL         H_    X
+ H___b      ALL         H___b X
+ He4+4      ALL         He4+4 X
+ Li         ALL         Li    X
+ Be3+2      ALL         Be3+2 X
+ B_3        ALL         B_3   X
+ B_2        ALL         B_2   X
+ C_3        ALL         C_3   X
+ C_R        ALL         C_R   X
+ C_2        ALL         C_2   X
+ C_1        ALL         C_1   X
+ N_3        ALL         N_3   X
+ N_R        ALL         N_R   X
+ N_2        ALL         N_2   X
+ N_1        ALL         N_1   X
+ O_3        ALL         O_3   X
+ O_3_z      ALL         O_3_z X
+ O_R        ALL         O_R   X
+ O_2        ALL         O_2   X
+ O_1        ALL         O_1   X
+ F_         ALL         F_    X
+ Ne4+4      ALL         Ne4+4 X
+ Na         ALL         Na    X
+ Mg3+2      ALL         Mg3+2 X
+ Al3        ALL         Al3   X
+ Si3        ALL         Si3   X
+ P_3+3      ALL         P_3+3 X
+ P_3+5      ALL         P_3+5 X
+ P_3+q      ALL         P_3+q X
+ S_3+2      ALL         S_3+2 X
+ S_3+4      ALL         S_3+4 X
+ S_3+6      ALL         S_3+6 X
+ S_R        ALL         S_R   X
+ S_2        ALL         S_2   X
+ Cl         ALL         Cl    X
+ Ar4+4      ALL         Ar4+4 X
+ K_         ALL         K_    X
+ Ca6+2      ALL         Ca6+2 X
+ Sc3+3      ALL         Sc3+3 X
+ Ti3+4      ALL         Ti3+4 X
+ Ti6+4      ALL         Ti6+4 X
+ V_3+5      ALL         V_3+5 X
+ Cr6+3      ALL         Cr6+3 X
+ Mn6+2      ALL         Mn6+2 X
+ Fe3+2      ALL         Fe3+2 X
+ Fe6+2      ALL         Fe6+2 X
+ Co6+3      ALL         Co6+3 X
+ Ni4+2      ALL         Ni4+2 X
+ Cu3+1      ALL         Cu3+1 X
+ Zn3+2      ALL         Zn3+2 X
+ Ga3+3      ALL         Ga3+3 X
+ Ge3        ALL         Ge3   X
+ As3+3      ALL         As3+3 X
+ Se3+2      ALL         Se3+2 X
+ Br         ALL         Br    X
+ Kr4+4      ALL         Kr4+4 X
+ Rb         ALL         Rb    X
+ Sr6+2      ALL         Sr6+2 X
+ Y_3+3      ALL         Y_3+3 X
+ Zr3+4      ALL         Zr3+4 X
+ Nb3+5      ALL         Nb3+5 X
+ Mo6+6      ALL         Mo6+6 X
+ Mo3+6      ALL         Mo3+6 X
+ Tc6+5      ALL         Tc6+5 X
+ Ru6+2      ALL         Ru6+2 X
+ Rh6+3      ALL         Rh6+3 X
+ Pd4+2      ALL         Pd4+2 X
+ Ag1+1      ALL         Ag1+1 X
+ Cd3+2      ALL         Cd3+2 X
+ In3+3      ALL         In3+3 X
+ Sn3        ALL         Sn3   X
+ Sb3+3      ALL         Sb3+3 X
+ Te3+2      ALL         Te3+2 X
+ I_         ALL         I_    X
+ Xe4+4      ALL         Xe4+4 X
+ Cs         ALL         Cs    X
+ Ba6+2      ALL         Ba6+2 X
+ La3+3      ALL         La3+3 X
+ Ce6+3      ALL         Ce6+3 X
+ Pr6+3      ALL         Pr6+3 X
+ Nd6+3      ALL         Nd6+3 X
+ Pm6+3      ALL         Pm6+3 X
+ Sm6+3      ALL         Sm6+3 X
+ Eu6+3      ALL         Eu6+3 X
+ Gd6+3      ALL         Gd6+3 X
+ Tb6+3      ALL         Tb6+3 X
+ Dy6+3      ALL         Dy6+3 X
+ Ho6+3      ALL         Ho6+3 X
+ Er6+3      ALL         Er6+3 X
+ Tm6+3      ALL         Tm6+3 X
+ Yb6+3      ALL         Yb6+3 X
+ Lu6+3      ALL         Lu6+3 X
+ Hf3+4      ALL         Hf3+4 X
+ Ta3+5      ALL         Ta3+5 X
+ W_6+6      ALL         W_6+6 X
+ W_3+4      ALL         W_3+4 X
+ W_3+6      ALL         W_3+6 X
+ Re6+5      ALL         Re6+5 X
+ Re3+7      ALL         Re3+7 X
+ Os6+6      ALL         Os6+6 X
+ Ir6+3      ALL         Ir6+3 X
+ Pt4+2      ALL         Pt4+2 X
+ Au4+3      ALL         Au4+3 X
+ Hg1+2      ALL         Hg1+2 X
+ Tl3+3      ALL         Tl3+3 X
+ Pb3        ALL         Pb3   X
+ Bi3+3      ALL         Bi3+3 X
+ Po3+2      ALL         Po3+2 X
+ At         ALL         At    X
+ Rn4+4      ALL         Rn4+4 X
+ Fr         ALL         Fr    X
+ Ra6+2      ALL         Ra6+2 X
+ Ac6+3      ALL         Ac6+3 X
+ Th6+4      ALL         Th6+4 X
+ Pa6+4      ALL         Pa6+4 X
+ U_6+4      ALL         U_6+4 X
+ Np6+4      ALL         Np6+4 X
+ Pu6+4      ALL         Pu6+4 X
+ Am6+4      ALL         Am6+4 X
+ Cm6+3      ALL         Cm6+3 X
+ Bk6+3      ALL         Bk6+3 X
+ Cf6+3      ALL         Cf6+3 X
+ Es6+3      ALL         Es6+3 X
+ Fm6+3      ALL         Fm6+3 X
+ Md6+3      ALL         Md6+3 X
+ No6+3      ALL         No6+3 X
+ Lw6+3      ALL         Lw6+3 X
+ CpR        ALL         CpR   X
+ CpR_B      ALL         CpR_B X
+ CiR        ALL         CiR   X
+ PiR        ALL         PiR   X
+ D_         ALL         D_    X
+END
+#
+STEP_DOWN_BOND
+    1    1    1   
+    2    2    1   
+END
+#
+BOND_STRETCH
+ CpR      C_R         HARMONIC     700.0000    1.1733
+ CpR_B    C_R         HARMONIC     700.0000    1.1733
+ CiR      C_2         HARMONIC     700.0000    0.6644
+ PiR      C_R         HARMONIC     700.0000    0.9951
+ X        X           UFF_GEN
+END
+#
+EQUIVALENCE_ANGLE
+ VB         CENTER      VB    VB    X
+            END         X     X     X
+ H_         CENTER      H_    VB    X
+            END         H_    H_    X
+ H___b      CENTER      H___b VB    X
+            END         H___b H___b X
+ He4+4      CENTER      He4+4 VB    X
+            END         He4+4 He4+4 X
+ Li         CENTER      Li    VB    X
+            END         Li    Li    X
+ Be3+2      CENTER      Be3+2 VB    X
+            END         Be3+2 Be3+2 X
+ B_3        CENTER      B_3   VB    X
+            END         B_3   B_3   X
+ B_2        CENTER      B_2   VB    X
+            END         B_2   B_2   X
+ C_3        CENTER      C_3   VB    X
+            END         C_3   C_3   X
+ C_R        CENTER      C_R   VB    X
+            END         C_R   C_R   X
+ C_2        CENTER      C_2   VB    X
+            END         C_2   C_2   X
+ C_1        CENTER      C_1   VB    X
+            END         C_1   C_1   X
+ N_3        CENTER      N_3   VB    X
+            END         N_3   N_3   X
+ N_R        CENTER      N_R   VB    X
+            END         N_R   N_R   X
+ N_2        CENTER      N_2   VB    X
+            END         N_2   N_2   X
+ N_1        CENTER      N_1   VB    X
+            END         N_1   N_1   X
+ O_3        CENTER      O_3   VB    X
+            END         O_3   O_3   X
+ O_3_z      CENTER      O_3_z VB    X
+            END         O_3_z O_3_z X
+ O_R        CENTER      O_R   VB    X
+            END         O_R   O_R   X
+ O_2        CENTER      O_2   VB    X
+            END         O_2   O_2   X
+ O_1        CENTER      O_1   VB    X
+            END         O_1   O_1   X
+ F_         CENTER      F_    VB    X
+            END         F_    F_    X
+ Ne4+4      CENTER      Ne4+4 VB    X
+            END         Ne4+4 Ne4+4 X
+ Na         CENTER      Na    VB    X
+            END         Na    Na    X
+ Mg3+2      CENTER      Mg3+2 VB    X
+            END         Mg3+2 Mg3+2 X
+ Al3        CENTER      Al3   VB    X
+            END         Al3   Al3   X
+ Si3        CENTER      Si3   VB    X
+            END         Si3   Si3   X
+ P_3+3      CENTER      P_3+3 VB    X
+            END         P_3+3 P_3+3 X
+ P_3+5      CENTER      P_3+5 VB    X
+            END         P_3+5 P_3+5 X
+ P_3+q      CENTER      P_3+q VB    X
+            END         P_3+q P_3+q X
+ S_3+2      CENTER      S_3+2 VB    X
+            END         S_3+2 S_3+2 X
+ S_3+4      CENTER      S_3+4 VB    X
+            END         S_3+4 S_3+4 X
+ S_3+6      CENTER      S_3+6 VB    X
+            END         S_3+6 S_3+6 X
+ S_R        CENTER      S_R   VB    X
+            END         S_R   S_R   X
+ S_2        CENTER      S_2   VB    X
+            END         S_2   S_2   X
+ Cl         CENTER      Cl    VB    X
+            END         Cl    Cl    X
+ Ar4+4      CENTER      Ar4+4 VB    X
+            END         Ar4+4 Ar4+4 X
+ K_         CENTER      K_    VB    X
+            END         K_    K_    X
+ Ca6+2      CENTER      Ca6+2 VB    X
+            END         Ca6+2 Ca6+2 X
+ Sc3+3      CENTER      Sc3+3 VB    X
+            END         Sc3+3 Sc3+3 X
+ Ti3+4      CENTER      Ti3+4 VB    X
+            END         Ti3+4 Ti3+4 X
+ Ti6+4      CENTER      Ti6+4 VB    X
+            END         Ti6+4 Ti6+4 X
+ V_3+5      CENTER      V_3+5 VB    X
+            END         V_3+5 V_3+5 X
+ Cr6+3      CENTER      Cr6+3 VB    X
+            END         Cr6+3 Cr6+3 X
+ Mn6+2      CENTER      Mn6+2 VB    X
+            END         Mn6+2 Mn6+2 X
+ Fe3+2      CENTER      Fe3+2 VB    X
+            END         Fe3+2 Fe3+2 X
+ Fe6+2      CENTER      Fe6+2 VB    X
+            END         Fe6+2 Fe6+2 X
+ Co6+3      CENTER      Co6+3 VB    X
+            END         Co6+3 Co6+3 X
+ Ni4+2      CENTER      Ni4+2 VB    X
+            END         Ni4+2 Ni4+2 X
+ Cu3+1      CENTER      Cu3+1 VB    X
+            END         Cu3+1 Cu3+1 X
+ Zn3+2      CENTER      Zn3+2 VB    X
+            END         Zn3+2 Zn3+2 X
+ Ga3+3      CENTER      Ga3+3 VB    X
+            END         Ga3+3 Ga3+3 X
+ Ge3        CENTER      Ge3   VB    X
+            END         Ge3   Ge3   X
+ As3+3      CENTER      As3+3 VB    X
+            END         As3+3 As3+3 X
+ Se3+2      CENTER      Se3+2 VB    X
+            END         Se3+2 Se3+2 X
+ Br         CENTER      Br    VB    X
+            END         Br    Br    X
+ Kr4+4      CENTER      Kr4+4 VB    X
+            END         Kr4+4 Kr4+4 X
+ Rb         CENTER      Rb    VB    X
+            END         Rb    Rb    X
+ Sr6+2      CENTER      Sr6+2 VB    X
+            END         Sr6+2 Sr6+2 X
+ Y_3+3      CENTER      Y_3+3 VB    X
+            END         Y_3+3 Y_3+3 X
+ Zr3+4      CENTER      Zr3+4 VB    X
+            END         Zr3+4 Zr3+4 X
+ Nb3+5      CENTER      Nb3+5 VB    X
+            END         Nb3+5 Nb3+5 X
+ Mo6+6      CENTER      Mo6+6 VB    X
+            END         Mo6+6 Mo6+6 X
+ Mo3+6      CENTER      Mo3+6 VB    X
+            END         Mo3+6 Mo3+6 X
+ Tc6+5      CENTER      Tc6+5 VB    X
+            END         Tc6+5 Tc6+5 X
+ Ru6+2      CENTER      Ru6+2 VB    X
+            END         Ru6+2 Ru6+2 X
+ Rh6+3      CENTER      Rh6+3 VB    X
+            END         Rh6+3 Rh6+3 X
+ Pd4+2      CENTER      Pd4+2 VB    X
+            END         Pd4+2 Pd4+2 X
+ Ag1+1      CENTER      Ag1+1 VB    X
+            END         Ag1+1 Ag1+1 X
+ Cd3+2      CENTER      Cd3+2 VB    X
+            END         Cd3+2 Cd3+2 X
+ In3+3      CENTER      In3+3 VB    X
+            END         In3+3 In3+3 X
+ Sn3        CENTER      Sn3   VB    X
+            END         Sn3   Sn3   X
+ Sb3+3      CENTER      Sb3+3 VB    X
+            END         Sb3+3 Sb3+3 X
+ Te3+2      CENTER      Te3+2 VB    X
+            END         Te3+2 Te3+2 X
+ I_         CENTER      I_    VB    X
+            END         I_    I_    X
+ Xe4+4      CENTER      Xe4+4 VB    X
+            END         Xe4+4 Xe4+4 X
+ Cs         CENTER      Cs    VB    X
+            END         Cs    Cs    X
+ Ba6+2      CENTER      Ba6+2 VB    X
+            END         Ba6+2 Ba6+2 X
+ La3+3      CENTER      La3+3 VB    X
+            END         La3+3 La3+3 X
+ Ce6+3      CENTER      Ce6+3 VB    X
+            END         Ce6+3 Ce6+3 X
+ Pr6+3      CENTER      Pr6+3 VB    X
+            END         Pr6+3 Pr6+3 X
+ Nd6+3      CENTER      Nd6+3 VB    X
+            END         Nd6+3 Nd6+3 X
+ Pm6+3      CENTER      Pm6+3 VB    X
+            END         Pm6+3 Pm6+3 X
+ Sm6+3      CENTER      Sm6+3 VB    X
+            END         Sm6+3 Sm6+3 X
+ Eu6+3      CENTER      Eu6+3 VB    X
+            END         Eu6+3 Eu6+3 X
+ Gd6+3      CENTER      Gd6+3 VB    X
+            END         Gd6+3 Gd6+3 X
+ Tb6+3      CENTER      Tb6+3 VB    X
+            END         Tb6+3 Tb6+3 X
+ Dy6+3      CENTER      Dy6+3 VB    X
+            END         Dy6+3 Dy6+3 X
+ Ho6+3      CENTER      Ho6+3 VB    X
+            END         Ho6+3 Ho6+3 X
+ Er6+3      CENTER      Er6+3 VB    X
+            END         Er6+3 Er6+3 X
+ Tm6+3      CENTER      Tm6+3 VB    X
+            END         Tm6+3 Tm6+3 X
+ Yb6+3      CENTER      Yb6+3 VB    X
+            END         Yb6+3 Yb6+3 X
+ Lu6+3      CENTER      Lu6+3 VB    X
+            END         Lu6+3 Lu6+3 X
+ Hf3+4      CENTER      Hf3+4 VB    X
+            END         Hf3+4 Hf3+4 X
+ Ta3+5      CENTER      Ta3+5 VB    X
+            END         Ta3+5 Ta3+5 X
+ W_6+6      CENTER      W_6+6 VB    X
+            END         W_6+6 W_6+6 X
+ W_3+4      CENTER      W_3+4 VB    X
+            END         W_3+4 W_3+4 X
+ W_3+6      CENTER      W_3+6 VB    X
+            END         W_3+6 W_3+6 X
+ Re6+5      CENTER      Re6+5 VB    X
+            END         Re6+5 Re6+5 X
+ Re3+7      CENTER      Re3+7 VB    X
+            END         Re3+7 Re3+7 X
+ Os6+6      CENTER      Os6+6 VB    X
+            END         Os6+6 Os6+6 X
+ Ir6+3      CENTER      Ir6+3 VB    X
+            END         Ir6+3 Ir6+3 X
+ Pt4+2      CENTER      Pt4+2 VB    X
+            END         Pt4+2 Pt4+2 X
+ Au4+3      CENTER      Au4+3 VB    X
+            END         Au4+3 Au4+3 X
+ Hg1+2      CENTER      Hg1+2 VB    X
+            END         Hg1+2 Hg1+2 X
+ Tl3+3      CENTER      Tl3+3 VB    X
+            END         Tl3+3 Tl3+3 X
+ Pb3        CENTER      Pb3   VB    X
+            END         Pb3   Pb3   X
+ Bi3+3      CENTER      Bi3+3 VB    X
+            END         Bi3+3 Bi3+3 X
+ Po3+2      CENTER      Po3+2 VB    X
+            END         Po3+2 Po3+2 X
+ At         CENTER      At    VB    X
+            END         At    At    X
+ Rn4+4      CENTER      Rn4+4 VB    X
+            END         Rn4+4 Rn4+4 X
+ Fr         CENTER      Fr    VB    X
+            END         Fr    Fr    X
+ Ra6+2      CENTER      Ra6+2 VB    X
+            END         Ra6+2 Ra6+2 X
+ Ac6+3      CENTER      Ac6+3 VB    X
+            END         Ac6+3 Ac6+3 X
+ Th6+4      CENTER      Th6+4 VB    X
+            END         Th6+4 Th6+4 X
+ Pa6+4      CENTER      Pa6+4 VB    X
+            END         Pa6+4 Pa6+4 X
+ U_6+4      CENTER      U_6+4 VB    X
+            END         U_6+4 U_6+4 X
+ Np6+4      CENTER      Np6+4 VB    X
+            END         Np6+4 Np6+4 X
+ Pu6+4      CENTER      Pu6+4 VB    X
+            END         Pu6+4 Pu6+4 X
+ Am6+4      CENTER      Am6+4 VB    X
+            END         Am6+4 Am6+4 X
+ Cm6+3      CENTER      Cm6+3 VB    X
+            END         Cm6+3 Cm6+3 X
+ Bk6+3      CENTER      Bk6+3 VB    X
+            END         Bk6+3 Bk6+3 X
+ Cf6+3      CENTER      Cf6+3 VB    X
+            END         Cf6+3 Cf6+3 X
+ Es6+3      CENTER      Es6+3 VB    X
+            END         Es6+3 Es6+3 X
+ Fm6+3      CENTER      Fm6+3 VB    X
+            END         Fm6+3 Fm6+3 X
+ Md6+3      CENTER      Md6+3 VB    X
+            END         Md6+3 Md6+3 X
+ No6+3      CENTER      No6+3 VB    X
+            END         No6+3 No6+3 X
+ Lw6+3      CENTER      Lw6+3 VB    X
+            END         Lw6+3 Lw6+3 X
+ CpR        CENTER      CpR   VB    X
+            END         CpR   CpR   X
+ CpR_B      CENTER      CpR_B VB    X
+            END         CpR_B CpR_B X
+ CiR        CENTER      CiR   VB    X
+            END         CiR   CiR   X
+ PiR        CENTER      PiR   VB    X
+            END         PiR   PiR   X
+ D_         CENTER      D_    VB    X
+            END         D_    D_    X
+END
+#
+STEP_DOWN_ANGLE
+  1    1    1    1    1  
+  1    1    3    1    1  
+  3    1    3    1    1  
+  3    2    3    1    1  
+  3    3    3    1    1  
+END
+#
+ANGLE_BEND
+ CpR      C_R      X           COS_HARMON   100.0000  180.0000
+ CpR      C_R      C_R         COS_HARMON     0.0000   54.0000
+ CpR_B    C_R      X           COS_HARMON   100.0000  180.0000
+ CpR_B    C_R      C_R         COS_HARMON     0.0000   54.0000
+ PiR      C_R      X           COS_HARMON   100.0000  180.0000
+ PiR      C_R      C_R         COS_HARMON     0.0000   54.0000
+ CiR      C_2      C_2         COS_HARMON     0.0000    0.0000
+ CpR_B    Mn6+2    X           COS_HARMON   100.0000  135.0000
+ CpR_B    Fe6+2    X           COS_HARMON   100.0000  135.0000
+ C_R      CpR      X           COS_HARMON   100.0000   90.0000
+ C_R      CpR      C_R         COS_HARMON     0.0000   72.0000
+ C_R      CpR_B    X           COS_HARMON   100.0000   90.0000
+ C_R      CpR_B    C_R         COS_HARMON     0.0000   72.0000
+ C_2      CiR      X           COS_HARMON   100.0000   90.0000
+ C_2      CiR      C_2         COS_HARMON     0.0000  180.0000
+ C_R      PiR      X           COS_HARMON   100.0000   90.0000
+ C_R      PiR      C_R         COS_HARMON     0.0000   72.0000
+ X        VB       X           VB_GEN
+ X        X        X           UFF_GEN
+END
+#
+EQUIVALENCE_TORSION
+ VB         CENTER      X     X
+            END         X     X
+ H_         CENTER      H_    X
+            END         H_    X
+ H___b      CENTER      H___b X
+            END         H___b X
+ He4+4      CENTER      He4+4 X
+            END         He4+4 X
+ Li         CENTER      Li    X
+            END         Li    X
+ Be3+2      CENTER      Be3+2 X
+            END         Be3+2 X
+ B_3        CENTER      B_3   X
+            END         B_3   X
+ B_2        CENTER      B_2   X
+            END         B_2   X
+ C_3        CENTER      C_3   X
+            END         C_3   X
+ C_R        CENTER      C_R   X
+            END         C_R   X
+ C_2        CENTER      C_2   X
+            END         C_2   X
+ C_1        CENTER      C_1   X
+            END         C_1   X
+ N_3        CENTER      N_3   X
+            END         N_3   X
+ N_R        CENTER      N_R   X
+            END         N_R   X
+ N_2        CENTER      N_2   X
+            END         N_2   X
+ N_1        CENTER      N_1   X
+            END         N_1   X
+ O_3        CENTER      O_3   X
+            END         O_3   X
+ O_3_z      CENTER      O_3_z X
+            END         O_3_z X
+ O_R        CENTER      O_R   X
+            END         O_R   X
+ O_2        CENTER      O_2   X
+            END         O_2   X
+ O_1        CENTER      O_1   X
+            END         O_1   X
+ F_         CENTER      F_    X
+            END         F_    X
+ Ne4+4      CENTER      Ne4+4 X
+            END         Ne4+4 X
+ Na         CENTER      Na    X
+            END         Na    X
+ Mg3+2      CENTER      Mg3+2 X
+            END         Mg3+2 X
+ Al3        CENTER      Al3   X
+            END         Al3   X
+ Si3        CENTER      Si3   X
+            END         Si3   X
+ P_3+3      CENTER      P_3+3 X
+            END         P_3+3 X
+ P_3+5      CENTER      P_3+5 X
+            END         P_3+5 X
+ P_3+q      CENTER      P_3+q X
+            END         P_3+q X
+ S_3+2      CENTER      S_3+2 X
+            END         S_3+2 X
+ S_3+4      CENTER      S_3+4 X
+            END         S_3+4 X
+ S_3+6      CENTER      S_3+6 X
+            END         S_3+6 X
+ S_R        CENTER      S_R   X
+            END         S_R   X
+ S_2        CENTER      S_2   X
+            END         S_2   X
+ Cl         CENTER      Cl    X
+            END         Cl    X
+ Ar4+4      CENTER      Ar4+4 X
+            END         Ar4+4 X
+ K_         CENTER      K_    X
+            END         K_    X
+ Ca6+2      CENTER      Ca6+2 X
+            END         Ca6+2 X
+ Sc3+3      CENTER      Sc3+3 X
+            END         Sc3+3 X
+ Ti3+4      CENTER      Ti3+4 X
+            END         Ti3+4 X
+ Ti6+4      CENTER      Ti6+4 X
+            END         Ti6+4 X
+ V_3+5      CENTER      V_3+5 X
+            END         V_3+5 X
+ Cr6+3      CENTER      Cr6+3 X
+            END         Cr6+3 X
+ Mn6+2      CENTER      Mn6+2 X
+            END         Mn6+2 X
+ Fe3+2      CENTER      Fe3+2 X
+            END         Fe3+2 X
+ Fe6+2      CENTER      Fe6+2 X
+            END         Fe6+2 X
+ Co6+3      CENTER      Co6+3 X
+            END         Co6+3 X
+ Ni4+2      CENTER      Ni4+2 X
+            END         Ni4+2 X
+ Cu3+1      CENTER      Cu3+1 X
+            END         Cu3+1 X
+ Zn3+2      CENTER      Zn3+2 X
+            END         Zn3+2 X
+ Ga3+3      CENTER      Ga3+3 X
+            END         Ga3+3 X
+ Ge3        CENTER      Ge3   X
+            END         Ge3   X
+ As3+3      CENTER      As3+3 X
+            END         As3+3 X
+ Se3+2      CENTER      Se3+2 X
+            END         Se3+2 X
+ Br         CENTER      Br    X
+            END         Br    X
+ Kr4+4      CENTER      Kr4+4 X
+            END         Kr4+4 X
+ Rb         CENTER      Rb    X
+            END         Rb    X
+ Sr6+2      CENTER      Sr6+2 X
+            END         Sr6+2 X
+ Y_3+3      CENTER      Y_3+3 X
+            END         Y_3+3 X
+ Zr3+4      CENTER      Zr3+4 X
+            END         Zr3+4 X
+ Nb3+5      CENTER      Nb3+5 X
+            END         Nb3+5 X
+ Mo6+6      CENTER      Mo6+6 X
+            END         Mo6+6 X
+ Mo3+6      CENTER      Mo3+6 X
+            END         Mo3+6 X
+ Tc6+5      CENTER      Tc6+5 X
+            END         Tc6+5 X
+ Ru6+2      CENTER      Ru6+2 X
+            END         Ru6+2 X
+ Rh6+3      CENTER      Rh6+3 X
+            END         Rh6+3 X
+ Pd4+2      CENTER      Pd4+2 X
+            END         Pd4+2 X
+ Ag1+1      CENTER      Ag1+1 X
+            END         Ag1+1 X
+ Cd3+2      CENTER      Cd3+2 X
+            END         Cd3+2 X
+ In3+3      CENTER      In3+3 X
+            END         In3+3 X
+ Sn3        CENTER      Sn3   X
+            END         Sn3   X
+ Sb3+3      CENTER      Sb3+3 X
+            END         Sb3+3 X
+ Te3+2      CENTER      Te3+2 X
+            END         Te3+2 X
+ I_         CENTER      I_    X
+            END         I_    X
+ Xe4+4      CENTER      Xe4+4 X
+            END         Xe4+4 X
+ Cs         CENTER      Cs    X
+            END         Cs    X
+ Ba6+2      CENTER      Ba6+2 X
+            END         Ba6+2 X
+ La3+3      CENTER      La3+3 X
+            END         La3+3 X
+ Ce6+3      CENTER      Ce6+3 X
+            END         Ce6+3 X
+ Pr6+3      CENTER      Pr6+3 X
+            END         Pr6+3 X
+ Nd6+3      CENTER      Nd6+3 X
+            END         Nd6+3 X
+ Pm6+3      CENTER      Pm6+3 X
+            END         Pm6+3 X
+ Sm6+3      CENTER      Sm6+3 X
+            END         Sm6+3 X
+ Eu6+3      CENTER      Eu6+3 X
+            END         Eu6+3 X
+ Gd6+3      CENTER      Gd6+3 X
+            END         Gd6+3 X
+ Tb6+3      CENTER      Tb6+3 X
+            END         Tb6+3 X
+ Dy6+3      CENTER      Dy6+3 X
+            END         Dy6+3 X
+ Ho6+3      CENTER      Ho6+3 X
+            END         Ho6+3 X
+ Er6+3      CENTER      Er6+3 X
+            END         Er6+3 X
+ Tm6+3      CENTER      Tm6+3 X
+            END         Tm6+3 X
+ Yb6+3      CENTER      Yb6+3 X
+            END         Yb6+3 X
+ Lu6+3      CENTER      Lu6+3 X
+            END         Lu6+3 X
+ Hf3+4      CENTER      Hf3+4 X
+            END         Hf3+4 X
+ Ta3+5      CENTER      Ta3+5 X
+            END         Ta3+5 X
+ W_6+6      CENTER      W_6+6 X
+            END         W_6+6 X
+ W_3+4      CENTER      W_3+4 X
+            END         W_3+4 X
+ W_3+6      CENTER      W_3+6 X
+            END         W_3+6 X
+ Re6+5      CENTER      Re6+5 X
+            END         Re6+5 X
+ Re3+7      CENTER      Re3+7 X
+            END         Re3+7 X
+ Os6+6      CENTER      Os6+6 X
+            END         Os6+6 X
+ Ir6+3      CENTER      Ir6+3 X
+            END         Ir6+3 X
+ Pt4+2      CENTER      Pt4+2 X
+            END         Pt4+2 X
+ Au4+3      CENTER      Au4+3 X
+            END         Au4+3 X
+ Hg1+2      CENTER      Hg1+2 X
+            END         Hg1+2 X
+ Tl3+3      CENTER      Tl3+3 X
+            END         Tl3+3 X
+ Pb3        CENTER      Pb3   X
+            END         Pb3   X
+ Bi3+3      CENTER      Bi3+3 X
+            END         Bi3+3 X
+ Po3+2      CENTER      Po3+2 X
+            END         Po3+2 X
+ At         CENTER      At    X
+            END         At    X
+ Rn4+4      CENTER      Rn4+4 X
+            END         Rn4+4 X
+ Fr         CENTER      Fr    X
+            END         Fr    X
+ Ra6+2      CENTER      Ra6+2 X
+            END         Ra6+2 X
+ Ac6+3      CENTER      Ac6+3 X
+            END         Ac6+3 X
+ Th6+4      CENTER      Th6+4 X
+            END         Th6+4 X
+ Pa6+4      CENTER      Pa6+4 X
+            END         Pa6+4 X
+ U_6+4      CENTER      U_6+4 X
+            END         U_6+4 X
+ Np6+4      CENTER      Np6+4 X
+            END         Np6+4 X
+ Pu6+4      CENTER      Pu6+4 X
+            END         Pu6+4 X
+ Am6+4      CENTER      Am6+4 X
+            END         Am6+4 X
+ Cm6+3      CENTER      Cm6+3 X
+            END         Cm6+3 X
+ Bk6+3      CENTER      Bk6+3 X
+            END         Bk6+3 X
+ Cf6+3      CENTER      Cf6+3 X
+            END         Cf6+3 X
+ Es6+3      CENTER      Es6+3 X
+            END         Es6+3 X
+ Fm6+3      CENTER      Fm6+3 X
+            END         Fm6+3 X
+ Md6+3      CENTER      Md6+3 X
+            END         Md6+3 X
+ No6+3      CENTER      No6+3 X
+            END         No6+3 X
+ Lw6+3      CENTER      Lw6+3 X
+            END         Lw6+3 X
+ CpR        CENTER      CpR   X
+            END         CpR   X
+ CpR_B      CENTER      CpR_B X
+            END         CpR_B X
+ CiR        CENTER      CiR   X
+            END         CiR   X
+ PiR        CENTER      PiR   X
+            END         PiR   X
+ D_         CENTER      D_    X
+            END         D_    X
+END
+#
+STEP_DOWN_TORSION
+    1    1    1    1    1    1    1 
+    2    2    2    2    1    1    1 
+END
+#
+TORSIONS
+ CiR      C_2      C_2      X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        O_3      O_3      X           DIHEDRAL       2.0000    2.0000   -1.0000
+ X        S_3+2    O_3      X           DIHEDRAL       3.6880    2.0000   -1.0000
+ X        S_3+2    S_3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Se3+2    O_3      X           DIHEDRAL       3.6880    2.0000   -1.0000
+ X        Se3+2    S_3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Se3+2    Se3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Zr3+4    C_3      X           DIHEDRAL       2.0000    3.0000    1.0000
+ X        Te3+2    O_3      X           DIHEDRAL       3.6880    2.0000   -1.0000
+ X        Te3+2    S_3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Te3+2    Se3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Te3+2    Te3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Po3+2    O_3      X           DIHEDRAL       3.6880    2.0000   -1.0000
+ X        Po3+2    S_3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Po3+2    Se3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Po3+2    Te3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        Po3+2    Po3+2    X           DIHEDRAL       6.8000    2.0000   -1.0000
+ X        CpR      C_R      X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        CpR      Ti3+4    X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        CpR      Zr3+4    X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        CpR_B    C_R      X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        CpR_B    Zr3+4    X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        CiR      C_2      X           DIHEDRAL       1.0000    4.0000    1.0000
+ X        CiR      C_2      C_2         DIHEDRAL       0.0000    1.0000    1.0000
+ C_2      CiR      C_2      X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        CiR      Zr3+4    X           DIHEDRAL       0.0000    1.0000    1.0000
+ X        X        X        X           UFF_GEN
+END
+#
+EQUIVALENCE_INVERSION
+ VB         CENTER      X     X
+            END         X     X
+ H_         CENTER      H_    X
+            END         H_    X
+ H___b      CENTER      H___b X
+            END         H___b X
+ He4+4      CENTER      He4+4 X
+            END         He4+4 X
+ Li         CENTER      Li    X
+            END         Li    X
+ Be3+2      CENTER      Be3+2 X
+            END         Be3+2 X
+ B_3        CENTER      B_3   X
+            END         B_3   X
+ B_2        CENTER      B_2   X
+            END         B_2   X
+ C_3        CENTER      C_3   X
+            END         C_3   X
+ C_R        CENTER      C_R   X
+            END         C_R   X
+ C_2        CENTER      C_2   X
+            END         C_2   X
+ C_1        CENTER      C_1   X
+            END         C_1   X
+ N_3        CENTER      N_3   X
+            END         N_3   X
+ N_R        CENTER      N_R   X
+            END         N_R   X
+ N_2        CENTER      N_2   X
+            END         N_2   X
+ N_1        CENTER      N_1   X
+            END         N_1   X
+ O_3        CENTER      O_3   X
+            END         O_3   X
+ O_3_z      CENTER      O_3_z X
+            END         O_3_z X
+ O_R        CENTER      O_R   X
+            END         O_R   X
+ O_2        CENTER      O_2   X
+            END         O_2   X
+ O_1        CENTER      O_1   X
+            END         O_1   X
+ F_         CENTER      F_    X
+            END         F_    X
+ Ne4+4      CENTER      Ne4+4 X
+            END         Ne4+4 X
+ Na         CENTER      Na    X
+            END         Na    X
+ Mg3+2      CENTER      Mg3+2 X
+            END         Mg3+2 X
+ Al3        CENTER      Al3   X
+            END         Al3   X
+ Si3        CENTER      Si3   X
+            END         Si3   X
+ P_3+3      CENTER      P_3+3 X
+            END         P_3+3 X
+ P_3+5      CENTER      P_3+5 X
+            END         P_3+5 X
+ P_3+q      CENTER      P_3+q X
+            END         P_3+q X
+ S_3+2      CENTER      S_3+2 X
+            END         S_3+2 X
+ S_3+4      CENTER      S_3+4 X
+            END         S_3+4 X
+ S_3+6      CENTER      S_3+6 X
+            END         S_3+6 X
+ S_R        CENTER      S_R   X
+            END         S_R   X
+ S_2        CENTER      S_2   X
+            END         S_2   X
+ Cl         CENTER      Cl    X
+            END         Cl    X
+ Ar4+4      CENTER      Ar4+4 X
+            END         Ar4+4 X
+ K_         CENTER      K_    X
+            END         K_    X
+ Ca6+2      CENTER      Ca6+2 X
+            END         Ca6+2 X
+ Sc3+3      CENTER      Sc3+3 X
+            END         Sc3+3 X
+ Ti3+4      CENTER      Ti3+4 X
+            END         Ti3+4 X
+ Ti6+4      CENTER      Ti6+4 X
+            END         Ti6+4 X
+ V_3+5      CENTER      V_3+5 X
+            END         V_3+5 X
+ Cr6+3      CENTER      Cr6+3 X
+            END         Cr6+3 X
+ Mn6+2      CENTER      Mn6+2 X
+            END         Mn6+2 X
+ Fe3+2      CENTER      Fe3+2 X
+            END         Fe3+2 X
+ Fe6+2      CENTER      Fe6+2 X
+            END         Fe6+2 X
+ Co6+3      CENTER      Co6+3 X
+            END         Co6+3 X
+ Ni4+2      CENTER      Ni4+2 X
+            END         Ni4+2 X
+ Cu3+1      CENTER      Cu3+1 X
+            END         Cu3+1 X
+ Zn3+2      CENTER      Zn3+2 X
+            END         Zn3+2 X
+ Ga3+3      CENTER      Ga3+3 X
+            END         Ga3+3 X
+ Ge3        CENTER      Ge3   X
+            END         Ge3   X
+ As3+3      CENTER      As3+3 X
+            END         As3+3 X
+ Se3+2      CENTER      Se3+2 X
+            END         Se3+2 X
+ Br         CENTER      Br    X
+            END         Br    X
+ Kr4+4      CENTER      Kr4+4 X
+            END         Kr4+4 X
+ Rb         CENTER      Rb    X
+            END         Rb    X
+ Sr6+2      CENTER      Sr6+2 X
+            END         Sr6+2 X
+ Y_3+3      CENTER      Y_3+3 X
+            END         Y_3+3 X
+ Zr3+4      CENTER      Zr3+4 X
+            END         Zr3+4 X
+ Nb3+5      CENTER      Nb3+5 X
+            END         Nb3+5 X
+ Mo6+6      CENTER      Mo6+6 X
+            END         Mo6+6 X
+ Mo3+6      CENTER      Mo3+6 X
+            END         Mo3+6 X
+ Tc6+5      CENTER      Tc6+5 X
+            END         Tc6+5 X
+ Ru6+2      CENTER      Ru6+2 X
+            END         Ru6+2 X
+ Rh6+3      CENTER      Rh6+3 X
+            END         Rh6+3 X
+ Pd4+2      CENTER      Pd4+2 X
+            END         Pd4+2 X
+ Ag1+1      CENTER      Ag1+1 X
+            END         Ag1+1 X
+ Cd3+2      CENTER      Cd3+2 X
+            END         Cd3+2 X
+ In3+3      CENTER      In3+3 X
+            END         In3+3 X
+ Sn3        CENTER      Sn3   X
+            END         Sn3   X
+ Sb3+3      CENTER      Sb3+3 X
+            END         Sb3+3 X
+ Te3+2      CENTER      Te3+2 X
+            END         Te3+2 X
+ I_         CENTER      I_    X
+            END         I_    X
+ Xe4+4      CENTER      Xe4+4 X
+            END         Xe4+4 X
+ Cs         CENTER      Cs    X
+            END         Cs    X
+ Ba6+2      CENTER      Ba6+2 X
+            END         Ba6+2 X
+ La3+3      CENTER      La3+3 X
+            END         La3+3 X
+ Ce6+3      CENTER      Ce6+3 X
+            END         Ce6+3 X
+ Pr6+3      CENTER      Pr6+3 X
+            END         Pr6+3 X
+ Nd6+3      CENTER      Nd6+3 X
+            END         Nd6+3 X
+ Pm6+3      CENTER      Pm6+3 X
+            END         Pm6+3 X
+ Sm6+3      CENTER      Sm6+3 X
+            END         Sm6+3 X
+ Eu6+3      CENTER      Eu6+3 X
+            END         Eu6+3 X
+ Gd6+3      CENTER      Gd6+3 X
+            END         Gd6+3 X
+ Tb6+3      CENTER      Tb6+3 X
+            END         Tb6+3 X
+ Dy6+3      CENTER      Dy6+3 X
+            END         Dy6+3 X
+ Ho6+3      CENTER      Ho6+3 X
+            END         Ho6+3 X
+ Er6+3      CENTER      Er6+3 X
+            END         Er6+3 X
+ Tm6+3      CENTER      Tm6+3 X
+            END         Tm6+3 X
+ Yb6+3      CENTER      Yb6+3 X
+            END         Yb6+3 X
+ Lu6+3      CENTER      Lu6+3 X
+            END         Lu6+3 X
+ Hf3+4      CENTER      Hf3+4 X
+            END         Hf3+4 X
+ Ta3+5      CENTER      Ta3+5 X
+            END         Ta3+5 X
+ W_6+6      CENTER      W_6+6 X
+            END         W_6+6 X
+ W_3+4      CENTER      W_3+4 X
+            END         W_3+4 X
+ W_3+6      CENTER      W_3+6 X
+            END         W_3+6 X
+ Re6+5      CENTER      Re6+5 X
+            END         Re6+5 X
+ Re3+7      CENTER      Re3+7 X
+            END         Re3+7 X
+ Os6+6      CENTER      Os6+6 X
+            END         Os6+6 X
+ Ir6+3      CENTER      Ir6+3 X
+            END         Ir6+3 X
+ Pt4+2      CENTER      Pt4+2 X
+            END         Pt4+2 X
+ Au4+3      CENTER      Au4+3 X
+            END         Au4+3 X
+ Hg1+2      CENTER      Hg1+2 X
+            END         Hg1+2 X
+ Tl3+3      CENTER      Tl3+3 X
+            END         Tl3+3 X
+ Pb3        CENTER      Pb3   X
+            END         Pb3   X
+ Bi3+3      CENTER      Bi3+3 X
+            END         Bi3+3 X
+ Po3+2      CENTER      Po3+2 X
+            END         Po3+2 X
+ At         CENTER      At    X
+            END         At    X
+ Rn4+4      CENTER      Rn4+4 X
+            END         Rn4+4 X
+ Fr         CENTER      Fr    X
+            END         Fr    X
+ Ra6+2      CENTER      Ra6+2 X
+            END         Ra6+2 X
+ Ac6+3      CENTER      Ac6+3 X
+            END         Ac6+3 X
+ Th6+4      CENTER      Th6+4 X
+            END         Th6+4 X
+ Pa6+4      CENTER      Pa6+4 X
+            END         Pa6+4 X
+ U_6+4      CENTER      U_6+4 X
+            END         U_6+4 X
+ Np6+4      CENTER      Np6+4 X
+            END         Np6+4 X
+ Pu6+4      CENTER      Pu6+4 X
+            END         Pu6+4 X
+ Am6+4      CENTER      Am6+4 X
+            END         Am6+4 X
+ Cm6+3      CENTER      Cm6+3 X
+            END         Cm6+3 X
+ Bk6+3      CENTER      Bk6+3 X
+            END         Bk6+3 X
+ Cf6+3      CENTER      Cf6+3 X
+            END         Cf6+3 X
+ Es6+3      CENTER      Es6+3 X
+            END         Es6+3 X
+ Fm6+3      CENTER      Fm6+3 X
+            END         Fm6+3 X
+ Md6+3      CENTER      Md6+3 X
+            END         Md6+3 X
+ No6+3      CENTER      No6+3 X
+            END         No6+3 X
+ Lw6+3      CENTER      Lw6+3 X
+            END         Lw6+3 X
+ CpR        CENTER      CpR   X
+            END         CpR   X
+ CpR_B      CENTER      CpR_B X
+            END         CpR_B X
+ CiR        CENTER      CiR   X
+            END         CiR   X
+ PiR        CENTER      PiR   X
+            END         PiR   X
+ D_         CENTER      D_    X
+            END         D_    X
+END
+#
+STEP_DOWN_INVERSION
+    1    1    1    1    1    1    1 
+    2    2    2    2    1    1    1 
+END
+#
+INVERSIONS
+ C_R      O_2      X        X           UMBRELLA      50.0000    0.0000
+ C_R      X        X        O_2         UMBRELLA      50.0000    0.0000
+ C_2      O_2      X        X           UMBRELLA      50.0000    0.0000
+ C_2      X        X        O_2         UMBRELLA      50.0000    0.0000
+ CpR      X        X        X           UMBRELLA       0.0000   45.0000
+ CpR_B    X        X        X           UMBRELLA       0.0000   45.0000
+ CiR      X        X        X           UMBRELLA       0.0000   45.0000
+ PiR      X        X        X           UMBRELLA       0.0000   45.0000
+ X        X        X        X           UFF_GEN
+END
+#
+GENERATOR
+ H_            0.3540  180.0000    0.7120    0.0000    0.0000    0.0000         3        -1    0.0000   4.52800
+ H___b         0.4600   83.5000    0.7125    0.0000    0.0000    0.0000         3        -1    0.0000   4.52800
+ He4+4         0.8490   90.0000    0.0972    0.0000    0.0000    0.0000         3        -1    0.0000   9.66000
+ Li            1.3360  180.0000    1.0255    0.0000    0.0000    0.0000         3        -1    0.0000   3.00600
+ Be3+2         1.0740  109.4712    1.5650    0.0000    0.0000    0.0000         3        -1    0.0000   4.87700
+ B_3           0.8380  109.4712    1.7550    0.0000    0.0000    0.0000         3        -1    0.0000   4.06800
+ B_2           0.8280  120.0000    1.7550    0.0000   12.0000    0.0000         3        -1    0.0000   4.06800
+ C_3           0.7570  109.4712    1.9120    0.0000    0.0000    0.0000         3        -1    2.1190   5.34300
+ C_R           0.7290  120.0000    1.9120    0.0000   12.0000    0.0000         3        -1    0.0000   5.34300
+ C_2           0.7320  120.0000    1.9120    0.0000   12.0000    0.0000         3        -1    0.0000   5.34300
+ C_1           0.7060  180.0000    1.9120    0.0000    0.0000    0.0000         3        -1    0.0000   5.34300
+ N_3           0.7000  106.7000    2.5438    0.0000    0.0000   61.2230         3        -1    0.4500   6.89900
+ N_R           0.6990  120.0000    2.5438    0.0000   12.0000    0.0000         3        -1    0.0000   6.89900
+ N_2           0.6850  111.3000    2.5438    0.0000   12.0000    0.0000         3        -1    0.0000   6.89900
+ N_1           0.6560  180.0000    2.5438    0.0000    0.0000    0.0000         3        -1    2.0000   6.89900
+ O_3           0.6580  104.5100    2.2998    0.0000    0.0000    0.0000         3        -1    0.0180   8.74100
+ O_3_z         0.5280  145.5000    2.2998    0.0000    0.0000    0.0000         3        -1    0.0180   8.74100
+ O_R           0.6800  110.3000    2.2998    0.0000   12.0000    0.0000         3        -1    0.0000   8.74100
+ O_2           0.6340  120.0000    2.2998    0.0000   12.0000    0.0000         3        -1    0.0000   8.74100
+ O_1           0.6390  180.0000    2.2998    0.0000    0.0000    0.0000         3        -1    0.0000   8.74100
+ F_            0.6680  180.0000    1.7350    0.0000    0.0000    0.0000         3        -1    0.0000  10.87400
+ Ne4+4         0.9200   90.0000    0.1944    0.0000    0.0000    0.0000         3        -1    0.0000  11.04000
+ Na            1.5390  180.0000    1.0809    0.0000    0.0000    0.0000         3        -1    0.0000   2.84300
+ Mg3+2         1.4210  109.4712    1.7866    0.0000    0.0000    0.0000         3        -1    0.0000   3.95100
+ Al3           1.2440  109.4712    1.7924    0.0000    0.0000    0.0000         3        -1    0.0000   3.04100
+ Si3           1.1170  109.4712    2.3232    0.0000    0.0000    0.0000         3        -1    1.2250   4.16800
+ P_3+3         1.1010   93.8000    2.8627    0.0000   00.0000   84.4339         3        -1    2.4000   5.46300
+ P_3+5         1.0560  109.4712    2.8627    0.0000    0.0000    0.0000         3        -1    2.4000   5.46300
+ P_3+q         1.0560  109.4712    2.8627    0.0000    0.0000    0.0000         3        -1    2.4000   5.46300
+ S_3+2         1.0640   92.1000    2.7032    0.0000    0.0000    0.0000         3        -1    0.4840   6.92800
+ S_3+4         1.0490  103.2000    2.7032    0.0000    0.0000    0.0000         3        -1    0.4840   6.92800
+ S_3+6         1.0270  109.4712    2.7032    0.0000    0.0000    0.0000         3        -1    0.4840   6.92800
+ S_R           1.0770   92.2000    2.7032    0.0000   12.0000    0.0000         3        -1    0.0000   6.92800
+ S_2           0.8540  120.0000    2.7032    0.0000   12.0000    0.0000         3        -1    0.0000   6.92800
+ Cl            1.0440  180.0000    2.3484    0.0000    0.0000    0.0000         3        -1    0.0000   8.56400
+ Ar4+4         1.0320   90.0000    0.2994    0.0000    0.0000    0.0000         3        -1    0.0000   9.46500
+ K_            1.9530  180.0000    1.1645    0.0000    0.0000    0.0000         3        -1    0.0000   2.42100
+ Ca6+2         1.7610   90.0000    2.1414    0.0000    0.0000    0.0000         3        -1    0.0000   3.23100
+ Sc3+3         1.5130  109.4712    2.5924    0.0000    0.0000    0.0000         3        -1    0.0000   3.39500
+ Ti3+4         1.4120  109.4712    2.6595    0.0000    0.0000    0.0000         3        -1    0.0000   3.47000
+ Ti6+4         1.4120   90.0000    2.6595    0.0000    0.0000    0.0000         3        -1    0.0000   3.47000
+ V_3+5         1.4020  109.4712    2.6789    0.0000    0.0000    0.0000         3        -1    0.0000   3.65000
+ Cr6+3         1.3450   90.0000    2.4631    0.0000    0.0000    0.0000         3        -1    0.0000   3.41500
+ Mn6+2         1.3820   90.0000    2.4301    0.0000    0.0000    0.0000         3        -1    0.0000   3.32500
+ Fe3+2         1.4120  109.4700    2.4301    0.0000    0.0000    0.0000         3        -1    0.0000   3.76000
+ Fe6+2         1.3350   90.0000    2.4301    0.0000    0.0000    0.0000         3        -1    0.0000   3.76000
+ Co6+3         1.2410   90.0000    2.4301    0.0000    0.0000    0.0000         3        -1    0.0000   4.10500
+ Ni4+2         1.1640   90.0000    2.4301    0.0000    0.0000    0.0000         3        -1    0.0000   4.46500
+ Cu3+1         1.3020  109.4712    1.7565    0.0000    0.0000    0.0000         3        -1    0.0000   3.72900
+ Zn3+2         1.1930  109.4712    1.3084    0.0000    0.0000    0.0000         3        -1    0.0000   5.10600
+ Ga3+3         1.2600  109.4712    1.8206    0.0000    0.0000    0.0000         3        -1    0.0000   2.99900
+ Ge3           1.1970  109.4712    2.7888    0.0000    0.0000    0.0000         3        -1    0.7010   4.05100
+ As3+3         1.2110   92.1000    2.8640    0.0000   00.0000   86.9735         3        -1    1.5000   5.18800
+ Se3+2         1.1900   90.6000    2.7645    0.0000    0.0000    0.0000         3        -1    0.3350   6.42800
+ Br            1.1920  180.0000    2.5186    0.0000    0.0000    0.0000         3        -1    0.0000   7.79000
+ Kr4+4         1.1470   90.0000    0.4520    0.0000    0.0000    0.0000         3        -1    0.0000   8.50500
+ Rb            2.2600  180.0000    1.5922    0.0000    0.0000    0.0000         3        -1    0.0000   2.33100
+ Sr6+2         2.0520   90.0000    2.4486    0.0000    0.0000    0.0000         3        -1    0.0000   3.02400
+ Y_3+3         1.6980  109.4712    3.2573    0.0000    0.0000    0.0000         3        -1    0.0000   3.83000
+ Zr3+4         1.5640  109.4712    3.6675    0.0000    0.0000    0.0000         3        -1    0.0000   3.40000
+ Nb3+5         1.4730  109.4712    3.6179    0.0000    0.0000    0.0000         3        -1    0.0000   3.55000
+ Mo6+6         1.4670   90.0000    3.4021    0.0000    0.0000    0.0000         3        -1    0.0000   3.46500
+ Mo3+6         1.4840  109.4712    3.4021    0.0000    0.0000    0.0000         3        -1    0.0000   3.46500
+ Tc6+5         1.3220   90.0000    3.4021    0.0000    0.0000    0.0000         3        -1    0.0000   3.29000
+ Ru6+2         1.4780   90.0000    3.4021    0.0000    0.0000    0.0000         3        -1    0.0000   3.57500
+ Rh6+3         1.3320   90.0000    3.5081    0.0000    0.0000    0.0000         3        -1    0.0000   3.97500
+ Pd4+2         1.3380   90.0000    3.2077    0.0000    0.0000    0.0000         3        -1    0.0000   4.32000
+ Ag1+1         1.3860  180.0000    1.9557    0.0000    0.0000    0.0000         3        -1    0.2000   4.43600
+ Cd3+2         1.4030  109.4712    1.6525    0.0000    0.0000    0.0000         3        -1    0.0000   5.03400
+ In3+3         1.4590  109.4712    2.0704    0.0000    0.0000    0.0000         3        -1    0.0000   2.99700
+ Sn3           1.3980  109.4712    2.9608    0.0000    0.0000    0.0000         3        -1    0.1990   3.98700
+ Sb3+3         1.4070   91.6000    2.7042    0.0000   00.0000   87.7047         3        -1    1.1000   4.89900
+ Te3+2         1.3860   90.2500    2.8821    0.0000    0.0000    0.0000         3        -1    0.3000   5.81600
+ I_            1.3820  180.0000    2.6537    0.0000    0.0000    0.0000         3        -1    0.0000   6.82200
+ Xe4+4         1.2670   90.0000    0.5560    0.0000    0.0000    0.0000         3        -1    0.0000   7.59500
+ Cs            2.5700  180.0000    1.5728    0.0000    0.0000    0.0000         3        -1    0.0000   2.18300
+ Ba6+2         2.2770   90.0000    2.7266    0.0000    0.0000    0.0000         3        -1    0.0000   2.81400
+ La3+3         1.9430  109.4712    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.83550
+ Ce6+3         1.8410   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.77400
+ Pr6+3         1.8230   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.85800
+ Nd6+3         1.8160   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.86850
+ Pm6+3         1.8010   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.88100
+ Sm6+3         1.7800   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.91150
+ Eu6+3         1.7710   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   2.87850
+ Gd6+3         1.7350   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   3.16650
+ Tb6+3         1.7320   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   3.01800
+ Dy6+3         1.7100   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   3.05550
+ Ho6+3         1.6960   90.0000    3.4157    0.0000    0.0000    0.0000         3        -1    0.0000   3.12700
+ Er6+3         1.6730   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   3.18650
+ Tm6+3         1.6600   90.0000    3.3049    0.0000    0.0000    0.0000         3        -1    0.0000   3.25140
+ Yb6+3         1.6370   90.0000    2.6177    0.0000    0.0000    0.0000         3        -1    0.0000   3.28890
+ Lu6+3         1.6710   90.0000    3.2709    0.0000    0.0000    0.0000         3        -1    0.0000   2.96290
+ Hf3+4         1.6110  109.4712    3.9212    0.0000    0.0000    0.0000         3        -1    0.0000   3.70000
+ Ta3+5         1.5110  109.4712    4.0748    0.0000    0.0000    0.0000         3        -1    0.0000   5.10000
+ W_6+6         1.3920   90.0000    3.6937    0.0000    0.0000    0.0000         3        -1    0.0000   4.63000
+ W_3+4         1.5260  109.4712    3.6937    0.0000    0.0000    0.0000         3        -1    0.0000   4.63000
+ W_3+6         1.3800  109.4712    3.6937    0.0000    0.0000    0.0000         3        -1    0.0000   4.63000
+ Re6+5         1.3720   90.0000    3.6937    0.0000    0.0000    0.0000         3        -1    0.0000   3.96000
+ Re3+7         1.3140  109.4712    3.6937    0.0000    0.0000    0.0000         3        -1    0.0000   3.96000
+ Os6+6         1.3720   90.0000    3.6937    0.0000    0.0000    0.0000         3        -1    0.0000   5.14000
+ Ir6+3         1.3710   90.0000    3.7307    0.0000    0.0000    0.0000         3        -1    0.0000   5.00000
+ Pt4+2         1.3640   90.0000    3.3817    0.0000    0.0000    0.0000         3        -1    0.0000   4.79000
+ Au4+3         1.2620   90.0000    2.6255    0.0000    0.0000    0.0000         3        -1    0.0000   4.89400
+ Hg1+2         1.3400  180.0000    1.7497    0.0000    0.0000    0.0000         3        -1    0.0000   6.27000
+ Tl3+3         1.5180  120.0000    2.0685    0.0000    0.0000    0.0000         3        -1    0.0000   3.20000
+ Pb3           1.4590  109.4712    2.8461    0.0000    0.0000    0.0000         3        -1    0.1000   3.90000
+ Bi3+3         1.5120   90.0000    2.4700    0.0000   00.0000   90.0000         3        -1    1.0000   4.69000
+ Po3+2         1.5000   90.0000    2.3329    0.0000    0.0000    0.0000         3        -1    0.3000   4.21000
+ At            1.5450  180.0000    2.2357    0.0000    0.0000    0.0000         3        -1    0.0000   4.75000
+ Rn4+4         1.4200   90.0000    0.5832    0.0000    0.0000    0.0000         3        -1    0.0000   5.37000
+ Fr            2.8800  180.0000    1.8469    0.0000    0.0000    0.0000         3        -1    0.0000   2.00000
+ Ra6+2         2.5120   90.0000    2.9161    0.0000    0.0000    0.0000         3        -1    0.0000   2.84300
+ Ac6+3         1.9830   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   2.83500
+ Th6+4         1.7210   90.0000    4.2021    0.0000    0.0000    0.0000         3        -1    0.0000   3.17500
+ Pa6+4         1.7110   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   2.98500
+ U_6+4         1.6840   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.34100
+ Np6+4         1.6660   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.54900
+ Pu6+4         1.6570   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.24300
+ Am6+4         1.6600   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   2.98950
+ Cm6+3         1.8010   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   2.83150
+ Bk6+3         1.7610   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.19350
+ Cf6+3         1.7500   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.19700
+ Es6+3         1.7240   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.33300
+ Fm6+3         1.7120   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.40000
+ Md6+3         1.6890   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.47000
+ No6+3         1.6790   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.47500
+ Lw6+3         1.6980   90.0000    3.8882    0.0000    0.0000    0.0000         3        -1    0.0000   3.50000
+ CpR           0.5510  120.0000    1.9120    0.0000    0.0000    0.0000         3        -1    0.0000   5.34300
+ CpR_B         0.3400  120.0000    1.9120    0.0000    0.0000    0.0000         3        -1    0.0000   5.34300
+ CiR           0.6160  120.0000    1.9120    0.0000    0.0000    0.0000         3        -1    0.0000   5.34300
+ PiR           0.6160  120.0000    1.9120    0.0000    0.0000    0.0000         3        -1    0.0000   5.34300
+ D_            0.3540  180.0000    0.7125    0.0000    0.0000    0.0000         3        -1    0.0000   4.52800
+END
+#
+COULOMBIC
+ X        X           CONST-EPS 
+END

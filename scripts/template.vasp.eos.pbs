@@ -1,0 +1,47 @@
+#!/bin/bash
+#PBS -q vulcan_batch
+#PBS -l nodes=2:ppn=8
+#PBS -l walltime=01:00:00
+#PBS -j oe 
+
+bash /usr/Modules/init/bash
+module unload intel
+module load intel/2013.2.146 mkl fftw openmpi
+
+prefix=prefix_here
+#PBS -N ${prefix}.vasprun
+temp_dir=$VSCRATCH/vasp/${prefix}/
+cd $PBS_O_WORKDIR
+mkdir -p $temp_dir
+for i in KPOINTS POTCAR INCAR POSCAR
+do
+	if [ ! -e ${prefix}.${i} ]; then
+		echo "ERROR: Cannot locate ${PBS_O_WORKDIR}/${prefix}.${i}"
+		exit 1
+	fi
+	cp ./${prefix}.${i} ${temp_dir}/${i}
+done
+
+cd $temp_dir
+for i in `seq -f '%0.2f' 0.75 0.01 1.30` 1.35 1.40 1.50
+do
+	rm -fr ${temp_dir}/${i}
+	mkdir ${temp_dir}/${i}
+	cd ${temp_dir}/${i}/
+	ln -s ../POTCAR
+	ln -s ../INCAR
+	ln -s ../KPOINTS
+	rm -fr __tmp.POSCAR
+	head -2 ../POSCAR > __tmp.header
+	nl=`wc -l ../POSCAR | awk '{print $1-5}'`
+	tail -${nl} ../POSCAR > __tmp.footer
+	head -5 ../POSCAR | tail -3 | awk '{for(i=1;i<4;i++) printf "%s ",$i*'$i'; printf "\n";}' > __tmp.POSCAR
+	cat __tmp.header __tmp.POSCAR __tmp.footer > POSCAR
+	rm -fr __tmp.header __tmp.POSCAR __tmp.footer
+	echo "a = $i"
+	mpirun -mca btl self,sm,openib /global/home/users/tpascal/codes/bin/vasp
+	V=`grep 'volume/ion' OUTCAR | awk '{print $5}'`
+	E=`tail -n1 OSZICAR | awk '{print $5/4}'`
+	echo "$i $E" >> ../EvsA
+	echo "$V $E" >> ../EvsV
+done

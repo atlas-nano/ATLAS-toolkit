@@ -1,0 +1,347 @@
+#!/usr/bin/perl -w
+#
+use strict;
+use FindBin qw($Bin);
+use lib "$FindBin::Bin/Packages";
+use File::Basename qw(basename);
+use General qw(FileTester LoadFFs);
+use FileFormats qw(GetBGFFileInfo AddMass);
+use Getopt::Std qw(getopt);
+use CERIUS2 qw(ReadFFs);
+use BOX qw(GetBox);
+
+sub init;
+sub calcMass;
+sub getModesFromFile;
+sub minimizeStructure;
+sub calcIdealGasThermo;
+sub printResults;
+
+my ($bgfFile, $ffList, $cell_press, $cell_mass, $cell_temp, $modes_file, $cell_vol);
+my ($inertiaProduct, $ATOMS, $BONDS, $HEADERS, $FFILES, $FF, $DATA, $doShake, $lmp_cmd);
+
+$|++;
+&init;
+print "Minimizing $bgfFile using LAMMPS...";
+$bgfFile = minimizeStructure($bgfFile, $ffList, \%{ $DATA }, $cell_vol, $doShake);
+&getModesFromFile($DATA,$modes_file) if (defined($modes_file));
+print "Parsing $bgfFile...";
+($ATOMS, $BONDS, $HEADERS) = GetBGFFileInfo($bgfFile);
+print "Done\n";
+($FFILES, undef) = ReadFFs($ffList);
+#($FFILES, undef) = ReadFFs("/home/tpascal/ff/DREIDING2.21.ff");
+$FF = LoadFFs($FFILES);
+&AddMass($ATOMS, $FF);
+$cell_mass = calcMass($ATOMS);
+&calcIdealGasThermo($cell_mass, $cell_press, $cell_temp, \%{ $DATA });
+&printResults($DATA, $cell_temp);
+`rm -fr ${bgfFile}`;
+
+sub printResults {
+	my ($data, $temp) = @_;
+	my ($a1, $a2, $i, $j, $tot);
+
+	@{ $a1 } = sort {$a cmp $b } keys %{ $data->{THERMO} };
+	@{ $a2 } = sort {$a cmp $b } keys %{ $data->{THERMO}{$a1->[0]} };
+	printf "%15s", "";
+	for $i (@{ $a2 } ) {
+		printf "%15s", $i;
+		$data->{THERMO}{FREE_ENERGY}{$i} = $data->{THERMO}{ENTHALPY}{$i}-$temp*$data->{THERMO}{ENTROPY}{$i};
+	}
+	push @{ $a1 }, "FREE_ENERGY";
+	printf "%15s\n", "TOTAL";
+
+	for $i (@{ $a1 }) {
+		printf "%-15s",$i;
+		$tot = 0;
+		for $j (@{ $a2 }) {
+			printf "%15.3f",$data->{THERMO}{$i}{$j};
+			$tot += $data->{THERMO}{$i}{$j}; 
+		}
+		printf "%15.3f\n", $tot;
+	}
+}
+
+sub calcIdealGasThermo {
+	my ($mass, $press, $temp, $data) = @_;
+	my ($R, $h, $k, $PI, $i, $u, $c, $amuA2kgM);
+
+	$R = 8.3145; #Gas Constant J/mol/K
+	$h = 6.626E-34; #Plank's constant J s
+	$k = 1.381E-23; #Boltzmann's constant J/K
+	$PI = atan2(1,1) * 4;
+	$c = 2.998E10; #speed of light cm/s
+	$amuA2kgM = 1E-3/6.023E23/1E20; #amu Angstroms^2 to kg m^2
+
+	#Translational
+	$data->{THERMO}{ENTROPY}{TRANS} = $R*((3/2)*log(2*$PI*$mass/$h/$h)+(5/2)*log($k*$temp)-log($press)+5/2);
+	$data->{THERMO}{HEAT_CAP}{TRANS} = $R*5/2;
+	$data->{THERMO}{ENTHALPY}{TRANS} += $R*$temp*5/2;
+
+	#Rotational
+	if($data->{INERTIA}{PRODUCT} > 0) {
+		$data->{THERMO}{ENTROPY}{ROT} = $R*(log(8*$PI*$PI/$data->{SIGMA})+(3/2)*log(2*$PI*$k*$temp/$h/$h)+(1/2)*log($data->{INERTIA}{PRODUCT}*$amuA2kgM**3)+(3/2));
+	} else {
+		my $I = $data->{INERTIA}{Ixx};
+		$I = $data->{INERTIA}{Iyy} if ($I==0);
+		my $B = $h*$h/(8*$PI*$PI*$I);
+		$data->{THERMO}{ENTROPY}{ROT} = $R*(log(8*$PI*$PI*$I*$k*$temp/$data->{SIGMA}/$h/$h)+1);
+		$data->{THERMO}{ENTROPY}{ROT} = $R*(log(sqrt($temp/$data->{SIGMA}/$B)));
+	}
+	$data->{THERMO}{HEAT_CAP}{ROT} = $R*3/2;
+	$data->{THERMO}{ENTHALPY}{ROT} += $R*$temp*3/2;
+
+	#Vibrational
+	$data->{THERMO}{ENTROPY}{VIB} = $data->{THERMO}{HEAT_CAP}{VIB} = 0.0;
+	for $i (@{ $data->{FREQUENCIES} }) {
+		$u = $h*$i*$c/$k/$temp;
+		$data->{THERMO}{ENTROPY}{VIB} += -$R*(log(1-exp(-$u))-$u*exp(-$u)/(1-exp(-$u)));
+		$data->{THERMO}{HEAT_CAP}{VIB} += $R*$u**2*exp(-$u)/(1-exp(-$u))**2;
+		$data->{THERMO}{ENTHALPY}{VIB} += $R*$temp*$u*exp(-$u)/(1-exp(-$u))**2;
+	}
+
+}
+
+sub minimizeStructure {
+	my ($file, $ffList, $data, $c_vol, $ds) = @_;
+	my ($execCmd, $prefix, $tot, $i, $tmp, $I_prod, $Internal_E, $c_len, $EMD, $shakeCmd, $seed);
+
+	#get seed
+	srand(34);
+	$seed=int(rand()*100000);
+
+	print "Minimizing structure...Creating LAMMPS files\r";
+	$prefix = basename($file);
+	$prefix =~ s/\.\w+$//;
+
+	$shakeCmd = "";
+	$execCmd = "$Bin/createLammpsInput.pl -b $file -f \"$ffList\" -s $prefix -t 'min heat' > /dev/null";
+	system($execCmd);
+	open INPUTFILE, "in.${prefix}" or die "ERROR: Cannot execute \"$execCmd\"\n";
+	while (<INPUTFILE>) {
+		chomp;
+		if ($_ =~ /^fix.*shake/) {
+			$shakeCmd = $_;
+		}
+	}
+	close INPUTFILE;
+	$shakeCmd = "" if (! $ds);
+	$execCmd = "$Bin/createLammpsInput.pl -b $file -f \"$ffList\" -s $prefix -t min > /dev/null";
+	system($execCmd);
+	system($execCmd);
+	if (! defined($c_vol)) {
+		`sed -i 's/.*xlo xhi/-100.000000   110.708820 xlo xhi/' data.${prefix}`;
+		`sed -i 's/.*ylo yhi/-100.000000   110.708820 ylo yhi/' data.${prefix}`;
+		`sed -i 's/.*zlo zhi/-100.000000   110.708820 zlo zhi/' data.${prefix}`;
+	} else {
+		$c_len = $c_vol**(1/3)/2;
+		`sed -i 's/.*xlo xhi/-${c_len}  $c_len xlo xhi/' data.${prefix}`;
+		`sed -i 's/.*ylo yhi/-${c_len}  $c_len ylo yhi/' data.${prefix}`;
+		`sed -i 's/.*zlo zhi/-${c_len}  $c_len zlo zhi/' data.${prefix}`;
+	}
+	`sed -i 's/opt.*/opt 9.0 10.0/' in.${prefix}`;
+	`sed -i 's/pppm.*/pppm 1e-06/' in.${prefix}`;
+	`sed -i 's/^neighbor.*/neighbor 2.0 nsq/' in.${prefix}`;
+	#`sed -i 's/^special_bonds.*/special_bonds lj\\/coul 0.0 0.0 1.0/' in.${prefix}`;
+	print "Minimizing structure...Updating LAMMPS files\r";
+
+	open LMPINFILE, ">> in.${prefix}" or die "ERROR: Cannot write to in.${prefix}: $!\n";
+	print LMPINFILE <<DATA;
+variable Ixx equal inertia(all,xx)
+variable Ixy equal inertia(all,xy)
+variable Ixz equal inertia(all,xz)
+variable Iyy equal inertia(all,yy)
+variable Iyz equal inertia(all,yz)
+variable Izz equal inertia(all,zz)
+variable I_prod equal \${Ixx}*\${Iyy}*\${Izz}+2*\${Ixy}*\${Ixz}*\${Iyz}-\${Ixx}*\${Iyz}*\${Iyz}-\${Iyy}*\${Ixz}*\${Ixz}-\${Izz}*\${Ixy}*\${Ixy}
+thermo_style custom v_Ixx v_Ixy v_Ixz v_Iyy v_Iyz v_Izz v_I_prod
+thermo_modify line multi
+$shakeCmd
+run 0
+velocity all create ${cell_temp} ${seed} dist gaussian
+thermo_style multi
+timestep        0.5
+
+fix             3 all nve
+fix             2 all langevin ${cell_temp} ${cell_temp} 1.0 ${seed}
+run             100000
+fix             2 all langevin ${cell_temp} ${cell_temp} 2.0 ${seed}
+run             100000
+fix             2 all langevin ${cell_temp} ${cell_temp} 5.0 ${seed}
+run             100000
+fix             2 all langevin ${cell_temp} ${cell_temp} 10.0 ${seed}
+run             100000
+fix             2 all langevin ${cell_temp} ${cell_temp} 50.0 ${seed}
+run             100000
+unfix           2
+unfix           3
+
+fix             2 all gle 6 ${cell_temp} ${cell_temp} ${seed} matrixA
+run             500000
+unfix           2
+
+fix             3 all nve
+fix             2 all langevin ${cell_temp} ${cell_temp} 100.0 ${seed}
+run             500000
+unfix           2
+unfix           3
+
+fix             2 all nvt temp ${cell_temp} ${cell_temp} 100.0
+run             500000
+unfix           2
+
+log             \${sname}.2pt.eng
+thermo          1
+print "================================================"
+print "NVT dynamics for 20ps dumping velocities"
+print "================================================"
+thermo_style    custom etotal ke temp pe ebond eangle edihed eimp evdwl ecoul elong press vol
+thermo_modify	line multi
+fix             1 all nvt temp ${cell_temp} ${cell_temp} 100.0
+dump            1 all custom 1 \${sname}.2pt.lammps id type xu yu zu vx vy vz 
+run             400000
+undump          1
+unfix           1
+DATA
+
+	close LMPINFILE;
+
+	# run LAMMPS
+	print "Minimizing structure...Running LAMMPS minimization\r";
+	$execCmd = "$lmp_cmd -in in.${prefix} -screen none -log ${prefix}.log.lammps";
+	die "ERROR: Cannot execute \"$execCmd\"\n" if(system("${execCmd} > /dev/null"));
+	open LOGFILE, "${prefix}.log.lammps" or die "ERROR: Cannot open ${prefix}.log.lammps: $!\n";
+	while (<LOGFILE>) {
+		chomp;
+		if ($_ =~ /^PotEng\s+\=\s+(\-?\d+\.?\d*)/i) { 
+			$Internal_E = $1*4182;
+		} elsif ($_ =~ /^TotEng\s+\=\s+(\-?\d+\.?\d*)/i) { 
+			$EMD = $1*4182;
+		} elsif ($_ =~ /^v_I_prod\s+\=\s+(\-?\d+\.?\d*)/) { 
+			$data->{INERTIA}{PRODUCT} = $1;
+		} elsif ($_ =~ /^v_Ixx\s+\=\s+(\-?\d+\.?\d*)\s+v_Ixy\s+\=\s+(\-?\d+\.?\d*)\s+v_Ixz\s+\=\s+(\-?\d+\.?\d*)/) {
+			($data->{INERTIA}{Ixx},$data->{INERTIA}{Ixy},$data->{INERTIA}{Ixz}) = ($1,$2,$3);
+		} elsif ($_ =~ /^v_Iyy\s+\=\s+(\-?\d+\.?\d*)\s+v_Iyz\s+\=\s+(\-?\d+\.?\d*)\s+v_Izz\s+\=\s+(\-?\d+\.?\d*)/) {
+			($data->{INERTIA}{Iyy},$data->{INERTIA}{Iyz},$data->{INERTIA}{Izz}) = ($1,$2,$3);
+		}
+	}
+	close LOGFILE;
+	die "ERROR: Cannot parse logfile ${prefix}.log.lammps\n"
+		if (!defined($Internal_E) or scalar(keys %{ $data->{INERTIA} }) < 7);
+	#update coordinates
+	print "Minimizing structure...updating coordinates\r";
+	$tot = `grep -i -c timestep ${prefix}.min.lammps`;
+	chop $tot;
+	$execCmd = "$Bin/convertLammpsTrj.pl -b $file -o bgf -s ${prefix}.min.bgf -t ${tot} -l ${prefix}.min.lammps";
+	die "ERROR: Cannot execute \"$execCmd\"\n" if(system("${execCmd} > /dev/null"));
+
+	#system("rm -fr in.${prefix} in.${prefix}_singlepoint data.${prefix} tmp"); 
+	#system("rm -fr ${prefix}.lammps.pbs ${prefix}.log.lammps");
+	system("rm -fr ${prefix}.min.lammps _byte_offset_${prefix}.min.lammps");
+	print "Minimizing structure...created ${prefix}.min.bgf...Done									  \n";
+	$data->{THERMO}{ENTHALPY}{TRANS} = $data->{THERMO}{ENTHALPY}{ROT} = $data->{THERMO}{ENTHALPY}{VIB} = $EMD/3;
+	$data->{THERMO}{EMD}{TRANS} = $data->{THERMO}{EMD}{ROT} = $data->{THERMO}{EMD}{VIB} = $EMD/3;
+	$data->{THERMO}{POT_E}{TRANS} = $data->{THERMO}{POT_E}{ROT} = $data->{THERMO}{POT_E}{VIB} = $Internal_E/3;
+	return "${prefix}.min.bgf";
+}
+
+#sub getPrincipleMoments {
+#	my ($data, $temp) = @_;
+#	my ($Matrix, $eigen, $eigenVals, $eigenVecs, $vMat, $oMat);
+#	my ($A, $B, $C, $s_rot, $R, $h, $k, $PI, $amuA2kgM);
+
+#	$R = 8.3145; #J/mol/K
+#	$h = 6.626E-34; #J s
+#	$k = 1.381E-23; #J/K
+#	$PI = atan2(1,1) * 4;
+#	$amuA2kgM = 1E-3/6.023E23/1E20; #amu Angstroms^2 to kg m^2
+
+#	$Matrix = [[$data->{INERTIA}{Ixx},$data->{INERTIA}{Ixy},$data->{INERTIA}{Ixz}],
+#				[$data->{INERTIA}{Ixy},$data->{INERTIA}{Iyy},$data->{INERTIA}{Iyz}],
+#				[$data->{INERTIA}{Ixz},$data->{INERTIA}{Iyz},$data->{INERTIA}{Izz}]];
+#	$eigen = Math::GSL::Linalg::SVD->new( { verbose=>0 });
+#	$eigen->load_data({ data=>$Matrix });
+#	$eigen->decompose( { algorithm=>q{jacobi} } );
+#	($eigenVals, $eigenVecs, $vMat, $oMat) = $eigen->results;
+#	$A = $h/(8*$PI*$PI*$eigenVals->[0]*$amuA2kgM);
+#	$B = $h/(8*$PI*$PI*$eigenVals->[1]*$amuA2kgM);
+#	$C = $h/(8*$PI*$PI*$eigenVals->[2]*$amuA2kgM);
+#	$s_rot = $R*((3/2)*log($k*$temp/$h)-(1/2)*log($A*$B*$C/$PI)-log($data->{SIGMA})+(3/2));
+
+#	return ($A, $B, $C, $s_rot);
+#}
+
+sub calcMass {
+	my ($atoms) = @_;
+	my ($i, $mass);
+
+	$mass = 0;
+	for $i (keys %{ $atoms }) {
+		$mass += $atoms->{$i}{MASS};
+	}
+	
+	return $mass/6.022E26; #mass in kg
+}
+
+sub getModesFromFile {
+	my ($data, $in_file) = @_;
+	my ($i, $zpe);
+
+	print "Getting vibrational modes from $in_file...";
+	$i = 0;
+	$zpe = 0;
+	open MODESFILE, $in_file or die "ERROR: Cannot open $in_file: $!\n";
+	while (<MODESFILE>) {
+		chomp;
+		if ($_ =~ /^(\d+)\s+(\d+\.?\d*)\s*/) {
+			push @{ $data->{FREQUENCIES} }, $2;
+			$zpe += $2*0.01196/2; #kJ/mol
+			$i++;
+		} elsif ($_ =~ /^(\d+\.?\d*)\s*/) {
+			push @{ $data->{FREQUENCIES} }, $1;
+			$zpe += $1*0.01196/2; #kJ/mol
+			$i++;
+		}
+	}
+	close MODESFILE;
+	die "ERROR: No modes read!\n" if (! $i);
+
+	print "read $i modes..Done\n";
+	$data->{THERMO}{ZPE}{ROT} = $data->{THERMO}{ZPE}{TRANS} = 0;
+	$data->{THERMO}{ZPE}{VIB} = $zpe;
+}
+
+sub init {
+	my (%OPTS, $rsigma);
+
+	getopt('bfpvtrmsl',\%OPTS);
+	for ("b", "f") {
+	die "usage: $0 -b bgf file -f force field -v (cell_volume - cubic angstroms to calculate pressure) -p (cell_pressure - bar) -t (cell_temperature - Kelvin) -r (rot_sym_number = 2) -m (vibrational_modes_file) -s (use_shake=no|0) -l (lmp_location)\n"
+		if (! exists($OPTS{$_}));
+	}
+
+	print "Initializing...";
+	($bgfFile, $ffList, $cell_vol, $cell_press, $cell_temp, $rsigma, $modes_file, $doShake, $lmp_cmd) = 
+		($OPTS{b}, $OPTS{f}, $OPTS{v}, $OPTS{p}, $OPTS{t}, $OPTS{r}, $OPTS{m}, $OPTS{s}, $OPTS{l});
+	FileTester($bgfFile);
+	$cell_temp = 298 if (! defined($cell_temp));
+	print "$cell_temp K...";
+	$rsigma = 2 if (! defined($rsigma) or $rsigma !~ /^\d+$/);
+	$DATA->{SIGMA} = $rsigma;
+	@{ $DATA->{FREQUENCIES} } = ();
+	if (! defined($cell_press) and defined($cell_vol)) {
+		print "$cell_vol A^3...";
+		$cell_press = 8.3145*$cell_temp/$cell_vol*1E30/6.023E23;	# p = RT/V
+	} elsif (! defined($cell_vol)) { $cell_press = 1E5; 
+	} else { $cell_press *= 1E5; }
+	#$cell_press = 101325;
+	print "$cell_press Pa (" .  $cell_press*9.86923267E-6 . " atm)...";
+	undef($modes_file) if (defined($modes_file) and (! -e $modes_file or ! -T $modes_file or ! -r $modes_file));
+	$doShake = 0 if (! defined($doShake) or $doShake !~ /1|yes/i);
+	$doShake = 1 if($doShake =~ /1|yes/i);
+	print "Done\n";
+
+	$lmp_cmd = "/home/tpascal/codes/bin/lmp_serial"
+		if(!defined($lmp_cmd));
+}
+

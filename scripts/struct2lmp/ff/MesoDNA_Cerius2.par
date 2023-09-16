@@ -1,0 +1,205 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+---------------------------------------------------------------------------------------
+The force field parameter of the DNA Mesoscale paper
+
+ do not scale the torsions by the number of bonds:
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      F
+ SCALE_BY_N_DEFINED_TORSIONS           F
+
+---------------------------------------------------------------------------------------
+
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               F
+ INVERSIONS                            F
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       F
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  F
+ BEND_BEND                             F
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     F
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        T
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      F
+ SCALE_BY_N_DEFINED_TORSIONS           F
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          0.40000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           F
+ H-BOND_DIRECT_RCUT                       4.50000
+ H-BOND_SPLINE_DISTANCE_ON                4.50000
+ H-BOND_SPLINE_DISTANCE_OFF               5.00000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 7.00000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            SMART                         
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                     1.00000000000000000      
+ COU_INTER_CUT_OFF                       14.00000
+ COU_SPLINE_OFF                          18.00000
+ COU_SPLINE_ON                           16.00000
+ EWALD_SUM_COU_ACCURACY                   0.00100
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                SMART                         
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            EWALD                         
+ COU_DIRECT_CUT-OFF                      20.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC                     
+ VDW_INTER_CUT_OFF                       14.00000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE                        
+ VDW_SPLINE_ON                           12.00000
+ VDW_SPLINE_OFF                          13.00000
+ EWALD_SUM_VDW_OPTIMIZE                NEVER                         
+ EWALD_SUM_VDW_ACCURACY                   0.00100
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                      30.00000
+ EWALD_SUM_VDW_REP_CUT                   20.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             F
+ ATOM_TYPE_ALL                         F
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ PHO        Xe     95.00000  0.0000   2   0   0
+ SUG        Rn     80.00000  0.0000   3   0   0
+ ADE        Kr     135.0000  0.0000   3   0   0
+ CYT        Ar     111.0000  0.0000   4   0   0
+ THY        Ne     126.0000  0.0000   3   0   0
+ GUA        He     151.0000  0.0000   4   0   0
+ H51        H       1.00080  0.0000   1   0   0
+ H52        H       1.00080  0.0000   1   0   0
+ H53        H       1.00080  0.0000   1   0   0
+ WAT        Xe     18.00000  0.0000   0   0   0
+END
+#
+DIAGONAL_VDW
+ PHO         VDW_MORSE     0.446974550000000        3.250000000000000         4.64584620000000
+ SUG         VDW_MORSE     0.446974550000000        3.850000000000000         3.92181820000000
+ ADE         VDW_MORSE     0.446974550000000        3.050000000000000         4.95049180000000
+ CYT         VDW_MORSE     0.446974550000000        3.050000000000000         4.95049180000000
+ THY         VDW_MORSE     0.446974550000000        3.050000000000000         4.95049180000000
+ GUA         VDW_MORSE     0.446974550000000        3.050000000000000         4.95049180000000
+ H51         VDW_MORSE     0.000000000000001        1.000000000000000         0.00000000000000
+ H52         VDW_MORSE     0.000000000000001        1.000000000000000         0.00000000000000
+ H53         VDW_MORSE     0.000000000000001        1.000000000000000         0.00000000000000
+ WAT         VDW_MORSE     3.770000000000000        1.150000000000000         8.00000000000000
+END
+#
+ATOM_TYPING_RULES
+END
+#
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ SUG      THY         HARMONIC     167.8480    4.6540
+ SUG      PHO         HARMONIC      46.0059    4.0053
+ SUG      GUA         HARMONIC     143.4190    4.7412
+ PHO      SUG         HARMONIC      18.2605    4.4283
+ SUG      ADE         HARMONIC     155.9740    4.6175
+ SUG      CYT         HARMONIC     193.3100    4.1101
+ GUA      H51         HARMONIC       0.0000    4.0500
+ GUA      H52         HARMONIC       0.0000    4.0500
+ GUA      H53         HARMONIC       0.0000    4.0500
+ CYT      H51         HARMONIC       0.0000    4.0500
+ CYT      H52         HARMONIC       0.0000    4.0500
+ CYT      H53         HARMONIC       0.0000    4.0500
+ ADE      H51         HARMONIC       0.0000    4.0500
+ ADE      H52         HARMONIC       0.0000    4.0500
+ THY      H51         HARMONIC       0.0000    4.0500
+ THY      H52         HARMONIC       0.0000    4.0500
+END
+#
+ANGLE_BEND
+ PHO      SUG      GUA         THETA_HARM    17.2524    2.1994	
+ PHO      SUG      CYT         THETA_HARM    19.2459    1.9942
+ SUG      PHO      SUG         THETA_HARM    60.2223    1.4486
+ PHO      SUG      THY         THETA_HARM    42.3032    1.9359
+ PHO      SUG      PHO         THETA_HARM    15.5292    1.8816
+ PHO      SUG      ADE         THETA_HARM    33.7276    2.1707
+ SUG      GUA      H51         THETA_HARM     0.0000    0.6666    
+ SUG      GUA      H52         THETA_HARM     0.0000    0.6666
+ SUG      GUA      H53         THETA_HARM     0.0000    0.6666
+ SUG      CYT      H51         THETA_HARM     0.0000    0.6666
+ SUG      CYT      H52         THETA_HARM     0.0000    0.6666
+ SUG      CYT      H53         THETA_HARM     0.0000    0.6666
+ SUG      ADE      H51         THETA_HARM     0.0000    0.6666
+ SUG      ADE      H52         THETA_HARM     0.0000    0.6666
+ SUG      THY      H51         THETA_HARM     0.0000    0.6666
+ SUG      THY      H52         THETA_HARM     0.0000    0.6666
+ H51      GUA      H52         THETA_HARM     0.0000    0.6666
+ H52      GUA      H53         THETA_HARM     0.0000    0.6666
+ H51      GUA      H53         THETA_HARM     0.0000    1.3333
+ H51      CYT      H52         THETA_HARM     0.0000    0.6666
+ H52      CYT      H53         THETA_HARM     0.0000    0.6666
+ H51      CYT      H53         THETA_HARM     0.0000    1.3333
+ H51      ADE      H52         THETA_HARM     0.0000    0.6666
+ H51      THY      H52         THETA_HARM     0.0000    0.6666
+END
+#
+TORSIONS
+ SUG      PHO      SUG      THY         DIHEDRAL       1.9059    4.0000   1.0000
+ SUG      PHO      SUG      ADE         DIHEDRAL       0.9103    4.0000   1.0000
+ PHO      SUG      PHO      SUG         DIHEDRAL       0.9715    1.0000   1.0000
+ SUG      PHO      SUG      PHO         DIHEDRAL      12.4271    1.0000   1.0000	
+ SUG      PHO      SUG      CYT         DIHEDRAL       1.5261    4.0000   1.0000
+ SUG      PHO      SUG      GUA         DIHEDRAL       0.8040    4.0000   1.0000	
+ PHO      SUG      GUA      H51         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      GUA      H52         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      GUA      H53         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      CYT      H51         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      CYT      H52         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      CYT      H53         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      ADE      H51         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      ADE      H52         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      THY      H51         DIHEDRAL       0.0100    4.0000   1.0000
+ PHO      SUG      THY      H52         DIHEDRAL       0.0100    4.0000   1.0000
+END
+#
+COULOMBIC
+END
+#
+HYDROGEN_BONDS
+ H51      H52         LJ_12_10     0.4000E+01    2.7500
+ H51      H53         LJ_12_10     0.4000E+01    2.7500
+ H52      H52         LJ_12_10     0.4000E+01    2.7500
+END
+#

@@ -1,0 +1,176 @@
+VERSION
+ CERIUS2     1
+END
+#
+HEADER
+The field is a combination of the origin graphite force field
+with Naoki's PVD, Mario's Teflon and tap's F3C water force fields
+(optimized to have correct HOH and OH stretches and hvap) for simulating
+graphene and congugated graphene (H,F,OH) systems.
+Feb. 12, 2008, Tod A Pascal.
+END
+#
+PREFERENCES
+ BONDS                                 T
+ ANGLES                                T
+ COULOMB                               T
+ INVERSIONS                            T
+ TORSIONS                              T
+ UREY_BRADLEY                          F
+ STRETCH_STRETCH                       T
+ SEPARATED_STRETCH_STRETCH             F
+ STRETCH_BEND_STRETCH                  T
+ BEND_BEND                             T
+ TORSION_STRETCH                       F
+ TORSION_BEND_BEND                     T
+ BEND_TORSION_BEND                     F
+ STRETCH_TORSION_STRETCH               F
+ HYDROGEN_BONDS                        F
+ DIAGONAL_VAN_DER_WAALS                T
+ OFF_DIAGONAL_VAN_DER_WAALS            T
+ IGNORE_UNDEFINED_TERMS                T
+ NON-BONDED_3-BODY                     F
+ SHRINK_CH_BONDS                       F
+ SHRINK_CH_H_ATOM                      H__C 
+ SHRINK_CH_FACTOR                         0.91500
+ SINGLE_TORSION                        F
+ SCALE_TORSIONS_ABOUT_COMMON_BOND      T
+ SCALE_BY_N_DEFINED_TORSIONS           T
+ EXOCYCLIC_TORSIONS_SCALE_FACTOR          0.40000
+ SINGLE_INVERSION                      F
+ H-BOND_METHOD                         SPLINE
+ H-BOND_LIST                           T
+ H-BOND_DIRECT_RCUT                       4.00000
+ H-BOND_SPLINE_DISTANCE_ON                4.00000
+ H-BOND_SPLINE_DISTANCE_OFF               4.50000
+ H-BOND_SPLINE_ANGLE_ON                  65.00000
+ H-BOND_SPLINE_ANGLE_OFF                 75.00000
+ H-BOND_LIST_DISTANCE_OFF                 6.50000
+ H-BOND_LIST_ANGLE_OFF                   90.00000
+ NB_NEIGHBOUR_SEARCH_METHOD            LIST                          
+ NON_BOND_BUFFER_DISTANCE                 2.00000
+ H-BOND_BUFFER_DISTANCE                   2.00000
+ COU_DIELETRIC_CONSTANT                   1.00000000000000000      
+ COU_INTER_CUT_OFF                        8.50000
+ COU_SPLINE_OFF                          10.00000
+ COU_SPLINE_ON                            9.00000
+ EWALD_SUM_COU_ACCURACY                   0.00010
+ EWALD_SUM_COU_ETA                        2.50000
+ EWALD_SUM_COU_KCUT                       0.50000
+ EWALD_SUM_COU_RCUT                       6.00000
+ EWALD_SUM_COU_OPTIMIZE                NEVER                         
+ COU_EXCLUDE_1-2                       T
+ COU_EXCLUDE_1-3                       T
+ COU_EXCLUDE_1-4                       F
+ COU_1-4_SCALE_FACTOR                     1.00000
+ COU_METHOD                            EWALD                        
+ COU_DIRECT_CUT-OFF                       8.00000
+ VDW_COMBINATION_RULE                  GEOMETRIC                    
+ VDW_INTER_CUT_OFF                        8.50000
+ VDW_EXCLUDE_1-2                       T
+ VDW_EXCLUDE_1-3                       T
+ VDW_EXCLUDE_1-4                       F
+ VDW_1-4_SCALE_FACTOR                     1.00000
+ VDW_METHOD                            SPLINE                        
+ VDW_SPLINE_ON                            9.00000
+ VDW_SPLINE_OFF                          10.0000
+ EWALD_SUM_VDW_OPTIMIZE                NEVER                         
+ EWALD_SUM_VDW_ACCURACY                   0.00010
+ EWALD_SUM_VDW_ETA                        2.50000
+ EWALD_SUM_VDW_KCUT                       0.50000
+ EWALD_SUM_VDW_RCUT                       6.00000
+ EWALD_SUM_VDW_REP_CUT                    6.00000
+ FAST_EWALD_SUM_RATIO                    10.00000
+ SLOW_EWALD_SUM_RATIO                     5.00000
+ MINIMUM_IMAGE                         F
+ ASSIGN_MASS                           T
+ ASSIGN_CHARGE                         F
+ ASSIGN_HYBRIDIZATION                  F
+ ASSIGN_VALBOND_CENTER                 F
+ ATOM_TYPE                             T
+ ATOM_TYPE_ALL                         T
+ CALCULATE_BOND_ORDER                  F
+END
+#
+ATOMTYPES
+ C_2G       C      12.01100     0.0   2   0   0 
+ H_         H       1.00800  0.0000   0   0   0
+ H___A      H       1.00800  0.0000   0   0   0
+ F_         F      18.99840 -1.0000   0   0   3
+ O_3        O      15.99940  0.0000   3   0   2
+END
+#
+DIAGONAL_VDW
+ C_2G        LJ_6_12       3.8050                  0.6920E-01
+ H_          LJ_6_12       3.194999933242798       0.1520000025629997E-01
+ H___A       LJ_6_12       3.194999933242798       0.9999999747378752E-04
+ O_3         LJ_6_12       3.404599905014038       0.9570000320672989E-01
+ F_          LJ_6_12       3.538000000000000       0.2110000000000000E-01
+END
+#
+ATOM_TYPING_RULES
+END
+#
+#
+OFF_DIAGONAL_VDW
+END
+#
+BOND_STRETCH
+ C_2G     C_2G        MORSE        720.0000    1.4114  133.0000
+ H_       C_2G        MORSE        729.3088    1.0789  106.7000
+ F_       C_2G        MORSE        832.0755    1.3457  108.0000
+ O_3      C_2G        HARMONIC     700.0000    1.4200
+ O_3      H___A       HARMONIC     700.0000    0.9800
+END
+#
+ANGLE_BEND
+ C_2G     C_2G     C_2G        COS_HARMON   196.1300  120.0000 
+ H_       C_2G     H_          COS_HARMON    52.7607  116.4161
+ C_2G     C_2G     H_          COS_HARMON    64.7621  116.0913       
+ F_       C_2G     C_2G        COS_HARMON   139.2072  114.8591
+ F_       C_2G     F_          COS_HARMON   184.7170  109.5665
+ X        O_3      X           THETA_HARM   100.0000  104.5100
+ X        C_2G     X           THETA_HARM   100.0000  109.4710
+END
+#
+TORSIONS
+ C_2G     C_2G     C_2G     C_2G        DIHEDRAL      21.2800    2.0000    1.0000
+ H_       C_2G     C_2G     C_2G        DIHEDRAL       4.4115    3.0000   -1.0000
+ H_       C_2G     C_2G     H_          DIHEDRAL       1.0690    3.0000   -1.0000
+ F_       C_2G     C_2G     C_2G        DIHEDRAL      -5.3835    3.0000   -1.0000
+ F_       C_2G     C_2G     F_          DIHEDRAL       1.0690    3.0000   -1.0000
+ X        O_3      C_2G     X           DIHEDRAL       2.0000    3.0000   -1.0000
+ X        C_2G     C_2G     X           DIHEDRAL       2.0000    3.0000   -1.0000
+END
+#
+STRETCH_STRETCH
+ C_2G     C_2G     C_2G        R-R            1.4114    1.4114   68.0000 
+# H_       C_2G     H_          R-R            1.0789    1.0789    5.3363
+# C_2G     C_2G     H_          R-R            1.4114    1.0789    0.9924
+# F_       C_2G     C_2G        R-R            1.3457    1.4114  111.1305
+# F_       C_2G     F_          R-R            1.3457    1.3457  145.3960
+END
+#
+STRETCH_BEND_STRETCH
+ C_2G     C_2G     C_2G        R-COSINE       1.4114    1.4114  120.0000   62.7089   62.7089 
+# H_       C_2G     H_          R-COSINE       1.0789    1.0789  116.4161   18.3930   18.3930
+# C_2G     C_2G     H_          R-COSINE       1.4114    1.0789  116.0913   23.3791   19.7787 
+# F_       C_2G     C_2G        R-COSINE       1.3457    1.4114  114.8591   56.9914   44.3441
+# F_       C_2G     F_          R-COSINE       1.3457    1.3457  109.5665   71.4787   71.4787
+END
+#
+TORSION_BEND_BEND
+END
+#
+BEND_BEND
+END
+#
+COULOMBIC
+ X        X           CONST-EPS 
+END
+#
+HYDROGEN_BONDS
+END
+#
+GENERATOR
+END

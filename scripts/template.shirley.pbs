@@ -1,0 +1,79 @@
+#PBS -q vulcan_batch
+#PBS -l nodes=nodes_here:ppn=ppn_here
+#PBS -l walltime=96:00:00
+#PBS -j oe
+#!/bin/bash
+#Job name:
+#SBATCH --job-name=fprefix_here
+#
+#Partition:
+#SBATCH --partition=vulcan
+#
+#Account
+#SBATCH --account=vulcan
+#
+#QOS
+#SBATCH --qos=normal
+#
+#Nodes
+#SBATCH --nodes=nodes_here
+#
+#Processors:
+#SBATCH --ntasks=nprocs_here
+#
+#QUEUE
+#SBATCH --constraint=vulcan
+#
+#Wall clock limit:
+#SBATCH --time=48:0:0
+#
+
+
+export nsnaps=nsnaps_here
+export rtemp=rtemp_here
+export fprefix=fprefix_here
+export cell_p=cell_p_here
+export c_a=c_a_here
+export c_b=c_b_here
+export c_c=c_c_here
+export c_alpha=`echo c_alpha_here | awk '{pi = atan2(1,1)*4; print cos($1*pi/180)}'`
+export c_beta=`echo c_beta_here | awk '{pi = atan2(1,1)*4; print cos($1*pi/180)}'`
+export c_gamma=`echo c_gamma_here | awk '{pi = atan2(1,1)*4; print cos($1*pi/180)}'`
+
+export njob=nodes_here
+export ppp=ppn_here
+
+#PBS -N ${fprefix}.${cell_p}.${rtemp}K.cp2k.md
+
+export results_dir=$PBS_O_WORKDIR/results
+mkdir -p $SCRATCH/md/cp2k/${fprefix}/${cell_p}/${rtemp}K ${results_dir}/MD ${results_dir}/crystal
+
+cd $SCRATCH/md/cp2k/${fprefix}/${cell_p}/${rtemp}K
+mkdir -p crystal spectra
+cp $PBS_O_WORKDIR/${fprefix}.${cell_p}.xyz crystal/
+
+echo "Calculating spectra from Crystal structure"
+cd crystal
+cp ~tpascal/scripts/arvid/*.sh ./
+cp $PBS_O_WORKDIR/${fprefix}.${cell_p}.Input_Block.in ./Input_Block.in
+
+export celldm_1=`echo $c_a | awk '{print $1*1.889725989}'`
+export celldm_2=`echo $c_a $c_b | awk '{print $2/$1}'`
+export celldm_3=`echo $c_a $c_c | awk '{print $2/$1}'`
+
+sed -i 's/^A=.*$/CELLDM1='$celldm_1'/' ./Input_Block.in
+sed -i 's/^B=.*$/CELLDM2='$celldm_2'/' ./Input_Block.in
+sed -i 's/^C=.*$/CELLDM3='$celldm_3'/' ./Input_Block.in
+sed -i 's/^COSBC=.*$/CELLDM4='$c_alpha'/' ./Input_Block.in
+sed -i 's/^COSAC=.*$/CELLDM5='$c_beta'/' ./Input_Block.in
+sed -i 's/^COSAB=.*$/CELLDM6='$c_gamma'/' ./Input_Block.in
+sed -i 's/^MOLNAME=.*$/MOLNAME="'${fprefix}.${cell_p}.crystal'"/' ./Input_Block.in
+sed -i 's/^NJOB=.*$/NJOB='$njob'/' ./Input_Block.in
+sed -i 's/^PPP=.*$/PPP='$ppp'/' ./Input_Block.in
+
+export PBS_O_WORKDIR=$PWD
+sh ./XAS-xyz.sh
+sh ./XAS-xyz-ref.sh
+sh ./XASAnalyse-xyz.sh
+
+cp -r ./XAS/Spectrum-* ${results_dir}/crystal/

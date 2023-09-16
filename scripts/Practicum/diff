@@ -1,0 +1,130 @@
+19d18
+< sub CalcDebye();
+62,70c61
+< 			          },
+< 	      "COINS"        =>  {
+< 		                  "incCoIon"     => 0,
+< 		                  "itypecoion"   => -9999.99,
+< 				  "qcoion"       => -9999.99,
+< 				  "rcoion"       => -9999.99,
+< 				  "mcoion"       => -9999.99,
+< 				  "num"          => -9999.99,
+< 			         },
+---
+> 				  },
+72c63
+< 		                 "incS"        => 0,
+---
+> 				 "incS"        => 0,
+143d133
+<     my ($pos_ions, $add_ions);
+148,149d137
+<     $add_ions = 0;
+<     $CYLINDER{"COIONS"} = 0;
+153,156d140
+<     if ($PARMS{"COIONS"}{"incCoIon"}) {
+< 	die "Ions and Counter Ions cannot have the same charge!\n"
+< 	    if ($PARMS{"COIONS"}{"qcoions"}/$PARMS{"IONS"}{"qfion"} > 0);
+<     }
+188c172
+<     print "Number of fluid ions to neutralize wall is " . $CYLINDER{"NIONS"} . "\n";
+---
+>     print "Number of fluid ions is " . $CYLINDER{"NIONS"} . "\n";
+192,200d175
+<     if ($PARMS{"COIONS"}{"incCoIon"}) {
+< 	$pos_ions = $CYLINDER{"NIONS"} + $PARMS{"COIONS"}{"num"} * abs( $PARMS{"COIONS"}{"qfions"} / $PARMS{"IONS"}{"qfion"});
+< 	$CYLINDER{"NIONS"} = $pos_ions;
+< 	$CYLINDER{"COIONS"} = $PARMS{"COIONS"}{"num"};
+< 	print "Number of positive ions is " . $pos_ions . "\n";
+< 	print "Number of negative ions is " . $PARMS{"COIONS"}{"num"} . "\n";
+<     }
+< 
+<     CalcDebye();
+252a228,229
+>     die "Error: Solute and counter ions cannot be oppositely charged!"
+> 	if ($PARMS{"SOLUTE"}{"qSol"}/$PARMS{"IONS"}{"qfion"} < 0);
+291,294c268,269
+< 	    if ($ion_counter > $CYLINDER{"NIONS"} + $CYLINDER{"COIONS"}) {     # Ran out of ions so place solvent
+< 		$solv_particles += AddAtm(2,$rx,$ry,$rz,$atm_counter);
+< 	    }elsif ($ion_counter > $CYLINDER{"NIONS"}) { # Ran out of positive ions so place negative
+< 		$ion_counter += AddAtm(1, $rx, $ry, $rz, $atm_counter);
+---
+> 	    if ($ion_counter > $CYLINDER{"NIONS"}) {     # Ran out of ions so place solvent
+> 		$solv_particles += AddAtm(1,$rx,$ry,$rz,$atm_counter);
+315,319c290,292
+< 			if ($ion_counter > $CYLINDER{"NIONS"} + $CYLINDER{"COIONS"}) {     # Ran out of ions so place solvent
+< 			    $solv_particles += AddAtm(2,$rx,$ry,$rz,$atm_counter);
+< 			}elsif ($ion_counter > $CYLINDER{"NIONS"}) { # Ran out of positive ions so place negative
+< 			    $ion_counter += AddAtm(1, $rx, $ry, $rz, $atm_counter);
+< 			} else {                                     # Place a positive ion
+---
+> 			if ($ion_counter > $CYLINDER{"NIONS"}) {     # Ran out of ions so place solvent
+> 			    $solv_particles += AddAtm(1,$rx,$ry,$rz,$atm_counter);
+> 			} else {                                     # Place an ion
+348c321
+<     if ($is_solvent == 2) {
+---
+>     if ($is_solvent) {
+353,357d325
+<     } elsif ($is_solvent == 1) {
+< 	$fluid_nm = "COIONS";
+< 	$charge = "qcoion";
+< 	$mass = "mcoion";
+< 	$radii = "rcoion";
+365d332
+< 
+420d386
+<     my (@type_holder);
+436,441c402
+<     @type_holder = ("IONS", "SOLVENT");
+< 
+<     push @type_holder, "COIONS"
+< 	if ($PARMS{"COIONS"}{"incCoIons"});
+< 
+<     for $type_counter (@type_holder) {
+---
+>     for $type_counter ("IONS", "SOLVENT") {
+447,449d407
+< 	    } elsif ($type_counter eq "COIONS") {
+< 		$itype = $PARMS{"COIONS"}{"itypecoion"};
+< 		$res_type = $atm_name = "Cl-";
+499d456
+<     my ($num_types);
+505,511c462,466
+<     $num_types = 2;
+<     $num_types++ 
+< 	if ($PARMS{"SOLUTE"}{"incS"});
+<     $num_types++
+< 	if ($PARMS{"COIONS"}{"incCoIon"});
+< 
+<     $out_string .= "$num_types atom types\n";
+---
+>     if ($PARMS{"SOLUTE"}{"incS"}) {
+> 	$out_string .= "3 atom types\n";
+>     } else {
+> 	$out_string .= "2 atom types\n";
+>     }
+525,526d479
+<     $out_string .= sprintf("%-5d%8.2f\n\n",$PARMS{"COIONS"}{"itypecoion"},$PARMS{"COIONS"}{"mcoion"})
+< 	if ($PARMS{"COIONS"}{"incCoIon"});
+534,553d486
+< 
+< sub CalcDebye() {
+< 
+< #   This subroutine will calculate the Debye shielding distance for this system and determine
+< #   whether this Debye length is greater than the radius of the solute
+< 
+<     my ($eta, $gas_const, $temp, $faraday, $conc, $mol_meter);
+<     my ($debye);
+< 
+< 
+<     $mol_meter = (1E30)/(6.023E23); # convert from particles/Angstroms^3 to moles/meter^3    
+<     $eta = 78.3; # dielectric constant of water at 298.15 Kelvin
+<     $gas_const = 8.3144; # J mol-1 K-1
+<     $temp = 298.15; # Kelvin   
+<     $faraday = 96.4846 * abs($PARMS{"IONS"}{"qfion"}); # C mol-1
+<     $conc = abs($CYLINDER{"NIONS"}/$CYLINDER{"VOL"}) * $mol_meter;
+<     $debye = 9.61E-9/sqrt($PARMS{"IONS"}{"qfion"}**2 * $conc);
+<     print "DeBye Length of system is " . sprintf("%12.8G", $debye) . "\n";
+< 					  
+< }

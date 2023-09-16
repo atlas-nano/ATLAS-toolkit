@@ -1,0 +1,19 @@
+#PBS -q vulcan_batch
+#PBS -l nodes=nodes_here:ppn=ppn_here
+#PBS -l walltime=24:00:00
+#PBS -j oe
+
+export fprefix=fprefix_herecell_p_here
+rtemp=rtemp_here
+
+cd $PBS_O_WORKDIR
+export results_dir=$PBS_O_WORKDIR/results
+mkdir -p $VSCRATCH/md/cp2k/${fprefix} ${results_dir}/
+
+cd $VSCRATCH/md/cp2k/${fprefix}
+cp $PBS_O_WORKDIR/${fprefix}.${rtemp}K.cp2k.in ./
+cp $PBS_O_WORKDIR/${fprefix}.cp2k.xyz ./
+cp ~tpascal/codes/cp2k/v2.5/cp2k/tests/QS/dftd3.dat ./
+
+mpirun -mca btl self,sm,openib ~tpascal/codes/bin/cp2k.popt -in ${fprefix}.${rtemp}K.cp2k.in > ${fprefix}.${rtemp}K.cp2k.out 
+cp ${fprefix}.* $results_dir/

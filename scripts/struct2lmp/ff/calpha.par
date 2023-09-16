@@ -1,0 +1,114 @@
+PARAMETER FORMAT (11-89)
+  233    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+*
+*-------------------------------------------------------*
+*                 (C) COPYRIGHT 1992                    *
+*         Molecular Simulations Incorporated            *
+*                 ALL RIGHTS RESERVED                   *
+* This notice must appear in all copies of this file.   *
+*-------------------------------------------------------*
+*
+FORCEFIELD DREIDING
+DEFAULTS  xxxdataxxx plus comments
+LBOND      T         T >> use bond terms
+LANGLE     T         T >> use angle terms
+ANGX 2 K   F         T >> use true force constants for cosine ang-str cross terms
+ANGANGINV  F         T >> use angle-angle inversion terms
+LINVERSN   T         T >> use inversion terms
+ALL INVER  F         T >> force all inversions to be used
+BNDXANG    F         T >> use bond cross angle terms
+ANGXANG    F         T >> use angle cross angle terms
+LTORSION   T         T >> use torsion terms
+BNDBNDTOR  F         T >> allow coupling of the 1-2 and 3-4 bonds of torsions
+ANGANGTOR  F         T >> allow coupling of the 1-2-3 and 2-3-4 angles of torsions
+LPITWIST   F         T >> use pi twist terms
+TORS SCAL  T         T >> will renormalize torsions (not allow SNGTOR)
+ALL TORSN  F         T >> force all torsions to be used
+ETOR SCAL     0.4000 exocyclic scaling factor
+TORANGSW   F         T >> switch torsion barrier off as angle becomes linear
+TORANGR     90. 180. on and off angles for torsion angle switch
+LNONBOND   T         T >> use nonbond terms
+RNB GEOMN  T         T >> use geom mean for nonbond cross terms
+NBEXBND    T         T >> exclude 1-2 terms from nonbonds
+NBEXANG    T         T >> exclude 1-3 terms from nonbonds
+SCAL NB14     1.0000 factor scale 1-4 nonbonds (1.0 >> full value)
+SHRINK CH  F         T >>  allow shrunk CH bonds for 
+SHRINK FC     1.0000 shrink factor for CH bonds
+LCOULMB    T         T >> use Coulomb terms
+R*EPS      T         T >> use shielded Coulomb 1/eps*R**2
+LHBOND     T         T >> use hb interactions
+ATM DEFLT C_32       default atom for FF
+MASSZER    F         T >> use zero mass option
+POLYENE    F         T >> use polyene option
+USRENERGY  F         T >> use user energy expression
+*
+FFLABEL    ATNO MODIFD MS CHARG HYB BND CPK #IH #LP
+C_31          6            0.00   3   4   5   0   0
+
+*
+ADDED H   HYDROGEN  1IMPLCTH  2IMPLCTH  3IMPLCTH  4IMPLCTH
+                              
+*
+LONE PAIRS
+*
+*
+*    Parameters for Gasteiger charges.
+*    Reference: Johann Gasteiger and Mario Marsili, Tetrahedron 36 (1980), 3219-3228
+*
+GASTEIGER          A         B         C        X+
+C_31         7.98000   9.18000   1.88000  19.04000
+
+VDW AT ITY       RNB      DENB     SCALE
+C_31     1   5.50000   0.15000  12.00000
+
+*
+AUTOTYPE  ELEMENT   HYBRIDIZATION RING_SIZE  REQUIREMNTS  FACTOR
+C_31         C            3           0           1           1
+             VH           0           0           0           1
+
+*
+NONBOND-OFF TYPE      RVDW      DVDW     SCALE
+*
+BONDSTRTCH  TYPE
+*  morse       2 FORC CNST  BND DIST    BOND E
+*  mm2         3 FORC CNST  BND DIST       CUB    KSLOPE    TSLOPE  BOND DIP
+*  polyene     6       Ke2       Re2       Re1       Ke1
+*simp harm     1 FORC CNST  BND DIST
+*
+C_31 -C_31     1  700.0000  3.800000   70.0000    0.0000    0.0000    0.0000
+
+*
+ANGLE-(L-C-R)     TYPE
+*  mm2           33-35 FORC CNST EQUIL ANG  A-STR-LC  A-STR-CR   STR-STR DLT-TH-1H DLT-TH-2H  NON-HARM
+* polyene           x6    Ke 1-2  Thet 1-2  A-STR-21  A-STR-11   STR-STR    Ke 1-1  Thet 1-1    Ke 2-2
+* period cosine     x4 FORC CNST LINEAR MN  A-STR-LC  A-STR-CR   STR-STR  NOT USED  NOT USED    PERIOD
+*simple costhet      1 FORC CNST EQUIL ANG
+*costhet with x     11 FORC CNST EQUIL ANG  A-STR-LC  A-STR-CR   STR-STR
+*simple harm thet   21 FORC CNST EQUIL ANG
+*harm thet with x   31 FORC CNST EQUIL ANG  A-STR-LC  A-STR-CR   STR-STR
+*
+X    -C_31 -X       21  100.0000  120.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+*
+TORSION                 CASE   BARRIER    PERIOD CISMIN(1)    ANGANG    BNDTOR MPHI
+* multiple terms use same labels but different period, barrier,cismin, must have angang etc on last one
+X    -C_31 -C_31 -X      101    0.0000    3.0000   -1.0000    0.0000    0.0000    1
+
+*AMM added the following zero energy terms to allow simulations of hemes :
+
+*
+INVERSION (CENT AT 1ST) TYPE  FRC CNST  EQU ANGL         D         E         F
+C_31 -X    -X    -X        2   00.0000   54.7360    9.9997  -34.6404   29.9997
+*
+ANGANGINV (1ST CENT I ) TYPE     K-KJL     K-JKL     K-JLK
+*
+PITWIST     TYPE   BARRIER  SPLT INV    ANGANG
+*
+CROSS-BND-ANG (CNT 1ST) TYPE  K-BND-IJ  K-BND-IK  K-BND-IL
+*
+HBOND       TYPE    -DE HB     RE HB
+X    -X        1   -9.0000    2.7500 ! no charges
+*X    -X        1   -7.0000    2.7500 ! Gasteiger charges
+*X    -X        1   -4.0000    2.7500 ! "experimental" charges
+*
+USER                      TYPE FORC CNST  BND DIST    LINEAR
+END OF DATA
