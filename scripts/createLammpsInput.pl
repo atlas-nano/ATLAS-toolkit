@@ -4114,7 +4114,7 @@ return <<DATA;
 This script will generate LAMMPS data and input files from a bgf structure
 usage: $0 -b structureFile -f \"ff1 ff2...\" -s [suffix] -t [sim template] -q [qeq/pqeq file] -r [reax/rexpon file] -i [inputFile_coeffs] -o [other_options] 
 Arguments:
-	-b structureFile: 
+	-b structureFile: if no box (CRYSTX line in bgf file) is provided, a padded box will be generated and applied 
 $fTypeStr
 	-f \"forcefield1 forcefield2...\": 
 $ffTypeStr
