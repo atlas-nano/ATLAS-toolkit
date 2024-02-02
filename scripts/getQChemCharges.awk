@@ -1,4 +1,4 @@
-#!/bin/gawk
+#!/usr/bin/gawk -f
 BEGIN{
 	if(ARGC < 3) {
 		print "usage: awk -v chrgStr=[chelpg(default)|esp|resp|mulliken] $0 qchem_out bgf_file"
