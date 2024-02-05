@@ -1,0 +1,117 @@
+# Following procedure from Gurina et al. Materials MDPI 2019 Oct 11
+# heat to 500K, NPT at 500K and 1atm for 5ns
+# then cool to 300K for 0.5ns 
+
+variable             sAtoms index 55237
+variable             t_high index 800
+
+group                solute id <> 1 ${sAtoms}
+group                solvent subtract all solute
+group nanoparticles type 1
+group ligands subtract solute nanoparticles
+                     
+timestep             1
+
+print                          .
+print ==========================================
+print "500 steps CG Minimization"
+print ==========================================
+print                          .
+
+dump        1 all custom 25 ${sname}.min.lammps id type xu yu zu vx vy vz
+thermo          10
+fix             restraint solute spring/self 500.0
+min_style       sd
+minimize        1.0e-4 1.0e-4 500 5000
+min_style       cg
+minimize        1.0e-4 1.0e-4 500 5000
+#now minimize the entire system
+unfix           restraint
+minimize        1.0e-4 1.0e-4 500 5000
+undump          1
+
+print                .
+print                =====================================
+print                "NVT dynamics to heat system"
+print                =====================================
+print                .
+                     
+fix                  shakeH all shake 0.0001 20 500 m 1.0079
+velocity             all create 0.0 12345678 dist uniform
+thermo               100
+dump                 1 all custom 1000 ${sname}.heat.lammpstrj id type xu yu zu vx vy vz
+dump                 2 all custom 10000 ${sname}.coarse.heat.lammpstrj id type xu yu zu vx vy vz
+fix                  4 solvent nvt temp ${rtemp} ${t_high} 100.0
+fix                  5 solute nvt temp ${rtemp} ${rtemp} 100.0
+fix recenter all recenter INIT INIT INIT
+run                  500000 #preserve heating rate
+unfix                4
+unfix                5
+undump               1
+undump               2
+unfix recenter
+
+write_restart restart.${sname}.heat-highT
+
+print                .
+print                =====================================
+print                "NVT dynamics to anneal system"
+print                =====================================
+print                .
+                     
+fix                  shakeH all shake 0.0001 20 500 m 1.0079
+velocity             all create 0.0 12345678 dist uniform
+thermo               100
+dump                 1 all custom 1000 ${sname}.anneal.lammpstrj id type xu yu zu vx vy vz
+dump                 2 all custom 10000 ${sname}.coarse.anneal.lammpstrj id type xu yu zu vx vy vz
+fix                  4 solvent nvt temp ${t_high} ${t_high} 100.0
+fix                  5 solute nvt temp ${rtemp} ${rtemp} 100.0
+fix recenter all recenter INIT INIT INIT
+run                  5000000 # run for 5 ns
+unfix                4
+unfix                5
+undump               1
+undump               2
+unfix recenter
+
+write_restart restart.${sname}.anneal-highT
+
+print                .
+print                =====================================
+print                "NVT dynamics to cool system"
+print                =====================================
+print                .
+
+dump                 1 all custom 1000 ${sname}.${t_high}K.cool.lammpstrj id type xu yu zu vx vy vz
+dump                 2 all custom 10000 ${sname}.${t_high}K.cool_coarse.lammpstrj id type xu yu zu vx vy vz
+
+fix                  4 solvent nvt temp ${t_high} ${rtemp} 100.0
+fix                  5 solute nvt temp ${rtemp} ${rtemp} 100.0
+fix recenter all recenter INIT INIT INIT
+run                  500000
+unfix                4
+unfix                5
+unfix recenter
+undump 1
+undump 2
+
+write_restart restart.${sname}.cool-highT
+
+print                .
+print                ================================================
+print                "NPT dynamics with an isotropic pressure of 1atm."
+print                ================================================
+print                .
+                     
+fix                  2 all npt temp ${rtemp} ${rtemp} 100.0 x 1.0 1.0 1000.0 y 1.0 1.0 1000.0 z 1.0 1.0 1000.0 couple yz
+fix recenter all recenter INIT INIT INIT
+dump                 1 all custom 1000 ${sname}.${rtemp}K.npt.lammpstrj id type xu yu zu vx vy vz
+dump                 2 all custom 10000 ${sname}.${rtemp}K.npt_coarse.lammpstrj id type xu yu zu vx vy vz
+run                  1000000 # run for 1 ns
+undump               1
+undump               2
+unfix                2
+unfix recenter
+
+write_restart restart.${sname}.npt
+
