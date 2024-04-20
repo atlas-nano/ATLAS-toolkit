@@ -82,6 +82,16 @@ sub init {
 sub usage {
 	print STDOUT <<DATA;
 usage: $0 -b bgf_file -i atom1 -j atom2 -s (save_name)
+
+NOTE: -i and -j should be followed by BGF atom selection strings, which allows for the removal of repeated instances of a given bond.
+
+valid selection fields include "resid", "resname", "atmname", "index", "x", "y", "z", "fftype", "charge"
+
+e.g.
+
+~/ATLAS-toolkit/scripts/removeBond.pl -b step5_assembly.bgf -i "fftype eq 'HT'" -j "fftype eq 'HT'" -s test
+
+was used to remove spurious connections between hydrogen atoms after converting output from CHARMM-GUI into BGF format
 DATA
 
 die "\n";
