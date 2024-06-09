@@ -51,7 +51,9 @@ fix             2 all npt temp ${rtemp} ${rtemp} 100.0 iso ${press} ${press} 200
 thermo          100
 thermo_style    multi
 dump            1 all custom 1000 ${sname}.${rtemp}K.${press}bar.npt.lammpstrj id type xu yu zu vx vy vz
+dump            myDump all dcd 1000 ${sname}.dcd
 run             50000 # run for 50ps
 unfix           2
 unfix 6
+undump myDump
 undump          1
