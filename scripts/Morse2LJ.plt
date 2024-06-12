@@ -19,11 +19,11 @@ set table "_morse.dat"
 pl [xstart:xstop] morse(x)
 unset table
 weight(x)=exp((x+D)/8.314/.298) #Boltzman weighting 
-d0 = D
-r0 = r
+d0 = D + 0
+r0 = r + 0
 #fit lj(x) '_morse.dat' u 1:2:(weight(column(2))) yerrors via d0,r0
 fit lj(x) '_morse.dat' via d0,r0
-print "Result: Morse parameter. D = ",d0," r = ",r0
+print "Result: LJ parameter. eps = ",d0," sigma = ",r0
 print "Creating comparison plot morse-lj.compare.png"
 
 set encoding iso_8859_1
