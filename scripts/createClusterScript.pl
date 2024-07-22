@@ -71,7 +71,8 @@ module load cpu/0.17.3b  gcc/10.2.0/npcyll4 cmake/3.21.4/teqow32 openmpi/4.1.3/o
 nprocs=\$(( \$SLURM_NTASKS_PER_NODE * \$SLURM_NNODES / 2 ))
 PARALLEL="mpirun -n \$nprocs -mca btl vader,self"
 
-LMP="/home/tpascal/codes/bin/lmp_expanse -screen none -var rtemp \$rtemp -var press \$press"
+# Deleted `-screen none` option for debugging purposes
+LMP="/home/tpascal/codes/bin/lmp_expanse -var rtemp \$rtemp -var press \$press"
 
 mkdir -p \$temp_dir/analysis \${curr_dir}/results
 cd \$temp_dir
@@ -83,7 +84,8 @@ done
 echo "LAMMPS dynamics of \${prefix} at \${rtemp}K"
 echo "running in \$temp_dir"
 \$PARALLEL \$LMP -in \${lmp_equil_file} -log \${prefix}.\${rtemp}K.equil.lammps.log
-cp *.log *.lammpstrj \${curr_dir}/results
+# Adding *.lammps and *.lammpsdump and *.dcd in case of alternately named lammps dump files
+cp *.log *.lammpstrj *.lammps *.lammpsdump *.dcd \${curr_dir}/results
 
 DATA
 
