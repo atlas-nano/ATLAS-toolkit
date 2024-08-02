@@ -1,7 +1,7 @@
 #!/usr/bin/gawk -f
 BEGIN{
 	if(ARGC < 3) {
-		print "usage: awk -v chrgStr=[chelpg(default)|esp|resp|mulliken] $0 qchem_out bgf_file"
+		print "usage: $0 -v chrg=[chelpg(default)|esp|resp|mulliken] qchem_out bgf_file"
 		exit(1)
 	}
 	if(chrg == "") {
