@@ -205,11 +205,7 @@ sub getFunctOpts {
 		}
 		$chargeOpt *= -1;
 	}
-	if($n eq "all") {
-		for $i (keys %{ $struct }) {
-			$selAtoms->{$i} = 1;
-		}
-	} elsif (scalar(keys %{ $selAtoms }) > $n) {
+	if ($n ne "all" and scalar(keys %{ $selAtoms }) > $n) {
 		@{ $tmp } = keys %{ $selAtoms };
 		&ShuffleArray($tmp);
 		$selAtoms = ();
@@ -346,7 +342,7 @@ DATA
 	# run LAMMPS
 	print "Minimizing structure...Running LAMMPS minimization\r";
 	#$execCmd = "/home/caltech/openmpi-1.3.3/bin/mpirun -np 1 /home/caltech/lammps-stable/src/lmp_parallel -in in.${prefix}_singlepoint -screen none -log ${prefix}_log.lammps";
-	$execCmd = "/home/tpascal/codes/bin/lmp_expanse -in in.${prefix}_singlepoint -screen none -log ${prefix}_log.lammps";
+	$execCmd = "/home/tpascal/codes/bin/lmp_serial -in in.${prefix}_singlepoint -screen none -log ${prefix}_log.lammps";
 	die "ERROR: Cannot execute \"$execCmd\"\n" if(system("${execCmd} > /dev/null"));
 
 	#update coordinates

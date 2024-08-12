@@ -84,7 +84,7 @@ if(exists($PARMS->{PARMS}{POLARIZATION}) and keys %{ $PARMS->{PARMS}{POLARIZATIO
 }
 print "Step 6: Creating $PARMS->{PARMS}{INPUTNAME} input files in.${suffix}...";
 &getTIP4Popts($PARMS, $ATOMS, $BONDS) if (exists($PARMS->{PARMS}{is_tip4p}) and $PARMS->{PARMS}{is_tip4p});
-&writeTypeCharges($PARMS)
+&writeTypeCharges($PARMS, $ATOMS)
 	if($sysOpts->{TypeCharges} and $PARMS->{QEq}{Opt}==0);
 &writeCMAPfile($PARMS, $suffix) if(defined($CMAP) and $CMAP->{counter}>0);	
 &CreateInputFile($PARMS);
@@ -547,6 +547,7 @@ sub createDatFileHeader {
 	} elsif ($parms->{PARMS}{HYBRID_VDW}  == 0) {
 		for $index (1 .. $parms->{ATOMTYPES}{counter}) {
 			next if (! exists($DATA->{$index}{KEY}));
+			next if ($DATA->{$index}{TYPE} =~ /(SW|REAX|REXPON|EAM)/);
 			$parms->{PARMS}{PAIR_COEFFS} .= sprintf("\npair_coeff %5d %5d ", $index, $index);
 			$parms->{PARMS}{PAIR_COEFFS} .= sprintf("%15s ", $DATA->{$index}{Lammps}{LMPNAME})
 				if (scalar(keys %{ $parms->{VDW}{TYPE} }) > 1);
@@ -1263,7 +1264,7 @@ sub removeEmptyParms {
 	my ($i);
 
 	for $i (keys %{ $parmData }) {
-		next if (($i eq "counter") or ($i eq "TYPE") or ($i eq "Lammps"));
+		next if (($i eq "counter") or ($i eq "TYPE"));
 		last if (exists($parmData->{$i}{INDEX}));
 		if (! keys %{ $parmData->{$i} }) {
 			delete $parmData->{$i};
@@ -1713,8 +1714,8 @@ sub addLammpsParms {
 	#save off diagnoal elements for later use
 	for $k (sort { $parms->{VDW}{TYPE}{$a}{ORDER} <=> $parms->{VDW}{TYPE}{$b}{ORDER} } keys %{ $parms->{VDW}{TYPE} }) {
 		$parms->{PARMS}{OFF_DIAG} .= "#$k\n" if ($parmHybrid =~ /overlay/);
-		#$k = $hybridOpt if(scalar(keys %{ $parms->{VDW}{TYPE} }) == 1);
-		#next if (! defined($k) or !exists($offDiag->{$k}));
+		#$k = $hybridOpt if(scalar(keys %{ $parms->{VDW}{TYPE} }) > 1);
+		next if (! defined($k) or !exists($offDiag->{$k}));
 		next if (! exists($offDiag->{$k}));
 		for $i (sort numerically keys %{ $offDiag->{$k} }) {
 			for $j (sort numerically keys %{ $offDiag->{$k}{$i} }) {
@@ -1844,7 +1845,9 @@ sub getVDWlist {
 
 	#loop over all types and get the offdiag components
 	for $i (keys %{ $vdwTypes }) {
+		next if (! defined($parms->{ATOMTYPES}{$i}) or ! exists($parms->{ATOMTYPES}{$i}{INDEX}));
 		for $k (keys %{ $vdwTypes }) { 
+			next if (! defined($parms->{ATOMTYPES}{$k}) or ! exists($parms->{ATOMTYPES}{$k}{INDEX}));
 			@tmp = sort numerically keys  %{ $parms->{VDW}{$i}{$k} };
 			if (!exists($parms->{ATOMTYPES}{$i}) and ! exists($parms->{ATOMTYPES}{$k})) {
 				$index1 = $index2 = "*";
@@ -2742,12 +2745,20 @@ sub writeIsotopeMass {
 }
 
 sub writeTypeCharges {
-	my ($parms) = $_[0];
+	my ($parms, $atoms) = @_;
 	my ($i, @types);
 
 	$parms->{PARMS}{TYPE_CHARGES} = "variable scaleQ index 1\n";
-	map { $parms->{ATOMTYPES}{$_}{USE_CHARGE} == 1 ? $parms->{PARMS}{TYPE_CHARGES} .= getTypeIDStr($parms->{ATOMTYPES}{$_}) : "" } 
-		sort { $parms->{ATOMTYPES}{$a}{TYPEID} <=> $parms->{ATOMTYPES}{$b}{TYPEID} } grep {!/TYPE|counter/i} keys %{ $parms->{ATOMTYPES} };
+	map { 
+		$parms->{ATOMTYPES}{$_}{USE_CHARGE} == 1 ? 
+			$parms->{PARMS}{TYPE_CHARGES} .= getTypeIDStr($parms->{ATOMTYPES}{$_}) : 
+			$parms->{PARMS}{TYPE_CHARGES} .= setTypeQ($parms->{ATOMTYPES}{$_}, $atoms) 
+		} 
+		sort { 
+			$parms->{ATOMTYPES}{$a}{TYPEID} <=> $parms->{ATOMTYPES}{$b}{TYPEID} 
+		} grep {
+			!/TYPE|counter/i
+		} keys %{ $parms->{ATOMTYPES} };
 }
 
 sub getTypeIDStr {
@@ -2759,6 +2770,28 @@ sub getTypeIDStr {
 	$str = "variable q${tID} equal ${q}*\${scaleQ}\n" .
 			"set type ${tID} charge \${q${tID}}\n";
 
+	return $str;
+}
+
+sub setTypeQ {
+	my ($parm, $atoms) = @_;
+	my ($ffType, $i, $qList, $typeQ, $typeID, $tmp, $str);
+
+	$ffType = $parm->{NAME};
+	for $i (values %{ $atoms }) {
+		if ($i->{FFTYPE} eq $ffType) {
+			$qList->{$i->{CHARGE}}++;
+		}
+	}
+
+	@{ $tmp } = keys %{ $qList };
+	$typeQ = $tmp->[0];
+	$typeID = $parm->{TYPEID};
+	$str = "variable q${typeID} equal ${typeQ}*\${scaleQ}\n" .
+			"set type ${typeID} charge \${q${typeID}}\n";
+
+	$ERRORS{ATOM_CHARGE}{"MULTIPLE CHARGES for $ffType DETECTED: @{$tmp}"}++ if($#{$tmp} > 0);
+	
 	return $str;
 }
 
@@ -4114,7 +4147,7 @@ return <<DATA;
 This script will generate LAMMPS data and input files from a bgf structure
 usage: $0 -b structureFile -f \"ff1 ff2...\" -s [suffix] -t [sim template] -q [qeq/pqeq file] -r [reax/rexpon file] -i [inputFile_coeffs] -o [other_options] 
 Arguments:
-	-b structureFile: if no box (CRYSTX line in bgf file) is provided, a padded box will be generated and applied 
+	-b structureFile: 
 $fTypeStr
 	-f \"forcefield1 forcefield2...\": 
 $ffTypeStr
