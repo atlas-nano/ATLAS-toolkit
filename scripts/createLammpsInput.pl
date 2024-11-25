@@ -14,7 +14,7 @@ use File::Basename qw(basename);
 
 use General qw(FileTester LoadElements Permutate GetSoluteAtoms FindElement
 			CRadDegrees LoadFFs IsDecimal AddRingField AddElementField ReadFFs
-			GetFileTypeStr GetFFTypeStr CoM LoadConverter);
+			GetFileTypeStr GetFFTypeStr GetOptTypeStr CoM LoadConverter);
 use FileFormats qw(GetBondList WriteSWfile addHeader createBGF insertHeaderRemark 
 			ParseStructFile);
 use CERIUS2 qw(GenerateUFFParms getLammpsOpts findDuplicate);
@@ -45,20 +45,24 @@ $PARMS->{PARMS}{MOLS} = $MOLS;
 &fixMesoDNAAtoms($ATOMS, $CONS) if ($sysOpts->{mesodna}); #mesodna fix
 &findDuplicateParms($PARMS, "VDW BONDS ANGLES TORSIONS PI_TORSIONS");
 &updateTorsionList($PARMS->{TORSIONS});
-&setOpts($ATOMS, $PARMS, $opts, $QEqtmp, $MOLS);
 #&AddRingField($ATOMS, $CONS, $ATOMS);
 &addQEqData($ATOMS,$PARMS, $QEqtmp) if (defined($QEqtmp));
 # remove all valence interactions for reax/3 body force fields or as specified
 &deleteBonds($ATOMS, \%{ $CONS }, $sysOpts->{nobonds}, $ffType) if ($ffType == 5 or exists($sysOpts->{nobonds})); 
+#electrode
 &setElectrodeOpts($ATOMS, $CONS, $PARMS, $sysOpts->{electrode}, $QEqtmp) if (defined($sysOpts->{electrode}));
 print "Done\n";
 &printErrors(\%ERRORS, 1) if (keys %ERRORS);
 print "Step 4: Determining valence list from connectivities...";
-@atmIndices = sort numerically keys %{ $ATOMS };
+for $i (sort numerically keys %{ $ATOMS }) {
+	push @atmIndices, $i if($ATOMS->{$i}{FFTYPE} !~ /_shell/); #core-shell fix
+}
+#@atmIndices = sort numerically keys %{ $ATOMS };
 &removeCrossParms($PARMS) if ($nocross);
 &getValenceParms($ATOMS, $CONS, $PARMS, \@atmIndices);
 &findDuplicateParms($PARMS, "INVERSIONS");
 &updateParmIndex($PARMS);
+&setOpts($ATOMS, $PARMS, $opts, $QEqtmp, $MOLS);
 &determineTinkerOpts($PARMS, $suffix, $sysOpts->{amoeba_monopole});
 &addPQEqOpt($ATOMS, $CONS, $PARMS) if (defined($QEqtmp) and $QEqtmp->{Opt} == 2);
 &getTorsionScalingFactor($TORSIONS);
@@ -318,7 +322,7 @@ sub isWater {
 	my ($atoms, $i) = @_;
 	my ($j, $eleList);
 
-	return 0 if (${$atoms->{$i}{MOLSIZE}} != 3);
+	#return 0 if (${$atoms->{$i}{MOLSIZE}} != 3);
 	@{ $eleList } = map { $atoms->{$_}{ELEMENT}{SYMBOL} } keys %{ $atoms->{$i}{MOLECULE}{MEMBERS} };
 	return 1 if ("@{ $eleList }" =~ /(H H O|O H H|H O H)/);
 	return 0;
@@ -708,8 +712,11 @@ sub getValenceParms {
 	my ($i, $j, $k, $l, $m, $n, @currIndices, $PLIST, $tmp);
 
 	for $i (@{ $atmList }) {
-		if ($#{ $cons->{$i} } == 2) { #Inversion
-			@currIndices = ($i,@{ $cons->{$i} });
+		if ($#{ $cons->{$i} } == 2 || $atoms->{$i}{NUMBONDS} == 3) { #Inversion
+			@currIndices = ($i);
+			for $j (@{ $cons->{$i} }) {
+				push @currIndices, $j if ($atoms->{$j}{FFTYPE} !~ /_shell/); #core shell fix
+			}
 			&searchForValence($atoms, $parms->{INVERSIONS}, \@currIndices, "INVERSIONS", 0, 1);
 		}
 		for $j (@{ $cons->{$i} }) {
@@ -1151,7 +1158,7 @@ sub updateParmIndex {
 
 sub addAllPair {
 	my ($parms, $pName, $optStr) = @_;
-	my (@tmp, $k, $curr, $allCoul);
+	my (@tmp, $k, $curr);
 
 	$parms->{PARMS}{$pName} = 1;
 	if(exists($parms->{VDW}{-1}{-1})) {
@@ -1213,7 +1220,7 @@ sub determineAllCoul {
 
 sub fixCoulLong {
 	my ($parms) = $_[0];
-	my ($k, $l, $cType, $curr, $isCoulLong);
+	my ($k, $l, $cType, $curr, $isCoulLong, $opts);
 
 	$isCoulLong = 0;
 	$cType = "long";
@@ -1225,10 +1232,15 @@ sub fixCoulLong {
 		$curr->{$k}{LMPNAME} = "lj/gromacs" if ($curr->{$k}{LMPNAME} eq "lj/charmm");
 		$curr->{$k}{LMPNAME} = "lj/cut/soft" if ($curr->{$k}{LMPNAME} eq "lj/cutsoft"); #FEP fix
 		$isCoulLong = 1 if ($curr->{$k}{LMPNAME} =~ /^coul/);
-		$l = $k;
+		$l = $k if($curr->{$k}{OPTS});
 	}
-
-	&addAllPair($parms,"coul/${cType}", $curr->{$l}{OPTS}) if (! $isCoulLong);
+	if(defined($l)) {
+		$curr->{$l}{OPTS} =~ /\s*(\S+)\s*$/;
+		$opts = " $1";
+	} else {
+		$opts = " 10";
+	}
+	&addAllPair($parms,"coul/${cType}", $opts) if (! $isCoulLong);
 	$parms->{PARMS}{allCoul} = 1;
 }
 
@@ -1713,9 +1725,9 @@ sub addLammpsParms {
 
 	#save off diagnoal elements for later use
 	for $k (sort { $parms->{VDW}{TYPE}{$a}{ORDER} <=> $parms->{VDW}{TYPE}{$b}{ORDER} } keys %{ $parms->{VDW}{TYPE} }) {
-		$parms->{PARMS}{OFF_DIAG} .= "#$k\n" if ($parmHybrid =~ /overlay/);
-		#$k = $hybridOpt if(scalar(keys %{ $parms->{VDW}{TYPE} }) > 1);
-		next if (! defined($k) or !exists($offDiag->{$k}));
+		$parms->{PARMS}{OFF_DIAG} .= "#$parms->{VDW}{TYPE}{$k}{LMPNAME}\n" if ($parmHybrid =~ /overlay/);
+		$k = "a" if(scalar(keys %{ $parms->{VDW}{TYPE} }) == 1); #TAP 9/16/2024: Fix here for case where MB potential is only one
+		#next if (! defined($k) or !exists($offDiag->{$k}));
 		next if (! exists($offDiag->{$k}));
 		for $i (sort numerically keys %{ $offDiag->{$k} }) {
 			for $j (sort numerically keys %{ $offDiag->{$k}{$i} }) {
@@ -1832,8 +1844,10 @@ sub fixMorseCoul {
 sub getVDWlist {
 	my ($parms, $parmHybrid, $datWrite) = @_;
 	my ($i, $j, $k, $l, $m, @tmp, $hybridOpt, $vdwTypes);
-	my ($index1, $index2, $atmN, $offDiag, $diag);
+	my ($index1, $index2, $atmN, $offDiag, $diag, $hasStar);
 
+#NOTE: TAP 9/5/2024: Added the hasStar variable, and all non-star vdw entries are now handled by compressVDW
+	
 	for $i (keys %{ $parms->{VDW}{TYPE} }) {
 		for $j (1 .. $parms->{ATOMTYPES}{counter}) {
 			$diag->{lc $i}[$j-1] = "NULL";
@@ -1849,14 +1863,18 @@ sub getVDWlist {
 		for $k (keys %{ $vdwTypes }) { 
 			next if (! defined($parms->{ATOMTYPES}{$k}) or ! exists($parms->{ATOMTYPES}{$k}{INDEX}));
 			@tmp = sort numerically keys  %{ $parms->{VDW}{$i}{$k} };
+			$hasStar = 0;
 			if (!exists($parms->{ATOMTYPES}{$i}) and ! exists($parms->{ATOMTYPES}{$k})) {
 				$index1 = $index2 = "*";
+				$hasStar = 1;
 			} elsif (! exists($parms->{ATOMTYPES}{$i})) {
 				$index1 = "*";
 				$index2 = $parms->{ATOMTYPES}{$k}{INDEX};
+				$hasStar = 1;
 			} elsif (! exists($parms->{ATOMTYPES}{$k})) {
 				$index1 = "*";
 				$index2 = $parms->{ATOMTYPES}{$i}{INDEX};
+				$hasStar = 1;
 			} elsif ($parms->{ATOMTYPES}{$i}{INDEX} < $parms->{ATOMTYPES}{$k}{INDEX}) {
 				$index1 = $parms->{ATOMTYPES}{$i}{INDEX};
 				$index2 = $parms->{ATOMTYPES}{$k}{INDEX};
@@ -1864,6 +1882,7 @@ sub getVDWlist {
 				$index2 = $parms->{ATOMTYPES}{$i}{INDEX};
 				$index1 = $parms->{ATOMTYPES}{$k}{INDEX};
 			}
+			$hasStar = 1;
 			for $l (@tmp) {
 				$m = $parms->{VDW}{$i}{$k}{$l};
 				if(($parms->{PARMS}{HYBRID_VDW} > 0 and exists($m->{IGNORE}) and $m->{IGNORE}==2) or 
@@ -1883,32 +1902,146 @@ sub getVDWlist {
 				next if ($m->{TYPE} =~ /SW|REXPON|REAX|EAM/i and $m->{TYPE} !~ /REXPON_/i);
 				if (defined($parmHybrid) and $parmHybrid ne "") {
 					$hybridOpt = $m->{Lammps}{LMPONAME};
-					$offDiag->{$hybridOpt}{$index1}{$index2} .= 
-						sprintf("%-15s %-4s %-4s $m->{Lammps}{LMPNAME} ","pair_coeff",$index1,$index2);
+					if($hasStar) {
+						$offDiag->{$hybridOpt}{$index1}{$index2} .= 
+							sprintf("%-15s %-4s %-4s $m->{Lammps}{LMPNAME} ","pair_coeff",$index1,$index2);
+					}	
 				} elsif ($i ne $k) {
 					$hybridOpt = "a";
-					$hybridOpt = $m->{Lammps}{LMPONAME};
-					$offDiag->{$hybridOpt}{$index1}{$index2} .= sprintf("%-15s %-4s %-4s ","pair_coeff",$index1,$index2);
+					#$hybridOpt = $m->{Lammps}{LMPONAME}; #?? don't think this should be here...
+					if($hasStar) {
+						$offDiag->{$hybridOpt}{$index1}{$index2} .= sprintf("%-15s %-4s %-4s ","pair_coeff",$index1,$index2);
+					}
 				} else {
+					#this is the diagonal case, so skip
 					next;
 				}
-				for $j (@{ $m->{VALS} }) {
-					last if ($m->{Lammps}{LMPNAME} =~ /^coul\/(long|cut)/);
-					if (IsDecimal($j)) {
-						$offDiag->{$hybridOpt}{$index1}{$index2} .= sprintf("%25.5f ", $j);
-					} elsif($j =~ /[a-zA-Z]/) {
-						$offDiag->{$hybridOpt}{$index1}{$index2} .= sprintf("%25s ", $j);
-					} else {
-						$offDiag->{$hybridOpt}{$index1}{$index2} .= sprintf("%25d ", $j);
+				if($hasStar) {
+					if($m->{Lammps}{LMPNAME} !~ /^coul\/(long|cut)/) {
+						for $j (@{ $m->{VALS} }) {
+							$offDiag->{$hybridOpt}{$index1}{$index2} .= formatVDWval($j);
+						}
 					}
+					$offDiag->{$hybridOpt}{$index1}{$index2} .= "# $m->{KEY}" if ($datWrite->{Labels});
+					$offDiag->{$hybridOpt}{$index1}{$index2} .= "\n";
+				} else {
+					$offDiag->{$hybridOpt}{$index1}{$index2}{VAL} = "@{ $m->{VALS} }";
+					$offDiag->{$hybridOpt}{$index1}{$index2}{LMP} = "$hybridOpt";
 				}
-				$offDiag->{$hybridOpt}{$index1}{$index2} .= "# $m->{KEY}" if ($datWrite->{Labels});
-				$offDiag->{$hybridOpt}{$index1}{$index2} .= "\n";
 				delete $parms->{VDW}{$i}{$k}{$l} if ($i eq $k and $parmHybrid); #delete the diagonal element since it will be save in the off diagonal
 			}
 		}
 	}
+
+	#now consolidate the vdw elements that are the same
+	&compressVDW($parms, \%{ $offDiag });
+
 	return ($diag, $offDiag);
+}
+
+sub formatVDWval {
+	#this returns a properly formatted VDW string
+	my ($val) = $_[0];
+	my ($ret);
+
+	for $i (split /\s+/, $val) {
+		if (IsDecimal($i)) {
+			$ret .= sprintf("%25.5f ", $i);
+		} elsif($val =~ /[a-zA-Z]/) {
+			$ret .= sprintf("%25s ", $i);
+		} else {
+			$ret .= sprintf("%25d ", $i);
+		}
+	}
+
+	return $ret;
+}
+
+sub compressVDW {
+	my ($parms, $offDiag) = @_;
+	my ($vdwType, $i, $j, $k, $currVal, $pList, $val);
+
+	for $vdwType (values %{ $offDiag }) {
+		for $i (keys %{ $vdwType }) { #these are the indices
+			next if ($i !~ /^\d+/); #ignore * and other non-numeric entries
+			for $j (keys %{ $vdwType->{$i} }) {
+				next if ($j !~ /^\d+/);
+				next if (ref($vdwType->{$i}{$j}) ne "HASH");
+				$currVal = $vdwType->{$i}{$j}{VAL};
+				$pList->{$currVal}{I}{$i} = 1;
+				$pList->{$currVal}{J}{$j} = 1;
+				$pList->{$currVal}{LMPONAME} = $vdwType->{$i}{$j}{LMP};
+				$pList->{$currVal}{SKEY} = abs("${i}.${j}") if (!defined($pList->{$currVal}{SKEY}) or $pList->{$currVal}{SKEY}>abs("${i}.${j}"));
+				delete $vdwType->{$i}{$j};
+			}
+			delete $vdwType->{$i} if (! keys %{ $vdwType->{$i} });
+		}
+		#now go through each values entry and print pair_coeff i j combinations
+		$k = 1; #offdiag{i}{j} counter
+		undef($i); undef($j);
+		for $currVal (sort { $pList->{$a}{SKEY} <=> $pList->{$b}{SKEY} } keys %{ $pList }) {
+			#currVal is the value we're interested in
+			$val = formatVDWval($currVal); #create a formatted string of the values
+			for $i (@{ getLammpsIJtypeString($pList->{$currVal}{I}, $parms->{ATOMTYPES}{counter}) }) {
+				for $j (@{ getLammpsIJtypeString($pList->{$currVal}{J}, $parms->{ATOMTYPES}{counter}) }) {
+					$k++ while(exists($offDiag->{$k})); #find a unique index
+					$offDiag->{$k}{$k} = sprintf("%-15s %-4s %-4s %s %s\n","pair_coeff",$i,$j,"",$val);
+					$k++;
+				}
+			}
+		}
+	}
+}
+
+sub getLammpsIJtypeString {
+	my ($iList, $n) = @_;
+	my ($cVal, $pVal, $sVal, $i, $tmp, $ret);
+
+	@{ $tmp } = sort numerically keys %{ $iList }; #get list of numbers
+
+	return ("*") if(scalar(@{ $tmp }) == $n); #special case of all types selected
+	for $i (0 .. $#{ $tmp }) {
+		$cVal = $tmp->[$i];
+		$sVal = $cVal if (! defined($sVal));
+		if(! defined($pVal)) {
+			$pVal = $cVal;
+		} elsif (($cVal - $pVal) > 1) {
+			#we've recorded a break
+			if(($pVal-$sVal) == 1) {
+				#single entry
+				push @{ $ret }, $pVal;
+			} else {
+				if($sVal == 1) {
+					push @{ $ret }, "*${pVal}";
+				} elsif (($pVal - $sVal)>0) {
+					push @{ $ret }, "${sVal}*${pVal}";
+				} else {
+					push @{ $ret }, $pVal;
+				}
+			}
+			undef $sVal;
+			undef $pVal;
+		} else {
+			$pVal = $cVal;
+		}
+	}
+
+	#last set of values
+	if(($pVal-$sVal) == 1) {
+		#single entry
+		push @{ $ret }, $pVal;
+	} else {
+		if($sVal == 1) {
+			push @{ $ret }, "*${pVal}";
+		} elsif ($cVal==$n) {
+			push @{ $ret }, "${pVal}*";
+		} elsif (($pVal - $sVal)>0) {
+			push @{ $ret }, "${sVal}*${pVal}";
+		} else {
+			push @{ $ret }, $pVal;
+		}
+	}
+	return $ret;
 }
 
 sub checkIJPairs {
@@ -2026,6 +2159,7 @@ sub checkAtomTypes {
 			$atomTypes->{$cffType}{ELENUM} = $atoms->{$i}{ELEMENT}{NUM};
 			$atoms->{$i}{PARMS} = \%{ $atomTypes->{$cffType} };
 			$atoms->{$i}{CHARGE} = $atomTypes->{$cffType}{CHARGE} if ($atomTypes->{$cffType}{USE_CHARGE});
+			
 			if(!exists($typeIDlist->{$cffType})) {
 				$typeIDlist->{$cffType} = ++$typeIDcounter;
 				$atomTypes->{$cffType}{TYPEID} = $typeIDcounter;
@@ -2253,14 +2387,13 @@ sub doPairMix {
 		$iName = $parms->{VDW}{TYPE}{$i}{NAME};
 		for $j (@tmp) {
 			$jType = findVDWEntry($parms->{VDW}{$j}{$j}, $iName);
-			next if (! $jType or !exists($parms->{ATOMTYPES}{$j}) or 
-				!exists($parms->{VDW}{$j}{$j}{$jType}{VALS}) or scalar(@{ $parms->{VDW}{$j}{$j}{$jType}{VALS} }) == 0);
+			next if (! $jType or !exists($parms->{ATOMTYPES}{$j}) or !exists($parms->{VDW}{$j}{$j}{$jType}{VALS}) or scalar(@{ $parms->{VDW}{$j}{$j}{$jType}{VALS} }) == 0);
 			for $k (@tmp) {
-				next if ($k eq $j or !exists($parms->{ATOMTYPES}{$k}) or !exists($parms->{ATOMTYPES}{$k}{INDEX}) 
-						or !exists($parms->{ATOMTYPES}{$j}) or !exists($parms->{ATOMTYPES}{$j}{INDEX}) 
-						or $parms->{ATOMTYPES}{$k}{INDEX} > $parms->{ATOMTYPES}{$j}{INDEX});
+				next if ($k eq $j or !exists($parms->{ATOMTYPES}{$k}) or !exists($parms->{ATOMTYPES}{$k}{INDEX}) or
+						!exists($parms->{ATOMTYPES}{$j}) or !exists($parms->{ATOMTYPES}{$j}{INDEX}) or
+						$parms->{ATOMTYPES}{$k}{INDEX} > $parms->{ATOMTYPES}{$j}{INDEX});
 				$kType = findVDWEntry($parms->{VDW}{$k}{$k}, $iName);
-				next if (! $kType or !exists($parms->{VDW}{$k}{$k}{$kType}{VALS}) or scalar(@{ $parms->{VDW}{$k}{$k}{$kType}{VALS} }) == 0);
+				next if (! $kType or !exists($parms->{ATOMTYPES}{$k}) or !exists($parms->{VDW}{$k}{$k}{$kType}{VALS}) or scalar(@{ $parms->{VDW}{$k}{$k}{$kType}{VALS} }) == 0); 
 				next if ((findVDWEntry($parms->{VDW}{$j}{$k}, $iName) and exists($parms->{VDW}{$j}{$k}{$jType}{VALS}) and scalar(@{ $parms->{VDW}{$j}{$k}{$jType}{VALS} }) > 0) or 
 						 (findVDWEntry($parms->{VDW}{$k}{$j}, $iName) and exists($parms->{VDW}{$k}{$j}{$jType}{VALS}) and scalar(@{ $parms->{VDW}{$k}{$j}{$jType}{VALS} }) > 0));
 				$count = scalar(keys %{ $parms->{VDW}{$j}{$k} }) + 1;
@@ -2271,6 +2404,12 @@ sub doPairMix {
 				$ignore = 3 if ($parms->{VDW}{$j}{$j}{$jType} > 1 and $parms->{VDW}{$k}{$k}{$kType}{IGNORE} > 1);
 				$parms->{VDW}{$j}{$k}{$count}{IGNORE} = $ignore;
 				$parms->{VDW}{$j}{$k}{$count}{VALS} = getPairMix($parms->{VDW}{$j}{$j}{$jType}{VALS},$parms->{VDW}{$k}{$k}{$kType}{VALS}, $iName);
+				#FEP fix
+				if($i =~ /soft/) {
+					$parms->{VDW}{$j}{$k}{$count}{VALS}[0] = 0.0001 if($parms->{VDW}{$j}{$k}{$count}{VALS}[0] == 0);
+					$parms->{VDW}{$j}{$k}{$count}{VALS}[1] = 0.1 if($parms->{VDW}{$j}{$k}{$count}{VALS}[1] == 0);
+					$parms->{VDW}{$j}{$k}{$count}{VALS}[2] = 1 if($parms->{VDW}{$j}{$k}{$count}{VALS}[2] == 0);
+				}
 			}
 		}
 	}
@@ -2502,28 +2641,25 @@ sub setOpts {
 		$add = "long off" if (! $hasCharge);
 		$parms->{PARMS}{OPTIONS}{VDW_EWALD} = 1;
 	}
-	for $i (1 .. $count) {
-		for $j (values %{ $tmp->{$i} }) {
-			next if (!exists($j->{Lammps}));
-			if($parms->{PARMS}{OPTIONS}{VDW_EWALD} == 1) {
-				$j->{Lammps}{name} =~ s/lj\/charmm\/coul\/long\S*/lj\/coul $add/g;
-				$j->{Lammps}{name} =~ s/lj\/cut\/coul\/long\S*/lj\/coul $add/g;
-				$j->{Lammps}{name} =~ s/buck\/coul\S*/buck\/coul $add/g;
-				$j->{Lammps}{opts} = " $parms->{PARMS}{cut_vdw} $parms->{PARMS}{cut_coul}";
-			} elsif ($qeqOpts->{Opt} == 2) {
-				$j->{Lammps}{name} = "lj/gromacs" if($j->{Lammps}{name} =~ /charmm/);
-				$j->{Lammps}{name} =~ s/\/coul.*//;
-			} elsif (! $hasCharge) {
-				$j->{Lammps}{name} =~ s/\/coul\S+//;
-				$j->{Lammps}{name} = "lj/charmm/coul/charmm" if ($j->{Lammps}{name} eq "lj/charmm");
-			} elsif ($parms->{PARMS}{OPTIONS}{PERIODICITY} == 0) {
-				$j->{Lammps}{name} =~ s/lj\/charmm\/coul\/long\/opt/lj\/charmm\/coul\/charmm/g;
-				$j->{Lammps}{name} =~ s/\/coul\/long/\/coul\/cut/g;
-			} elsif ($j->{TYPE} eq "LJ_6_12" and exists($parms->{PARMS}{is_tip4p}) and $parms->{PARMS}{is_tip4p}) { # tip4p fix
-				$j->{Lammps}{name} = "lj/cut/tip4p/long/opt";
-				$j->{Lammps}{fep}{pair} = "lj/cut/tip4p/long/soft";
-				$j->{Lammps}{opts} = "";
-			}
+	for $j (values %{ $parms->{VDW}{TYPE} }) {
+		if($parms->{PARMS}{OPTIONS}{VDW_EWALD} == 1) {
+			$j->{LMPNAME} =~ s/lj\/charmm\/coul\/long\S*/lj\/coul $add/g;
+			$j->{LMPNAME} =~ s/lj\/cut\/coul\/long\S*/lj\/coul $add/g;
+			$j->{LMPNAME} =~ s/buck\/coul\S*/buck\/coul $add/g;
+			$j->{OPTS} = " $parms->{PARMS}{cut_vdw} $parms->{PARMS}{cut_coul}";
+		} elsif ($qeqOpts->{Opt} == 2) {
+			$j->{LMPNAME} = "lj/gromacs" if($j->{LMPNAME} =~ /charmm/);
+			$j->{LMPNAME} =~ s/\/coul.*//;
+		} elsif (! $hasCharge) {
+			$j->{LMPNAME} =~ s/\/coul\S+//;
+			$j->{LMPNAME} = "lj/gromacs" if ($j->{LMPNAME} eq "lj/charmm");
+		} elsif ($parms->{PARMS}{OPTIONS}{PERIODICITY} == 0) {
+			$j->{LMPNAME} =~ s/lj\/charmm\/coul\/long\/opt/lj\/charmm\/coul\/charmm/g;
+			$j->{LMPNAME} =~ s/\/coul\/long/\/coul\/cut/g;
+		} elsif ($j->{LMPNAME} =~ /lj.charmm/ and exists($parms->{PARMS}{is_tip4p}) and $parms->{PARMS}{is_tip4p}) { # tip4p fix
+			$j->{LMPNAME} = "lj/cut/tip4p/long/opt";
+			$j->{Lammps}{fep}{pair} = "lj/cut/tip4p/long/soft";
+			$j->{OPTS} = "";
 		}
 	}
 	$parms->{PARMS}{FEP}{valid} = 0;
@@ -2809,6 +2945,7 @@ sub getRigidOpt {
 	for $i (keys %{ $rigidSelect }) {
 		$parms->{PARMS}{RIGID}{MOLS}{${$atoms->{$i}{MOLECULEID}}}{$i} = 1;
 	}
+	%{ $parms->{PARMS}{RIGID}{ATOMS} } = %{ $rigidSelect };
 	#if polarizable drude or thole
 	$nMatched = 0;
 	if(exists($sOpt->{coreShell}) and $sOpt->{coreShell}{type}>0) {
@@ -2842,9 +2979,9 @@ sub getFEPopt {
 	#now we have to get the atom types for the FEP
 	for $i (sort numerically keys %{ $fepSelect }) {
 		$a1 = $atoms->{$i}{PARMS}{LABEL};
-		$a2 = "${a1}fep";
+		$a2 = "${a1}__fep";
 		$a3 = "${a2}" . $atoms->{$i}{CHARGE};
-		if (! defined($fepAtomTypes->{$a1})) {
+		if (! exists($fepAtomTypes->{$a1}) or $fepAtomTypes->{$a1} == $atoms->{$i}{CHARGE}) {
 			$fepAtomTypes->{$a1} = $atoms->{$i}{CHARGE}; #fftype for FEP atom
 			$fepParentAtomTypes->{$a1}{$a1} = 1;
 		} elsif(exists($fepAtomTypes->{$a2}) and $fepAtomTypes->{$a2} == $atoms->{$i}{CHARGE}) {
@@ -2863,25 +3000,43 @@ sub getFEPopt {
 	for $i (sort numerically keys %{ $atoms }) {
 		next if (exists($fepSelect->{$i}));
 		if (defined($fepAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} })) { 
-			$first = 1;
-			for $j (keys %{ $fepSelect }) {
-				next if($atoms->{$j}{PARMS}{LABEL} ne $atoms->{$i}{PARMS}{LABEL});
-				#create a duplicate fftype for the fep atom 
-				($newPair, $newType) = duplicatePair($parms, $atoms->{$j}{PARMS}{LABEL}, $atoms->{$j}{CHARGE}, "fep") 
-					if ($first==1);
-				$first++;
-				#and update	
-				$fepParentAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} }{ $newType } = 1;
-				$atoms->{$j}{PARMS} = \%{ $newPair };
-				$atoms->{$j}{FFTYPE} = $newType;
-				$fepAtomTypes->{ $newType } = $atoms->{$j}{CHARGE};
+#			$first = 1;
+#			for $j (keys %{ $fepSelect }) {
+#				next if($atoms->{$j}{PARMS}{LABEL} ne $atoms->{$i}{PARMS}{LABEL});
+#				#create a duplicate fftype for the fep atom 
+#				($newPair, $newType) = duplicatePair($parms, $atoms->{$j}{PARMS}{LABEL}, $atoms->{$j}{CHARGE}, "fep") 
+#					if ($first==1);
+#				$first++;
+#				#and update	
+#				$fepParentAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} }{ $newType } = 1;
+#				$atoms->{$j}{PARMS} = \%{ $newPair };
+#				$atoms->{$j}{FFTYPE} = $newType;
+#				$fepAtomTypes->{ $newType } = $atoms->{$j}{CHARGE};
+#			}
+#			#remove the old atomlabel entry from fepAtomTypes and fepParentAtomTypes
+#			delete $fepAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} };
+#			delete $fepParentAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} }{ $atoms->{$i}{PARMS}{LABEL} };
+#			$atoms->{$i}{PARMS}{LABEL} =~ s/__fep.*//;
+			$newType = "$atoms->{$i}{PARMS}{LABEL}__nofep";
+			if(!exists($nonfepAtomTypes->{ $newType })) {
+				$parms->{VDW}{$newType}{$newType} = dclone($parms->{VDW}{$atoms->{$i}{PARMS}{LABEL}}{$atoms->{$i}{PARMS}{LABEL}});
+				($newPair, undef) = duplicatePair($parms, $atoms->{$i}{PARMS}{LABEL}, $atoms->{$i}{CHARGE}, "nofep");
+				$atoms->{$i}{PARMS} = \%{ $newPair };
+			} else {
+				$atoms->{$i}{PARMS} = \%{ $parms->{ATOMTYPES}{$newType} };
 			}
-			#remove the old atomlabel entry from fepAtomTypes and fepParentAtomTypes
-			delete $fepAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} };
-			delete $fepParentAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} }{ $atoms->{$i}{PARMS}{LABEL} };
+			$atoms->{$i}{FFTYPE} = $newType;
 		}
 		$nonfepAtomTypes->{ $atoms->{$i}{PARMS}{LABEL} } = $atoms->{$i}{CHARGE};
 	}
+	#now reindex the atomtypes in case we deleted any in the previous step
+#	$j = 0;
+#	for $i (sort {$parms->{ATOMTYPES}{$a}{INDEX} <=>$parms->{ATOMTYPES}{$b}{INDEX}}
+#			grep {!/TYPE|counter/i} keys %{ $parms->{ATOMTYPES} }) {
+#		$parms->{ATOMTYPES}{$i}{INDEX} = ++$j;
+#	}
+#	#update the atomtype counter for consistency
+#	$parms->{ATOMTYPES}{counter} = $j;
 
 	&doPairMix($parms); #generate off diagonal entry for fep - nonfep fftypes
 
@@ -2891,7 +3046,7 @@ sub getFEPopt {
 	for $i (sort {$parms->{ATOMTYPES}{$a}{INDEX} <=> $parms->{ATOMTYPES}{$b}{INDEX}} keys %{ $fepAtomTypes }) {
 		$idx = ${parms}->{ATOMTYPES}{$i}{INDEX}; #type index
 		$q =  $fepAtomTypes->{$i}; #atom charge
-		$qIdx = getAtomIndexFromTypeID($atoms, $fepSelect, $idx); #atom index
+		$qIdx = getAtomIndexFromFFtype($atoms, $i); #atom index
 		if ($parms->{QEq}{Opt}==2 or $q != 0) {
 			$parms->{PARMS}{FEP}{var_str} .= "variable             v${idx} equal q[$qIdx] #q = ${q}\n";
 		}
@@ -2909,15 +3064,17 @@ sub getFEPopt {
 	&determineAllCoul($parms);
 	$valid = 0;
 	$valid = 1 if (keys %{ $fepAtomTypes } and keys %{ $nonfepAtomTypes } and keys %{ $fepParentAtomTypes} );
+	die "ERROR: No valid atomtypes found for FEP!\n" if (scalar(keys %{ $fepAtomTypes }) == 0);
+	die "ERROR: FEP selected for all atoms!\n" if (scalar(keys %{ $nonfepAtomTypes }) == 0);
 	&createFEPVDWPairStr($parms, $fepAtomTypes, $nonfepAtomTypes, $fepParentAtomTypes) if ($valid);
 }
 
-sub getAtomIndexFromTypeID {
-	my ($atoms, $atomSelect, $typeIndx) = @_;
+sub getAtomIndexFromFFtype {
+	my ($atoms, $ffType) = @_;
 	my ($atomID, $i);
 
-	for $i (keys %{ $atomSelect }) {
-		if($atoms->{$i}{PARMS}{TYPEID} == $typeIndx) {
+	for $i (keys %{ $atoms }) {
+		if($atoms->{$i}{FFTYPE} eq $ffType) {
 			$atomID = $i;
 			last;
 		}
@@ -2930,8 +3087,8 @@ sub duplicatePair {
 	my ($parms, $atmLabel, $atmCharge, $pairLabel) = @_;
 	my ($newPair, $newPairLabel);
 
-	$newPairLabel = "${atmLabel}${pairLabel}";
-	$newPairLabel .= "${atmCharge}" if (defined($parms->{ATOMTYPES}{$newPairLabel}));
+	$newPairLabel = "${atmLabel}__${pairLabel}";
+	$newPairLabel .= "${atmCharge}" if (exists($parms->{ATOMTYPES}{$newPairLabel}));
 
 	$newPair = dclone($parms->{ATOMTYPES}{$atmLabel});
 	$newPair->{LABEL} = $newPairLabel;
@@ -2950,9 +3107,8 @@ sub createFEPVDWPairStr {
 	my ($nIdx, $addSoftFlag, $tmp, $childParentMap);
 
 	$childParentMap = getChildFromParent($fepParentAtomTypes);
-	for $i (keys %{ $fepParentAtomTypes }) { #enumerate over all the parent fep atomtypes
-		for $j (keys %{ $parms->{ATOMTYPES} }) { #enumerate over all the atom types
-			next if ($j =~ /counter/);
+	for $i (sort { $parms->{ATOMTYPES}{$a}{INDEX}<=>$parms->{ATOMTYPES}{$b}{INDEX} } keys %{ $fepParentAtomTypes }) { #enumerate over all the parent fep atomtypes
+		for $j (sort { $parms->{ATOMTYPES}{$a}{INDEX}<=>$parms->{ATOMTYPES}{$b}{INDEX} } grep {!/counter/} keys %{ $parms->{ATOMTYPES} }) { #enumerate over all the atom types
 			$l = $j;
 			$l = $childParentMap->{$j} if (exists($childParentMap->{$j}));
 			if(exists($parms->{VDW}{$i}) and exists($parms->{VDW}{$i}{$l}) and keys %{ $parms->{VDW}{$i}{$l}}) {
@@ -2968,7 +3124,7 @@ sub createFEPVDWPairStr {
 				undef $parent;
 			}
 			next if (! defined($parent));
-			for $k (keys %{ $fepParentAtomTypes->{$i} }) { #enumerate over all the children of parent atomtype i
+			for $k (sort { $parms->{ATOMTYPES}{$a}{INDEX}<=>$parms->{ATOMTYPES}{$b}{INDEX} } keys %{ $fepParentAtomTypes->{$i} }) { #enumerate over all the children of parent atomtype i
 				$parms->{VDW}{counter}++;
 				if(exists($parms->{VDW}{$j}) and exists($parms->{VDW}{$j}{$k})) { #check for reverse vdw entry for j k
 					$parms->{VDW}{$j}{$k} = dclone($parent);
@@ -2983,8 +3139,8 @@ sub createFEPVDWPairStr {
 				$nIdx = "$parms->{ATOMTYPES}{$j}{INDEX} $parms->{ATOMTYPES}{$k}{INDEX}" 
 					if($parms->{ATOMTYPES}{$k}{INDEX}>$parms->{ATOMTYPES}{$j}{INDEX});
 
-				#now record the nofep - fep pair
 				next if (!exists($nonfepAtomTypes->{$j}));
+				#now record the nofep - fep pair
 				for $l (values %{ $curr }) {
 					next if (! exists($l->{Lammps}{FEP})); #skip all no fep entries
 					$addSoftFlag = $l->{Lammps}{FEP}{addsoft};
@@ -3004,6 +3160,10 @@ sub createFEPVDWPairStr {
 					}
 					$l->{Lammps} = \%{ $parms->{VDW}{TYPE}{ $tmp->{pair} } }; 
 					push @{ $l->{VALS} }, 1 if (! exists($l->{FEP_MOD}));
+					if($l->{Lammps}{LMPNAME} =~ /soft/) {
+						$l->{VALS}[0] = 0.001 if ($l->{VALS}[0] == 0);
+						$l->{VALS}[1] = 1 if ($l->{VALS}[1] == 0);
+					}
 					$l->{FEP_MOD} = 1;
 					$l->{Lammps}{USED} = 1;
 				}
@@ -3132,7 +3292,7 @@ sub addSoftPair {
 	my ($parms, $curr, $itype, $jtype, $vals) = @_;
 	my (@tmp, $k);
 
-	@{ $vals } = () if (! defined($vals));
+	@{ $vals } = (0.1, 0.1, 1) if (! defined($vals));
 	$curr = \%{ $parms->{VDW}{$itype}{$jtype} };
 	$k = 0;
 	if(keys %{ $curr }) {
@@ -3156,6 +3316,7 @@ sub addSoftPair {
 								);
 	}
 	$parms->{VDW}{counter}++;
+	$vals->[0] = 0.001 if ($vals->[0] == 0);
 	$curr->{$k} = (
 					{
 						"ATOM"     => "$itype $jtype",
@@ -3214,6 +3375,7 @@ sub getChildFromParent {
 sub addCoreShellAtoms {
 	my ($atoms, $bonds, $parms, $csOpt) = @_;
 	my ($atomSel, $ffTyAtoms, $allTypes, $i); 
+	my ($cffType, $curr, $cTmp, $resN, $atomTypes); 
 
 	$atomSel = SelectAtoms($csOpt->{aStr}, $atoms);
 	$ffTyAtoms = SelectAtomsByField($atoms, $bonds, "FFTYPE", $atomSel);
@@ -3226,6 +3388,38 @@ sub addCoreShellAtoms {
 		$qxFile = "$Bin/../ff/schwerdtfeger.dff" if (! defined($qxFile));
 	}
 	&parsePolarizationFile($qxFile, $parms->{ATOMTYPES}) if (defined($qxFile));
+	#now check polarization parameters and see if there are residue specific polarization parameters
+	$atomTypes = $parms->{ATOMTYPES};
+	for $i (keys %{ $atoms }) {
+		$resN = $atoms->{$i}{RESNAME};
+		$resN = $1 if ($resN =~ /^\s*(\S+)\s*$/);
+		$cffType = $atoms->{$i}{FFTYPE};
+		if(exists($parms->{POLARIZATION}) and exists($parms->{POLARIZATION}{$resN}) 
+				and exists($parms->{POLARIZATION}{$resN}{$cffType})) {
+			#check that the polarization entry (if exists) is the same as the current entry
+			$curr = $parms->{POLARIZATION}{$resN}{$cffType};
+			if (! exists($atomTypes->{$cffType})) {
+				$ERRORS{ATOMTYPES}{$cffType}++;
+			} else {
+				$atoms->{$i}{CHARGE} = $curr->{totQ};
+				if(!exists($atomTypes->{$cffType}{polarInfo})) {
+					%{ $atomTypes->{$cffType}{polarInfo} } = %{ $curr };
+					$atomTypes->{$cffType}{polarInfo}{RESNAME} = $resN;
+				}elsif(exists($atomTypes->{$cffType}{polarInfo}{RESNAME}) 
+						and $atomTypes->{$cffType}{polarInfo}{RESNAME} ne $resN) {
+					#fftype and polarization info already present for different residue, 
+					#so create new fftype based on current residue
+					$cTmp = "${cffType}_${resN}";
+					$atoms->{$i}{FFTYPE} = $cTmp;
+					%{ $atomTypes->{$cTmp} } = %{ $atomTypes->{cffType} };
+					$atomTypes->{$cTmp}{LABEL} = $cTmp;
+					%{ $atomTypes->{$cTmp}{polarInfo} } = %{ $curr };
+					$atomTypes->{$cTmp}{polarInfo}{RESNAME} = $resN;
+					$atoms->{$i}{PARMS} = \%{ $atomTypes->{$cTmp} };
+				}
+			}
+		}
+	}
 	&saveCoreShellData($parms, $ffTyAtoms, $allTypes, $atoms, $bonds, $csOpt);
 }
 
@@ -3255,7 +3449,7 @@ sub parsePolarizationFile {
 		while (<POLARFILE>) {
 			chomp;
 			# type m_D/u q_D/e    k_D   alpha/A3 thole
-			if ($_ =~ /^\s*(\S+)\s+(\d+\.?\d*)\s+(\-?\d+\.?\d*)\s+(\d+\.?\d*)\s*(\d*\.?\d*)\s*(\d*\.?\d*)/) {
+			if ($_ =~ /^\s*(\S+)\s+(\d+\.?\d*)\s+(\-?\d+\.?\d*)\s+(\d+\.?\d*)\s*\-?(\d*\.?\d*)\s*(\d*\.?\d*)/) {
 				next if ($1 eq "#");
 				$polarInfo->{$1} = (
 									{
@@ -3278,8 +3472,8 @@ sub parsePolarizationFile {
 		for $i (keys %{ $aTypes }) {
 			if(exists($polarInfo->{$i})) {
 				$aTypes->{$i}{polarInfo} = \%{ $polarInfo->{$i} };
-			} elsif (exists($polarInfo->{ $aTypes->{$i}{ATOM}})) {
-				$aTypes->{$i}{polarInfo} = \%{ $polarInfo->{ $aTypes->{$i}{ATOM}} };
+				#			} elsif (exists($polarInfo->{ $aTypes->{$i}{ATOM}})) {
+				#$aTypes->{$i}{polarInfo} = \%{ $polarInfo->{ $aTypes->{$i}{ATOM}} };
 			}
 		}
 	}
@@ -3383,7 +3577,7 @@ sub saveCoreShellData {
 						{
 							m     => $aType->{m},
 							q     => $aType->{q},
-							k1    => $aType->{k},
+							k1    => $aType->{k}, #note multiply by 2 here since diving by 2 when generating data file
 							k2    => 0,
 							alpha => $aType->{alpha}, #alpha = q^2/3.0114
 						}
@@ -3423,7 +3617,7 @@ sub createShellAtom {
 	$atoms->{$sID}{INDEX} = $sID;
 	$atoms->{$sID}{CHARGE} = $parms->{ATOMTYPES}{$sType}{polarInfo}{q};
 	$atoms->{$sID}{MOLECULE}{MOLSIZE}++;
-	$atoms->{$sID}{MOLECULE}{MEMBERS}{$atoms->{$sID}{MOLECULE}{MOLSIZE}} = $sID;
+	$atoms->{$sID}{MOLECULE}{MEMBERS}{$sID} = 1;
 	$atoms->{$sID}{CORE_PARENT}{TYPE} = $atoms->{$cID}{FFTYPE};
 	$atoms->{$sID}{CORE_PARENT}{ID} = $cID;
 	push @{ $bonds->{$cID} }, $sID;
@@ -3454,7 +3648,9 @@ sub createShellAtom {
 
 sub createShellVDW {
 	my ($parms, $cType, $sType, $csOpt, $sAtm) = @_;
-	my ($rec, $coul, $i, $lammpsType, $iType, $aType, $thole);
+	my ($rec, $coul, $i, $lammpsType, $iType, $aType, $thole, $CNV);
+
+	$CNV = LoadConverter();
 
 	if (! exists($parms->{ATOMTYPES}{$cType}{polarInfo})) {
 		$ERRORS{"POLARIZATION TYPE"}{$cType}++;
@@ -3478,14 +3674,16 @@ sub createShellVDW {
 				KEY     => "$sType * ",
 				TYPE    => "LJ_6_12",
 				USED    => 0,
-				VALS    => [0,0.1],
+				VALS    => [0,1.0],
 				COUL    => $coul,
+				Lammps  => getLammpsOpts("LJ_6_12","vdw", $CNV,0),
 			}
 	);
-	if (defined($lammpsType)) {
-		$rec->{Lammps} = \%{ $parms->{VDW}{TYPE}{$lammpsType} };
-		$rec->{TYPE} = $parms->{VDW}{TYPE}{$lammpsType}{NAME};
-	}
+	#	if (defined($lammpsType)) {
+	#		$rec->{Lammps} = \%{ $parms->{VDW}{TYPE}{$lammpsType} };
+	#		$rec->{TYPE} = $parms->{VDW}{TYPE}{$lammpsType}{NAME};
+	#		$rec->{VALS} = [0,0.25,0] if($rec->{TYPE} =~ /EXPO_6/i);
+	#}
 	%{ $parms->{VDW}{$sType}{"*"}{1} } = %{ $rec }; #all types
 	if (!exists($parms->{VDW}{$sType}{$sType})) {	
 		$iType = \%{ $parms->{VDW}{$sType}{$sType} };
@@ -3504,13 +3702,19 @@ sub createShellVDW {
 												"LMPNAME"  => "thole",
 												"LMPONAME" => "thole",
 												"SCC"      => 1,
+												#"FEP"      => {
+												#	"addsoft"   => 0,
+												#	"pair"      => "thole",
+												#	"pair_opts" => "2.6 10",
+												#	"parms"     => ["polar"],
+												#},
 											}
 										);
 		}
 		#now create new entry for thole type
-		$thole = 1.22;
 		$thole = $aType->{thole} if(exists($aType->{thole}));
 		#first for core
+		$aType->{alpha} *= -1 if($aType->{alpha}<0);
 		$rec = (
 				{
 					ATOM    => "$cType $cType ",
@@ -3527,13 +3731,13 @@ sub createShellVDW {
 		$rec->{IGNORE} = 1 if (! exists($aType->{thole}));
 		$iType = \%{ $parms->{VDW}{$cType}{$cType} };
 		$i = scalar(keys %{ $iType }) + 1;
-		%{ $iType->{$i} } = %{ $rec };
+		%{ $iType->{$i} } = %{ $rec } if (exists($aType->{thole}));
 		#and for shell
 		$rec->{ATOM} = $rec->{KEY} = "$sType $sType ";
 		$rec->{CORE} = $cType;
 		$iType = \%{ $parms->{VDW}{$sType}{$sType} };
 		$i = scalar(keys %{ $iType }) + 1;
-		%{ $iType->{$i} } = %{ $rec };
+		%{ $iType->{$i} } = %{ $rec } if (exists($aType->{thole}));
 	} elsif($csOpt->{type} == 3) {
 		$parms->{VDW}{$sType}{$sType}{1}{IGNORE} = 1;
 		$parms->{VDW}{$sType}{$sType}{1}{Lammps}{pmix} = 0;
@@ -3554,6 +3758,7 @@ sub createShellValence {
 							missing => 0,
 						}
 	);
+	$curr->{1}{CORE_SHELL} = 1;
 	$fc1 = 500 if ($fc1<=0);
 	$fc2 = 500 if ($fc2<=0);
 	$curr->{1}{VALS} = [$fc1/2,0];
@@ -3972,9 +4177,7 @@ sub init {
 	
 	print "Step 1: Initializing...";
 	@{ $tmp } = split /\s+/,$inputFile;
-	for (@{ $tmp }) {
-		FileTester($_); 
-	}
+	FileTester($_) for (@{ $tmp });
 
 	$suffix = "lammps" if (! defined($suffix));
 	#reax/rexpon option
@@ -4002,7 +4205,7 @@ sub init {
 	for (@{ $FFILES }) {
 		$ffType .= $_->{FFTYPEID};
 	}
-	$opts .= ' polarizable:"fftype=~/OW/" thole rigid: "resname =~ /WAT/"' if ($FF =~ /swm4-ndp/);
+	$opts .= ' polarizable: "fftype=~/OW/" thole rigid: "resname =~ /WAT/"' if ($FF =~ /swm4-ndp/);
 	$inputStr = "mesodna" if ($ffType =~ /3/);
 	#qeq option
 	$QEqtmp->{Opt} = 0;
@@ -4055,6 +4258,7 @@ sub init {
 			}
 		}	
 		$QEqtmp->{File} = $1 if(defined($qxFile) and $qxFile =~ /(\S+)/);
+
 		#Core-shell
 		if ($opts =~ /polar/i) {
 			$tmp = ();
@@ -4087,7 +4291,7 @@ sub init {
 		}
 
 		#FEP
-		if ($opts =~ /fep/ig) {
+		if ($opts =~ /fep/i) {
 			$tmp = ();
 			&getOptSelStr($opts,"fep",\@{ $tmp });
 			for $i (@{ $tmp }) {
@@ -4097,7 +4301,7 @@ sub init {
 		}
 
 		#Rigid bodies
-		if ($opts =~ /rigid/ig) {
+		if ($opts =~ /rigid/i) {
 			$tmp = ();
 			&getOptSelStr($opts,"rigid",\@{ $tmp });
 			for $i (@{ $tmp }) {
@@ -4107,7 +4311,7 @@ sub init {
 		}
 
 		#include file
-		if ($opts =~ /include_file/ig) {
+		if ($opts =~ /include_file/i) {
 			$tmp = ();
 			&getOptSelStr($opts, "include_file",\@{ $tmp });
 			$sysOpts->{include_file} = "@{ $tmp }" if ($#{ $tmp } > -1);
@@ -4143,6 +4347,7 @@ sub usage {
 	my ($list) = getInputTypes(1);
 	my ($fTypeStr) = &GetFileTypeStr;
 	my ($ffTypeStr) = &GetFFTypeStr;
+	my ($optStr) = &GetOptTypeStr;
 return <<DATA;
 This script will generate LAMMPS data and input files from a bgf structure
 usage: $0 -b structureFile -f \"ff1 ff2...\" -s [suffix] -t [sim template] -q [qeq/pqeq file] -r [reax/rexpon file] -i [inputFile_coeffs] -o [other_options] 
@@ -4198,6 +4403,8 @@ $ffTypeStr
 		"rigid: 'atom selection(s)'" - Treat the specified atoms (and their associated molecules) as rigid bodies during dynamics
 		"include_file:" - Include a file with LAMMPS code after the data_read line. Use for further customization
 
+	    atom selection options:
+$optStr
 	-t [control file template]: (optional). Specifies the type of input file to create. See $Bin/dat/LAMMPS for a list
 		Current options include "$list"
 		or you can specify your own input file
