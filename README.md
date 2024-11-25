@@ -17,3 +17,5 @@ Remove spurious hydrogen-hydrogen bonds from a BGF generated from CHARMM-GUI out
 
 note that strings, like those used to identify an fftype or resid, should be enclosed in single quotes within the selection string, which should go in double quotes.
 
+You can also use regular expressions for this (details coming soon)
+

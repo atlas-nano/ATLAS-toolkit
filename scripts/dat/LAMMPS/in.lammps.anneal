@@ -32,22 +32,16 @@ print "Heating 0K -> ${tempStart}K"
 print =====================================
 print            .
 
-fix             2 all nve
+fix             2 all nvt  ${tempStart} ${tempStart} 10.0
 velocity        all create ${tempStart} ${seed} dist gaussian rot yes
-thermo          50
+thermo          100
 thermo_style    multi
-fix             3 all langevin ${tempStart} ${tempStart} 5.0 ${seed}
-run             25000
-unfix           3
-fix             3 all temp/rescale 2 ${tempStart} ${tempStart} 0.05 0.5
-run             25000
+run             50000
 unfix		2
-unfix           3
 
 variable        c loop 5 #number of annealing cycles
 variable        tIncrement equal (${tempStop}-${tempStart})/10
 
-thermo		100
 
 label           cycle
 variable	force_constant equal 40/(2^v_c)
