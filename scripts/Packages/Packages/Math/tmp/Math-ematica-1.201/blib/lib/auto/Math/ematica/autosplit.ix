@@ -1,0 +1,13 @@
+# Index created by AutoSplit for blib/lib/Math/ematica.pm
+#    (file acts as timestamp)
+package Math::ematica;
+sub send_packet  ;
+sub _send_packet  ;
+sub _send_call  ;
+sub register  ;
+sub do_callback  ;
+sub call  ;
+sub dispatch  ;
+sub main  ;
+sub install  ;
+1;
